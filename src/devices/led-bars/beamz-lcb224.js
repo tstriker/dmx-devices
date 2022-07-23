@@ -106,6 +106,6 @@ let configs = [
 export default ModelFactory({
     label: `Beamz LCB 224`,
     widthCm: 110,
-    type: "rgb-bar",
+    type: "two-row-bar",
     config: configs,
 });

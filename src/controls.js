@@ -7,23 +7,22 @@ export class Control {
     // type of the control - this value is used in device configs
     static type = "";
 
-    constructor(control, props) {
+    constructor({props, ...control}, deviceProps) {
         // somehow the static properties are not accessible on the actual instantiated class, so we need
         // to redefine type.
-        this.type = control.type;
-        this.name = control.name;
-        this.label = control.label;
+        Object.entries(control).forEach(([field, val]) => {
+            this[field] = val;
+        });
 
-        let propByName = Object.fromEntries(props.map(prop => [prop.name, prop]));
+        let propByName = Object.fromEntries(deviceProps.map(prop => [prop.name, prop]));
 
-        Object.entries(control.props).map(([key, propName]) => {
+        Object.entries(props).map(([key, propName]) => {
             // control has localised names for each device prop as specified in the mapping
             // here we make it possible to access .red1 via .red, and so on
             this[key] = propByName[propName];
         });
 
         // intercept setting props
-
         return new Proxy(this, {
             set(target, property, value, receiver) {
                 if (target[property] instanceof Prop) {

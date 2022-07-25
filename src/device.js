@@ -1,9 +1,20 @@
 import {round} from "./utils.js";
 import {Prop} from "./props.js";
-import {Control, RGBLightControl, RGBWLightControl} from "./controls.js";
+import {RGBLightControl, RGBWLightControl} from "./controls.js";
 
 export class Device {
-    constructor({address, channels, label, props, controls, render, onChange, resetDMX = true, ...other}) {
+    constructor({
+        address,
+        channels,
+        label,
+        props,
+        controls,
+        render,
+        onChange,
+        resetDMX = true,
+        reverseLights = false,
+        ...other
+    }) {
         this.address = address;
         this.channels = channels;
         this.label = label;
@@ -11,6 +22,7 @@ export class Device {
         this.dmx = {};
         this.onChange = onChange;
         this.render = render;
+        this.reverseLights = reverseLights;
 
         this._externalUpdate = false;
 
@@ -42,13 +54,15 @@ export class Device {
         let knownTypes = [RGBLightControl, RGBWLightControl];
 
         // populate controls and feed in the prop objects
-        this.controls = (controls || []).map(control => {
+        // deep clone the object to avoid any weird sideffects down the line
+        controls = JSON.parse(JSON.stringify(controls || []));
+        let maxOrder = Math.max(...controls.map(control => control.order || 0));
+        this.controls = controls.map(control => {
+            control.order = reverseLights ? maxOrder - control.order || 0 : control.order || 0;
             let controlClass = knownTypes.find(controlClass => control.type == controlClass.type);
-            if (controlClass) {
-                return new controlClass(control, this.props);
-            }
+            return new controlClass(control, this.props);
         });
-
+        this.controls.sort((a, b) => a.order - b.order);
         this.controls.forEach(control => {
             this[control.name] = control;
         });

@@ -80,6 +80,7 @@ let configs = [];
             name: `light${idx}`,
             type: "rgbw-light",
             label: `Light ${idx}`,
+            order: 8 - ((idx - 1) % 8), // mirror the bar position, as the factory default is cray
             props: {
                 red: `red${idx}`,
                 green: `green${idx}`,

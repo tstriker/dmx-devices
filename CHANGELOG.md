@@ -1,3 +1,7 @@
+# 0.1.3
+
+* RGBLight control's `.color` now checks for alpha
+
 # 0.1.2
 
 * controls are now sorted by `order` property which is mostly 

@@ -1,3 +1,6 @@
+# 0.1.5
+* Fix parsing alpha in control (maps to value/dimmer)
+
 # 0.1.4
 * Add ADJ Mega HEX Par
 

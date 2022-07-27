@@ -60,7 +60,7 @@ export class RGBLightControl extends Control {
     set color(value) {
         let [r, g, b, a] = chroma(value).rgba();
         if (this.dimmer) {
-            [this.red, this.green, this.blue, this.dimmer] = [r, g, b, a];
+            [this.red, this.green, this.blue, this.dimmer] = [r, g, b, Math.round(a * 255)];
         } else {
             [this.red, this.green, this.blue] = [r * a, g * a, b * a];
         }
@@ -79,8 +79,13 @@ export class RGBWLightControl extends Control {
     }
 
     set color(value) {
-        let [r, g, b] = chroma(value).rgb();
+        let [r, g, b, a] = chroma(value).rgba();
         let w = colorToRGBW(value)[3];
-        [this.red, this.green, this.blue, this.white] = [r, g, b, w];
+
+        if (this.dimmer) {
+            [this.red, this.green, this.blue, this.white, this.dimmer] = [r, g, b, w, Math.round(a * 255)];
+        } else {
+            [this.red, this.green, this.blue, this.white] = [r * a, g * a, b * a, w * a];
+        }
     }
 }

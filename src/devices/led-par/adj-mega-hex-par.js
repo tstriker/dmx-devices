@@ -201,6 +201,21 @@ let controls = [
     },
 ];
 
+let dimmerControls = [
+    {
+        name: "light",
+        type: "rgbw-light",
+        label: "Light",
+        props: {
+            red: "red",
+            green: "green",
+            blue: "blue",
+            white: "white",
+            dimmer: "dimmer",
+        },
+    },
+];
+
 export default ModelFactory({
     label: "ADJ Mega HEX Par",
     widthCm: 20,
@@ -208,8 +223,12 @@ export default ModelFactory({
 
     config: [
         {channels: 6, props: {red, green, blue, white, amber, uv}, controls},
-        {channels: 7, props: {red, green, blue, white, amber, uv, dimmer}, controls},
-        {channels: 8, props: {red, green, blue, white, amber, uv, dimmer, strobe, strobeSpeed}, controls},
+        {channels: 7, props: {red, green, blue, white, amber, uv, dimmer}, controls: dimmerControls},
+        {
+            channels: 8,
+            props: {red, green, blue, white, amber, uv, dimmer, strobe, strobeSpeed},
+            controls: dimmerControls,
+        },
         {
             channels: 11,
             props: {
@@ -229,7 +248,7 @@ export default ModelFactory({
                 soundActiveMode,
                 speed,
             },
-            controls,
+            controls: dimmerControls,
         },
         {
             channels: 12,
@@ -251,7 +270,7 @@ export default ModelFactory({
                 speed,
                 dimmerCurves,
             },
-            controls,
+            controls: dimmerControls,
         },
     ],
 });

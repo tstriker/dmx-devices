@@ -1,3 +1,10 @@
+# 0.1.7
+* Do not touch dimmer after all in `color` control as 
+  while you can go from rgba to rgb, you can't get back properly
+  as there are two paths. simplest not to touch the dimmer 
+  instead and poke colors themselves. this frees up dimmer to be
+  truly the single source of truth in brightness
+
 # 0.1.6
 * Fix setting/getting colors in control when alpha is present
   (was setting float values and then tripping on reading them)

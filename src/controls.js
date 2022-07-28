@@ -54,20 +54,12 @@ export class RGBLightControl extends Control {
     }
 
     get color() {
-        let color = chroma(this.red.val, this.green.val, this.blue.val);
-        if (this.dimmer) {
-            color = color.alpha(this.dimmer.val / 255);
-        }
-        return color.hex();
+        return chroma(this.red.val, this.green.val, this.blue.val).hex();
     }
 
     set color(value) {
         let [r, g, b, a] = chroma(value).rgba();
-        if (this.dimmer) {
-            [this.red, this.green, this.blue, this.dimmer] = [r, g, b, Math.round(a * 255)];
-        } else {
-            [this.red, this.green, this.blue] = [Math.round(r * a), Math.round(g * a), Math.round(b * a)];
-        }
+        [this.red, this.green, this.blue] = [Math.round(r * a), Math.round(g * a), Math.round(b * a)];
     }
 }
 
@@ -80,9 +72,6 @@ export class RGBWLightControl extends Control {
 
     get color() {
         let color = chroma(this.red.val, this.green.val, this.blue.val);
-        if (this.dimmer) {
-            color = color.alpha(this.dimmer.dmx / 255);
-        }
         return color.hex();
     }
 
@@ -90,15 +79,11 @@ export class RGBWLightControl extends Control {
         let [r, g, b, a] = chroma(value).rgba();
         let w = colorToRGBW(value)[3];
 
-        if (this.dimmer) {
-            [this.red, this.green, this.blue, this.white, this.dimmer] = [r, g, b, w, Math.round(a * 255)];
-        } else {
-            [this.red, this.green, this.blue, this.white] = [
-                Math.round(r * a),
-                Math.round(g * a),
-                Math.round(b * a),
-                Math.round(w * a),
-            ];
-        }
+        [this.red, this.green, this.blue, this.white] = [
+            Math.round(r * a),
+            Math.round(g * a),
+            Math.round(b * a),
+            Math.round(w * a),
+        ];
     }
 }

@@ -2,6 +2,12 @@
 
 TL;DR instead of saying "set channel 37 to 141" why not say "set light1 to 'pink'".
 
+# Alpha quality code disclaimer
+
+This package is in it's very early days, the API hasn't stabilised yet 
+and much is yet to be figured out, so do use it with this caveat in mind.
+I'd be eager to hear any usecases, so do give a shout on github!
+
 # Installation
 
 `npm install dmx-devices`

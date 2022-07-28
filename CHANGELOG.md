@@ -1,3 +1,7 @@
+# 0.1.6
+* Fix setting/getting colors in control when alpha is present
+  (was setting float values and then tripping on reading them)
+
 # 0.1.5
 * Fix parsing alpha in control (maps to value/dimmer)
 

@@ -11,7 +11,7 @@ export class Device {
         controls,
         render,
         onChange,
-        resetDMX = true,
+        resetDMX = false,
         reverseLights = false,
         ...other
     }) {
@@ -41,11 +41,10 @@ export class Device {
             });
 
             if (resetDMX) {
-                // set all channels to zero on create time so that our output is deterministic
-                // override the flag if you want it to be additive instea
-                // (like, when you don't know the state of the device and want to change just one channel without
-                // changing the others)
-                this.dmx[propChannel] = 0;
+                // if specified will reset DMX to default values / zeroes, making output deterministic
+                // avoid if you are not controlling all aspects of the device (e.g. when you just want to change
+                // a few channels and don't want to touch the rest)
+                this.dmx[propChannel] = prop.defaultVal || 0;
             }
             this[key] = prop;
         });
@@ -142,12 +141,13 @@ export class Device {
     updateProps(dmx) {
         this._externalUpdate = true;
         this.props.forEach(prop => {
-            let val = dmx[prop.channel] || 0;
-            if (prop.modifies) {
-                val = val - prop.modifies.cur.chVal;
+            if (dmx[prop.channel] != null) {
+                let val = dmx[prop.channel];
+                if (prop.modifies) {
+                    val = val - prop.modifies.cur.chVal;
+                }
+                prop.dmx = val;
             }
-
-            prop.dmx = val;
         });
         this._externalUpdate = false;
     }

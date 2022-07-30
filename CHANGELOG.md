@@ -1,3 +1,10 @@
+# 0.1.8
+* Fix unintentional prop rewrites when passed in a partial
+  DMX (e.g. "update just these 4 props" would reset everything that
+  was not mentioned
+* Flip resetDMX flag on device to be false by default, thus
+  default is a safer "do not overwrite anything else"
+
 # 0.1.7
 * Do not touch dimmer after all in `color` control as 
   while you can go from rgba to rgb, you can't get back properly

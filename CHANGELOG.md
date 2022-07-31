@@ -1,3 +1,6 @@
+# 0.1.9
+* Add the most limited RGB par because that's a thing
+
 # 0.1.8
 * Fix unintentional prop rewrites when passed in a partial
   DMX (e.g. "update just these 4 props" would reset everything that

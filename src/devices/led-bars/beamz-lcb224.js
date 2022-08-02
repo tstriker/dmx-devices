@@ -70,38 +70,12 @@ let configs = [
     },
 
     {
-        channels: 8,
-        lights: 1,
-        props: {
-            dimmer: rangeProp({channel: 1, label: "Dimmer", default: 255}),
-            ...rgb(2).props,
-
-            mode: {
-                channel: 5,
-            },
-
-            strobe: strobe(8),
-        },
-        controls: [...rgb(2).controls],
-    },
-
-    {
         channels: 48,
         lights: 16,
         props: {
             ...rgb([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46]).props,
         },
         controls: [...rgb([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46]).controls],
-    },
-
-    {
-        channels: 53,
-        lights: 16,
-        props: {
-            dimmer: rangeProp({channel: 1, label: "Dimmer", default: 255}),
-            ...rgb([2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44, 47]).props,
-        },
-        controls: [...rgb([2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44, 47]).controls],
     },
 ];
 

@@ -25,6 +25,7 @@ export class Device {
         this.reverseLights = reverseLights;
 
         this._externalUpdate = false;
+        this._notifyTimeout = null;
 
         // populate props
         Object.entries(props).forEach(([key, config]) => {
@@ -112,12 +113,6 @@ export class Device {
         });
     }
 
-    _notify() {
-        if (!this._externalUpdate && this.onChange) {
-            this.onChange(this.dmx);
-        }
-    }
-
     get props() {
         // returns all props for this device, in case you want to put them on screen, or are looking for something
         // specific
@@ -135,7 +130,17 @@ export class Device {
         } else {
             this.dmx[ch] = val;
         }
-        this._notify();
+
+        if (!this._notifyTimeout) {
+            this._notifyTimeout = setTimeout(() => this._notify(), 16);
+        }
+    }
+
+    _notify() {
+        this._notifyTimeout = null;
+        if (!this._externalUpdate && this.onChange) {
+            this.onChange(this.dmx);
+        }
     }
 
     updateProps(dmx) {

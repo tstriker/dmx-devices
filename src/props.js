@@ -26,6 +26,7 @@ export class Prop {
         this.modeMap = calcModeMap({stops, modes});
         this.modeMapEntries = Object.entries(this.modeMap);
 
+        this.defaultVal = defaultVal;
         this.chVal = defaultVal || Object.values(this.modeMap)[0].cur.chVal;
         this.cur = this.modeMap[this.chVal].cur;
         this.interpolated = this.modeMap[this.chVal].val;
@@ -33,6 +34,11 @@ export class Prop {
     }
 
     set dmx(chVal) {
+        if (chVal == this.chVal) {
+            // nothing to report
+            return;
+        }
+
         this.chVal = chVal;
         this.cur = this.modeMap[chVal]?.cur;
         this.interpolated = this.modeMap[chVal]?.val;

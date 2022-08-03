@@ -1,3 +1,8 @@
+# 0.1.10
+* Massively improve performance on many props frequent updates
+  by debouncing the updates on device level (firing one
+  dmx update per frame, rather than all props)
+
 # 0.1.9
 * Add the most limited RGB par because that's a thing
 

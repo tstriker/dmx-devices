@@ -132,7 +132,7 @@ export class Device {
         }
 
         if (!this._notifyTimeout) {
-            this._notifyTimeout = setTimeout(() => this._notify(), 16);
+            this._notifyTimeout = setTimeout(() => this._notify());
         }
     }
 

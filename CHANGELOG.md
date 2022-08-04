@@ -1,3 +1,8 @@
+# 0.1.11
+* Minor perf improvements, and add support for white cans
+  where you can feed in color and it will set it to max 
+  brightness; also add beamz cob30ww as a result
+
 # 0.1.10
 * Massively improve performance on many props frequent updates
   by debouncing the updates on device level (firing one

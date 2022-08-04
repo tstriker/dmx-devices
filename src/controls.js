@@ -16,11 +16,14 @@ export class Control {
 
         let propByName = Object.fromEntries(deviceProps.map(prop => [prop.name, prop]));
 
+        this.props = [];
         Object.entries(props).map(([key, propName]) => {
             // control has localised names for each device prop as specified in the mapping
             // here we make it possible to access .red1 via .red, and so on
             this[key] = propByName[propName];
+            this.props.push(propByName[propName]);
         });
+        this.channels = Object.values(this.props).map(prop => prop.channel);
 
         // intercept setting props
         return new Proxy(this, {
@@ -33,16 +36,6 @@ export class Control {
                 }
             },
         });
-    }
-
-    get props() {
-        // returns all props for this device, in case you want to put them on screen, or are looking for something
-        // specific
-        return Object.values(this).filter(obj => obj instanceof Prop);
-    }
-
-    get channels() {
-        return Object.values(this.props).map(prop => prop.channel);
     }
 }
 
@@ -85,5 +78,24 @@ export class RGBWLightControl extends Control {
             Math.round(b * a),
             Math.round(w * a),
         ];
+    }
+}
+
+export class WLightControl extends Control {
+    static type = "w-light";
+
+    constructor(control, props) {
+        super(control, props);
+    }
+
+    get color() {
+        return chroma(this.white, this.white, this.white).hex();
+    }
+
+    set color(value) {
+        let [r, g, b, a] = chroma(value).rgba();
+        let w = Math.max(r, g, b);
+
+        this.white = Math.round(w * a);
     }
 }

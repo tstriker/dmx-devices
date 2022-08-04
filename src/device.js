@@ -1,6 +1,6 @@
 import {round} from "./utils.js";
 import {Prop} from "./props.js";
-import {RGBLightControl, RGBWLightControl} from "./controls.js";
+import {RGBLightControl, RGBWLightControl, WLightControl} from "./controls.js";
 
 export class Device {
     constructor({
@@ -27,6 +27,8 @@ export class Device {
         this._externalUpdate = false;
         this._notifyTimeout = null;
 
+        this.props = [];
+
         // populate props
         Object.entries(props).forEach(([key, config]) => {
             // init all the props
@@ -48,10 +50,11 @@ export class Device {
                 this.dmx[propChannel] = prop.defaultVal || 0;
             }
             this[key] = prop;
+            this.props.push(prop);
         });
 
         // XXX - will make it dynamic eventually
-        let knownTypes = [RGBLightControl, RGBWLightControl];
+        let knownTypes = [RGBLightControl, RGBWLightControl, WLightControl];
 
         // populate controls and feed in the prop objects
         // deep clone the object to avoid any weird sideffects down the line
@@ -71,6 +74,9 @@ export class Device {
         Object.entries(other).forEach(([key, val]) => {
             this[key] = val;
         });
+
+        let controlChannels = this.controls.map(control => control.channels).flat();
+        this.unmanagedProps = this.props.filter(prop => !controlChannels.includes(prop.channel));
 
         return new Proxy(this, {
             set(target, prop, value, receiver) {
@@ -111,17 +117,6 @@ export class Device {
                 return Reflect.get(...arguments);
             },
         });
-    }
-
-    get props() {
-        // returns all props for this device, in case you want to put them on screen, or are looking for something
-        // specific
-        return Object.values(this).filter(obj => obj instanceof Prop);
-    }
-
-    get unmanagedProps() {
-        let controlChannels = this.controls.map(control => control.channels).flat();
-        return this.props.filter(prop => !controlChannels.includes(prop.channel));
     }
 
     onPropChange(ch, val, modifies) {

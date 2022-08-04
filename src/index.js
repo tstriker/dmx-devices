@@ -8,6 +8,7 @@ export {default as BeamzLCB244} from "./devices/led-bars/beamz-lcb244.js";
 export {default as LEDPar} from "./devices/led-par/generic-led-par.js";
 export {default as ADJMegaHEXPar} from "./devices/led-par/adj-mega-hex-par.js";
 export {default as RGBPar} from "./devices/led-par/rgb-par.js";
+export {default as BeamzCOB30WW} from "./devices/led-par/beamz-cob30ww.js";
 
 export {default as SharkSpot1} from "./devices/moving-heads/shark-spot-one.js";
 export {default as UnbrandedSpot12} from "./devices/moving-heads/unbranded-spot-12.js";

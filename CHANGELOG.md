@@ -1,3 +1,7 @@
+# 0.1.12
+
+* Add ADJ MegaTRIPar and Chauvet SlimPAR 56
+
 # 0.1.11
 * Minor perf improvements, and add support for white cans
   where you can feed in color and it will set it to max 

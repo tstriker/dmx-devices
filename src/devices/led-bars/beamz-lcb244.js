@@ -67,7 +67,7 @@ let configs = [];
                     {chVal: 1, val: 0.1},
                     {chVal: 255, val: 0.9},
                 ],
-                defaultVal: 255,
+                defaultVal: 0,
             },
             [`red${idx}`]: rangeProp({channel: colorAddress + 3, label: `Red ${idx}`}),
             [`green${idx}`]: rangeProp({channel: colorAddress + 4, label: `Green ${idx}`}),

@@ -62,7 +62,7 @@ let configs = [
         channels: 5,
         lights: 1,
         props: {
-            dimmer: rangeProp({channel: 1, label: "Dimmer", default: 255}),
+            dimmer: rangeProp({channel: 1, label: "Dimmer", defaultVal: 255}),
             strobe: strobe(2),
             ...rgb(3).props,
         },

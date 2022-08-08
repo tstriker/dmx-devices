@@ -126,15 +126,11 @@ export class Device {
             this.dmx[ch] = val;
         }
 
-        if (!this._notifyTimeout) {
-            this._notifyTimeout = setTimeout(() => this._notify());
-        }
-    }
-
-    _notify() {
-        this._notifyTimeout = null;
-        if (!this._externalUpdate && this.onChange) {
-            this.onChange(this.dmx);
+        if (!this._notifyTimeout && !this._externalUpdate) {
+            this._notifyTimeout = setTimeout(() => {
+                this._notifyTimeout = null;
+                this.onChange(this.dmx);
+            });
         }
     }
 

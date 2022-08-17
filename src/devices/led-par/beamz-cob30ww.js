@@ -21,8 +21,8 @@ export default ModelFactory({
                 channel: 3,
                 label: "Mode",
                 modes: [
-                    {chVal: 0, val: 0, label: "Off"},
-                    {chVal: 10, val: "auto_1", label: "On"},
+                    {chVal: 0, val: 0, label: "Light Off"},
+                    {chVal: 10, val: "auto_1", label: "Light On"},
                     {chVal: 40, val: "auto_2", label: "Pulse"},
                     {chVal: 70, val: "auto_3", label: "Strobe"},
                     {chVal: 100, val: "auto_4", label: "Dim-strobe"},

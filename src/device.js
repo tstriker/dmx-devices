@@ -47,7 +47,9 @@ export class Device {
                 // if specified will reset DMX to default values / zeroes, making output deterministic
                 // avoid if you are not controlling all aspects of the device (e.g. when you just want to change
                 // a few channels and don't want to touch the rest)
-                this.dmx[propChannel] = prop.defaultVal || 0;
+                if (!prop.modifies && prop.channel >= 1 && prop.channel <= 512) {
+                    this.dmx[propChannel] = prop.defaultVal || 0;
+                }
             }
             this[key] = prop;
             this.props.push(prop);

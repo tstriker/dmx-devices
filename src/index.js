@@ -15,3 +15,4 @@ export {default as RGBPar} from "./devices/led-par/rgb-par.js";
 
 export {default as SharkSpot1} from "./devices/moving-heads/shark-spot-one.js";
 export {default as UnbrandedSpot12} from "./devices/moving-heads/unbranded-spot-12.js";
+export {default as BeamzMHL75} from "./devices/moving-heads/beamz-mhl75.js";

@@ -2,7 +2,7 @@ import {ModelFactory, rangeProp} from "../../device.js";
 
 export default ModelFactory({
     label: "Unbranded moving head 12ch",
-    deviceOptions: {swivelFine: true},
+    type: "moving head",
     config: {
         props: {
             panCoarse: {

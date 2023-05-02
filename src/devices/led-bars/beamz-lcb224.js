@@ -25,6 +25,7 @@ function rgb(addresses) {
             label: `Light ${idx}`,
             upper: idx > 8, // 224 has a unique design of two leds arranged vertically. lights 9-16 is upper row
             order: 8 - ((idx - 1) % 8), // reverse the light position on the bar by default as the factory default is cray
+            pixelGroup: idx <= 8 ? 0 : 1,
             props: {
                 red: `red${idx}`,
                 green: `green${idx}`,

@@ -12,7 +12,6 @@ export class Device {
         render,
         onChange,
         resetDMX = false,
-        reverseLights = false,
         ...other
     }) {
         this.address = address;
@@ -22,7 +21,6 @@ export class Device {
         this.dmx = {};
         this.onChange = onChange;
         this.render = render;
-        this.reverseLights = reverseLights;
 
         this._externalUpdate = false;
         this._notifyTimeout = null;
@@ -61,15 +59,22 @@ export class Device {
         // populate controls and feed in the prop objects
         // deep clone the object to avoid any weird sideffects down the line
         controls = JSON.parse(JSON.stringify(controls || []));
-        let maxOrder = Math.max(...controls.map(control => control.order || 0));
-        this.controls = controls.map(control => {
-            control.order = reverseLights ? maxOrder - control.order || 0 : control.order || 0;
+        this.controls = controls.map((control, idx) => {
+            control.idx = idx + 1;
+            control.order = control.order || 0;
             let controlClass = knownTypes.find(controlClass => control.type == controlClass.type);
             return new controlClass(control, this.props);
         });
-        this.controls.sort((a, b) => a.order - b.order);
+
+        this.pixels = [];
         this.controls.forEach(control => {
             this[control.name] = control;
+
+            if (["rgb-light", "rgbw-light", "w-light"].includes(control.type)) {
+                let group = control.pixelGroup || 0;
+                this.pixels[group] = this.pixels[group] || [];
+                this.pixels[group].push(control);
+            }
         });
 
         // proxy anything else through; tbd

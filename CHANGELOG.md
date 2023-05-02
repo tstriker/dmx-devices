@@ -1,10 +1,15 @@
+# 0.1.17
+
+* Introduce pixel groups that allow logical grouping of
+  pixels in LED and PAR bars; WIP
+
 # 0.1.12
 
 * Add ADJ MegaTRIPar and Chauvet SlimPAR 56
 
 # 0.1.11
 * Minor perf improvements, and add support for white cans
-  where you can feed in color and it will set it to max 
+  where you can feed in color and it will set it to max
   brightness; also add beamz cob30ww as a result
 
 # 0.1.10
@@ -23,9 +28,9 @@
   default is a safer "do not overwrite anything else"
 
 # 0.1.7
-* Do not touch dimmer after all in `color` control as 
+* Do not touch dimmer after all in `color` control as
   while you can go from rgba to rgb, you can't get back properly
-  as there are two paths. simplest not to touch the dimmer 
+  as there are two paths. simplest not to touch the dimmer
   instead and poke colors themselves. this frees up dimmer to be
   truly the single source of truth in brightness
 
@@ -43,8 +48,8 @@
 * RGBLight control's `.color` now checks for alpha
 
 # 0.1.2
-* controls are now sorted by `order` property which is mostly 
-  relevant for LED bars, strips and so on, where orientation 
+* controls are now sorted by `order` property which is mostly
+  relevant for LED bars, strips and so on, where orientation
   matters. pass in reverseLights=true in the device constructor
   to flip the direction. I'm not exactly sure which way is the right
   way but some factory defaults make no sense

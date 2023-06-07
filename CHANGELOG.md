@@ -1,3 +1,9 @@
+# 0.2.0
+
+* Switch the API over from an amalgamation of controls to
+  separate pixels and controls within; WIP
+
+
 # 0.1.17
 
 * Introduce pixel groups that allow logical grouping of

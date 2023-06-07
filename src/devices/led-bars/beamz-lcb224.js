@@ -2,7 +2,7 @@ import {ModelFactory, rangeProp} from "../../device.js";
 
 function rgb(addresses) {
     // generates the rgb props triplet and colors control
-    let config = {props: {}, controls: []};
+    let config = {props: {}, pixels: []};
 
     if (!Array.isArray(addresses)) {
         addresses = [addresses];
@@ -19,17 +19,20 @@ function rgb(addresses) {
             [`blue${idx}`]: rangeProp({channel: address + 2, label: `Blue ${idx}`}),
         };
 
-        config.controls.push({
-            name: `light${idx}`,
-            type: "rgb-light",
+        config.pixels.push({
+            id: `light${idx}`,
             label: `Light ${idx}`,
-            upper: idx > 8, // 224 has a unique design of two leds arranged vertically. lights 9-16 is upper row
-            order: 8 - ((idx - 1) % 8), // reverse the light position on the bar by default as the factory default is cray
-            pixelGroup: idx <= 8 ? 0 : 1,
-            props: {
-                red: `red${idx}`,
-                green: `green${idx}`,
-                blue: `blue${idx}`,
+            group: idx <= 8 ? 0 : 1,
+
+            controls: {
+                color: {
+                    type: "rgb-light",
+                    props: {
+                        red: `red${idx}`,
+                        green: `green${idx}`,
+                        blue: `blue${idx}`,
+                    },
+                },
             },
         });
     });
@@ -56,7 +59,7 @@ let configs = [
         props: {
             ...rgb(1).props,
         },
-        controls: [...rgb(1).controls],
+        pixels: [...rgb(1).pixels],
     },
 
     {
@@ -67,7 +70,7 @@ let configs = [
             strobe: strobe(2),
             ...rgb(3).props,
         },
-        controls: [...rgb(3).controls],
+        pixels: [...rgb(3).pixels],
     },
 
     {
@@ -76,7 +79,7 @@ let configs = [
         props: {
             ...rgb([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46]).props,
         },
-        controls: [...rgb([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46]).controls],
+        pixels: [...rgb([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46]).pixels],
     },
 ];
 

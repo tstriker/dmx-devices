@@ -1,4 +1,6 @@
 import {ModelFactory, rangeProp} from "../../device.js";
+import {Pixel} from "../../controls.js";
+
 let configs = [];
 
 // generate 1, 2, 4, and 8 segment versions (same light, just the number of individually controllable lights change
@@ -50,7 +52,7 @@ let configs = [];
             chaseSpeed: rangeProp({channel: channels, label: "Chase Speed"}),
         },
 
-        controls: [],
+        pixels: [],
     };
 
     for (let idx = 1; idx <= lights; idx += 1) {
@@ -64,8 +66,8 @@ let configs = [];
                 label: `Strobe ${idx}`,
                 stops: [
                     {chVal: 0, val: 0},
-                    {chVal: 1, val: 0.1},
-                    {chVal: 255, val: 0.9},
+                    {chVal: 1, val: 0.001},
+                    {chVal: 255, val: 1},
                 ],
                 defaultVal: 0,
             },
@@ -76,18 +78,21 @@ let configs = [];
             [`cycle${idx}`]: rangeProp({channel: colorAddress + 7, label: `Auto ${idx}`}),
         };
 
-        config.controls.push({
-            name: `light${idx}`,
-            type: "rgbw-light",
+        config.pixels.push({
+            id: `light${idx}`,
             label: `Light ${idx}`,
-            order: 8 - ((idx - 1) % 8), // mirror the bar position, as the factory default is cray
-            props: {
-                red: `red${idx}`,
-                green: `green${idx}`,
-                blue: `blue${idx}`,
-                white: `white${idx}`,
-                strobe: `strobe${idx}`,
+            controls: {
+                color: {
+                    type: "rgbw-light",
+                    props: {
+                        red: `red${idx}`,
+                        green: `green${idx}`,
+                        blue: `blue${idx}`,
+                        white: `white${idx}`,
+                    },
+                },
                 dimmer: `dimmer${idx}`,
+                strobe: `strobe${idx}`,
             },
         });
     }

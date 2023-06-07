@@ -4,7 +4,7 @@ TL;DR instead of saying "set channel 37 to 141" why not say "set light1 to 'pink
 
 # Alpha quality code disclaimer
 
-This package is in it's very early days, the API hasn't stabilised yet 
+This package is in it's very early days, the API hasn't stabilised yet
 and much is yet to be figured out, so do use it with this caveat in mind.
 I'd be eager to hear any usecases, so do give a shout on github!
 
@@ -38,4 +38,4 @@ console.log(bar.dmx);
 
 Check the [devices directory](https://github.com/tstriker/dmx-devices/tree/main/src/devices) for all currently recognized devices.
 
-The [generic LED light](https://github.com/tstriker/dmx-devices/blob/main/src/devices/led-lights/generic-led-light.js) is a good starting point for figuring how to create your own config.
+The [LED Par](https://github.com/tstriker/dmx-devices/blob/main/src/devices/led-par/par.js) is a good starting point for figuring how to create your own config.

@@ -12,8 +12,8 @@ export default ModelFactory({
                 label: "Strobe",
                 stops: [
                     {chVal: 0, val: 0, label: "off"},
-                    {chVal: 10, val: 0.1},
-                    {chVal: 255, val: 0.9},
+                    {chVal: 10, val: 0.01},
+                    {chVal: 255, val: 1},
                 ],
                 defaultVal: 0,
             },
@@ -45,13 +45,19 @@ export default ModelFactory({
             },
         },
 
-        controls: [
+        pixels: [
             {
-                name: `light`,
-                type: "w-light",
+                id: `light`,
                 label: `Light`,
-                props: {
-                    white: "dimmer",
+                controls: {
+                    color: {
+                        type: "w-light",
+                        props: {
+                            white: "dimmer",
+                        },
+                    },
+                    dimmer: "dimmer",
+                    strobe: "strobe",
                 },
             },
         ],

@@ -1,101 +1,106 @@
 import chroma from "chroma-js";
 
 import {colorToRGBW} from "./utils.js";
-import {Prop} from "./props.js";
 
-export class Control {
-    // type of the control - this value is used in device configs
-    static type = "";
+export class Pixel {
+    // abstracts away all the possible controls in individual pixels
+    // so that you can do light8.color = "fuchsia" or bubbles.speed = 5
+    constructor({id, label, group, controls}, idx, props) {
+        this.id = id;
+        this.idx = idx;
+        this.label = label;
+        this.group = group || 0;
+        this.controls = controls;
 
-    constructor({props, ...control}, deviceProps) {
-        // somehow the static properties are not accessible on the actual instantiated class, so we need
-        // to redefine type.
-        Object.entries(control).forEach(([field, val]) => {
-            this[field] = val;
-        });
+        this._allProps = Object.fromEntries(props.map(prop => [prop.name, prop]));
+        this.props = {};
 
-        let propByName = Object.fromEntries(deviceProps.map(prop => [prop.name, prop]));
+        // there are two stages for pixel - the declaration stage where we figure out what needs to be done
+        // and then the initiation stage, so this should essentially return a constructor
+        // during initiation it will get passed in actual device props
+        let usedChannels = new Set();
 
-        this.props = [];
-        Object.entries(props).map(([key, propName]) => {
-            // control has localised names for each device prop as specified in the mapping
-            // here we make it possible to access .red1 via .red, and so on
-            this[key] = propByName[propName];
-            this.props.push(propByName[propName]);
-        });
-        this.channels = Object.values(this.props).map(prop => prop.channel);
+        Object.entries(controls).forEach(([controlName, config]) => {
+            let setter, getter;
+            if (typeof config == "string") {
+                // a proxy to prop
+                getter = () => this._allProps[config].val;
+                setter = val => (this._allProps[config].val = val);
+            } else if (config.set) {
+                // we have ourselves a getter/setter function as a control
+                getter = () => config.get(this.props);
+                setter = val => config.set(this.props, val);
+            } else if (config.type) {
+                // a config class that maps to one of the pixel controls below
+                getter = () => pixelControls[config.type].get(this.props);
+                setter = val => pixelControls[config.type].set(this.props, val);
+            }
 
-        // intercept setting props
-        return new Proxy(this, {
-            set(target, property, value, receiver) {
-                if (target[property] instanceof Prop) {
-                    target[property].val = value;
-                    return true;
-                } else {
-                    return Reflect.set(target, property, value, receiver);
+            Object.defineProperty(this, controlName, {get: getter, set: setter});
+
+            // the goal is to set each of the controls to be a setter/getter
+            // and all their props are accessible directly as well
+            Object.entries(config.props || {}).forEach(([propName, propField]) => {
+                let prop = this._allProps[propField];
+
+                this.props[propName] = prop;
+                if (!Object.hasOwn(this, propName)) {
+                    Object.defineProperty(this, propName, {
+                        get: () => prop.val,
+                        set: val => (prop = val),
+                    });
                 }
-            },
+
+                usedChannels.add(prop.channel);
+            });
         });
+
+        this.channels = [...usedChannels];
     }
 }
 
-export class RGBLightControl extends Control {
-    static type = "rgb-light";
+let pixelControls = {
+    "rgb-light": {
+        get(props) {
+            chroma(props.red.val, props.green.val, props.blue.val).hex();
+        },
+        set(props, value) {
+            let [r, g, b, a] = chroma(value).rgba();
+            [props.red.val, props.green.val, props.blue.val] = [
+                Math.round(r * a),
+                Math.round(g * a),
+                Math.round(b * a),
+            ];
+        },
+    },
 
-    constructor(control, props) {
-        super(control, props);
-    }
+    "rgbw-light": {
+        get(props) {
+            let color = chroma(props.red.val, props.green.val, props.blue.val);
+            return color.hex();
+        },
+        set(props, value) {
+            let [r, g, b, a] = chroma(value).rgba();
+            let w = colorToRGBW(value)[3];
 
-    get color() {
-        return chroma(this.red.val, this.green.val, this.blue.val).hex();
-    }
+            [props.red.val, props.green.val, props.blue.val, props.white.val] = [
+                Math.round(r * a),
+                Math.round(g * a),
+                Math.round(b * a),
+                Math.round(w * a),
+            ];
+        },
+    },
 
-    set color(value) {
-        let [r, g, b, a] = chroma(value).rgba();
-        [this.red, this.green, this.blue] = [Math.round(r * a), Math.round(g * a), Math.round(b * a)];
-    }
-}
+    "w-light": {
+        get(props) {
+            return chroma(props.white, props.white, props.white).hex();
+        },
+        set(props, value) {
+            let [r, g, b, a] = chroma(value).rgba();
+            let w = Math.max(r, g, b);
 
-export class RGBWLightControl extends Control {
-    static type = "rgbw-light";
-
-    constructor(control, props) {
-        super(control, props);
-    }
-
-    get color() {
-        let color = chroma(this.red.val, this.green.val, this.blue.val);
-        return color.hex();
-    }
-
-    set color(value) {
-        let [r, g, b, a] = chroma(value).rgba();
-        let w = colorToRGBW(value)[3];
-
-        [this.red, this.green, this.blue, this.white] = [
-            Math.round(r * a),
-            Math.round(g * a),
-            Math.round(b * a),
-            Math.round(w * a),
-        ];
-    }
-}
-
-export class WLightControl extends Control {
-    static type = "w-light";
-
-    constructor(control, props) {
-        super(control, props);
-    }
-
-    get color() {
-        return chroma(this.white, this.white, this.white).hex();
-    }
-
-    set color(value) {
-        let [r, g, b, a] = chroma(value).rgba();
-        let w = Math.max(r, g, b);
-
-        this.white = Math.round(w * a);
-    }
-}
+            props.white.val = Math.round(w * a);
+        },
+    },
+};

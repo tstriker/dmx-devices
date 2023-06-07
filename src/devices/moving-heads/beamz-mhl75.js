@@ -116,19 +116,28 @@ export default ModelFactory({
             washStrobe: rangeProp({channel: 15, label: `Wash Strobe`}),
         },
 
-        controls: [
+        pixels: [
             {
-                name: "light",
-                type: "rgbw-light",
+                id: "light",
                 label: "Light",
-                props: {
-                    red: "washRed",
-                    green: "washGreen",
-                    blue: "washBlue",
-                    white: "washWhite",
-                    dimmer: "washDimmer",
-                    strobe: "washStrobe",
+                controls: {
+                    color: {
+                        type: "rgbw-light",
+                        props: {
+                            red: "washRed",
+                            green: "washGreen",
+                            blue: "washBlue",
+                            white: "washWhite",
+                        },
+                    },
                 },
+                dimmer: "washDimmer",
+                strobe: "washStrobe",
+                gobo: "gobo",
+                colorWheel: "colorWheel",
+
+                tilt: "tilt",
+                pan: "pan",
             },
         ],
     },

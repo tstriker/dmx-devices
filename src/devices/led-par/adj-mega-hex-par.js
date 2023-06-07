@@ -1,4 +1,5 @@
 import {ModelFactory, rangeProp} from "../../device.js";
+import {Pixel} from "../../controls.js";
 
 let red = rangeProp({channel: 1, label: "Red"});
 let green = rangeProp({channel: 2, label: "Green"});
@@ -187,34 +188,40 @@ let dimmerCurves = {
     ],
 };
 
-let controls = [
-    {
-        name: "light",
-        type: "rgbw-light",
-        label: "Light",
-        props: {
-            red: "red",
-            green: "green",
-            blue: "blue",
-            white: "white",
-        },
+let colorControl = {
+    type: "rgbw-light",
+    props: {
+        red: "red",
+        green: "green",
+        blue: "blue",
+        white: "white",
     },
-];
+};
 
-let dimmerControls = [
-    {
-        name: "light",
-        type: "rgbw-light",
-        label: "Light",
-        props: {
-            red: "red",
-            green: "green",
-            blue: "blue",
-            white: "white",
-            dimmer: "dimmer",
-        },
+let Strobe = {
+    props: {strobe: "strobe"},
+    get(props) {
+        // strobe universally should be: 0=off, 0.01..1 = flickering faster and faster
+        let chVal = props.strobe.chVal;
+        if (chVal < 64) {
+            return 0;
+        } else if (chVal <= 95) {
+            return (chVal - 63) / 32;
+        }
     },
-];
+
+    set(props, value) {
+        if (value == 1) {
+            props.strobe.dmx = 32;
+        } else {
+            props.strobe.dmx = 64 + Math.floor(value * 31);
+        }
+    },
+};
+
+function getPixels(controls) {
+    return [{id: "light", label: "Light", controls}];
+}
 
 export default ModelFactory({
     label: "ADJ Mega HEX Par",
@@ -222,12 +229,20 @@ export default ModelFactory({
     type: "rgbw-light",
 
     config: [
-        {channels: 6, props: {red, green, blue, white, amber, uv}, controls},
-        {channels: 7, props: {red, green, blue, white, amber, uv, dimmer}, controls: dimmerControls},
+        {
+            channels: 6,
+            props: {red, green, blue, white, amber, uv},
+            pixels: getPixels({color: colorControl, amber: "amber", uv: "uv"}),
+        },
+        {
+            channels: 7,
+            props: {red, green, blue, white, amber, uv, dimmer},
+            pixels: getPixels({color: colorControl, amber: "amber", uv: "uv", dimmer: "dimmer"}),
+        },
         {
             channels: 8,
             props: {red, green, blue, white, amber, uv, dimmer, strobe, strobeSpeed},
-            controls: dimmerControls,
+            pixels: getPixels({color: colorControl, amber: "amber", uv: "uv", dimmer: "dimmer", strobe: Strobe}),
         },
         {
             channels: 11,
@@ -248,7 +263,7 @@ export default ModelFactory({
                 soundActiveMode,
                 speed,
             },
-            controls: dimmerControls,
+            pixels: getPixels({color: colorControl, dimmer: "dimmer", strobe: Strobe}),
         },
         {
             channels: 12,
@@ -270,7 +285,7 @@ export default ModelFactory({
                 speed,
                 dimmerCurves,
             },
-            controls: dimmerControls,
+            pixels: getPixels({color: colorControl, dimmer: "dimmer", strobe: Strobe}),
         },
     ],
 });

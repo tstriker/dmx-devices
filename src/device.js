@@ -1,19 +1,9 @@
 import {round} from "./utils.js";
 import {Prop} from "./props.js";
-import {RGBLightControl, RGBWLightControl, WLightControl} from "./controls.js";
+import {Pixel} from "./controls.js";
 
 export class Device {
-    constructor({
-        address,
-        channels,
-        label,
-        props,
-        controls,
-        render,
-        onChange,
-        resetDMX = false,
-        ...other
-    }) {
+    constructor({address, channels, label, props, pixels, render, onChange, resetDMX = false, ...other}) {
         this.address = address;
         this.channels = channels;
         this.label = label;
@@ -53,37 +43,32 @@ export class Device {
             this.props.push(prop);
         });
 
-        // XXX - will make it dynamic eventually
-        let knownTypes = [RGBLightControl, RGBWLightControl, WLightControl];
-
-        // populate controls and feed in the prop objects
-        // deep clone the object to avoid any weird sideffects down the line
-        controls = JSON.parse(JSON.stringify(controls || []));
-        this.controls = controls.map((control, idx) => {
-            control.idx = idx + 1;
-            control.order = control.order || 0;
-            let controlClass = knownTypes.find(controlClass => control.type == controlClass.type);
-            return new controlClass(control, this.props);
-        });
-
         this.pixels = [];
-        this.controls.forEach(control => {
-            this[control.name] = control;
 
-            if (["rgb-light", "rgbw-light", "w-light"].includes(control.type)) {
-                let group = control.pixelGroup || 0;
-                this.pixels[group] = this.pixels[group] || [];
-                this.pixels[group].push(control);
-            }
+        pixels = pixels.map((pixel, idx) => new Pixel(pixel, idx + 1, this.props));
+        pixels.forEach(pixel => {
+            // math the specific pixel so we can go straight to this.light8 and so on
+            this[pixel.id] = pixel;
+
+            // establish the nested groups in pixels, so that we can support two-row lights and so on
+            let group = pixel.group;
+            this.pixels[group] = this.pixels[group] || [];
+            this.pixels[group].push(pixel);
         });
 
-        // proxy anything else through; tbd
+        let controlChannels = this.pixels.map(pixel => pixel.channels).flat();
+        this.unmanagedProps = this.props.filter(prop => !controlChannels.includes(prop.channel));
+
+        // tell API consumers what features all of this device's pixels have
+        let deviceFeatures = ["strobe", "white", "amber", "uv"].filter(feature =>
+            pixels.every(pixel => feature in pixel)
+        );
+        this.features = deviceFeatures;
+
+        // proxy anything else through - this allows us to inject custom attributes on construction time
         Object.entries(other).forEach(([key, val]) => {
             this[key] = val;
         });
-
-        let controlChannels = this.controls.map(control => control.channels).flat();
-        this.unmanagedProps = this.props.filter(prop => !controlChannels.includes(prop.channel));
 
         return new Proxy(this, {
             set(target, prop, value, receiver) {

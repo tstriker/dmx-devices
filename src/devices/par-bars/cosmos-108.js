@@ -1,8 +1,8 @@
 import {ModelFactory, rangeProp} from "../../device.js";
 
 function rgb(...addresses) {
-    // generates the rgb props triplet and colors control
-    let config = {props: {}, controls: []};
+    // generates the rgb props triplet and colors pixel
+    let config = {props: {}, pixels: []};
 
     addresses.forEach((address, idx) => {
         // we want to start with 1, not 0
@@ -15,15 +15,18 @@ function rgb(...addresses) {
             [`blue${idx}`]: rangeProp({channel: address + 2, label: `Blue ${idx}`}),
         };
 
-        config.controls.push({
-            name: `light${idx}`,
-            type: "rgb-light",
+        config.pixels.push({
+            id: `light${idx}`,
             label: `Light ${idx}`,
-            order: idx,
-            props: {
-                red: `red${idx}`,
-                green: `green${idx}`,
-                blue: `blue${idx}`,
+            controls: {
+                color: {
+                    type: "rgb-light",
+                    props: {
+                        red: `red${idx}`,
+                        green: `green${idx}`,
+                        blue: `blue${idx}`,
+                    },
+                },
             },
         });
     });
@@ -53,7 +56,7 @@ let configs = [
             spotStrobe: strobe(3, "Strobe Speed"),
             ...rgb(4, 7, 10, 13).props,
         },
-        controls: [...rgb(4, 7, 10, 13).controls],
+        pixels: [...rgb(4, 7, 10, 13).pixels],
     },
 ];
 

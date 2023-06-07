@@ -36,32 +36,41 @@ let strobeSpeed = {
     ],
 };
 
-let controls = [
-    {
-        name: "light",
-        type: "rgb-light",
-        label: "Light",
-        props: {
-            red: "red",
-            green: "green",
-            blue: "blue",
-        },
+let Strobe = {
+    props: {strobe: "strobe"},
+    get(props) {
+        // strobe universally should be: 0=off, 0.01..1 = flickering faster and faster
+        let chVal = props.strobe.chVal;
+        if (chVal < 64) {
+            return 0;
+        } else if (chVal <= 95) {
+            return (chVal - 63) / 32;
+        }
     },
-];
 
-let dimmerControls = [
-    {
-        name: "light",
-        type: "rgb-light",
-        label: "Light",
-        props: {
-            red: "red",
-            green: "green",
-            blue: "blue",
-            dimmer: "dimmer",
-        },
+    set(props, value) {
+        if (value == 1) {
+            props.strobe.dmx = 32;
+        } else {
+            props.strobe.dmx = 64 + Math.floor(value * 31);
+        }
     },
-];
+};
+
+let colorControl = {
+    name: "light",
+    type: "rgb-light",
+    label: "Light",
+    props: {
+        red: "red",
+        green: "green",
+        blue: "blue",
+    },
+};
+
+function getPixels(controls) {
+    return [{id: "light", label: "Light", controls}];
+}
 
 export default ModelFactory({
     label: "ADJ Mega TRI Par",
@@ -69,16 +78,24 @@ export default ModelFactory({
     type: "rgb-light",
 
     config: [
-        {channels: 4, props: {red, green, blue, uv}, controls},
+        {channels: 4, props: {red, green, blue, uv}, pixels: getPixels({color: colorControl, uv: "uv"})},
         {
             channels: 5,
             props: {red, green, blue, uv, dimmer: rangeProp({channel: 5, label: "Dimmer", defaultVal: 255})},
-            controls: dimmerControls,
+            pixels: getPixels({color: colorControl, dimmer: "dimmer", uv: "uv"}),
         },
         {
             channels: 6,
-            props: {red, green, blue, uv, strobe, strobeSpeed, dimmer: rangeProp({channel: 6, label: "Dimmer", defaultVal: 255})},
-            controls: dimmerControls,
+            props: {
+                red,
+                green,
+                blue,
+                uv,
+                strobe,
+                strobeSpeed,
+                dimmer: rangeProp({channel: 6, label: "Dimmer", defaultVal: 255}),
+            },
+            pixels: getPixels({color: colorControl, dimmer: "dimmer", uv: "uv", strobe: Strobe}),
         },
     ],
 });

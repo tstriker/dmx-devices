@@ -49,7 +49,7 @@ let Strobe = {
     },
 
     set(props, value) {
-        if (value == 1) {
+        if (value == 0) {
             props.strobe.dmx = 32;
         } else {
             props.strobe.dmx = 64 + Math.floor(value * 31);

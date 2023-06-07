@@ -38,7 +38,6 @@ export default ModelFactory({
                     {chVal: 0, val: 0},
                     {chVal: 255, val: 270},
                 ],
-                defaultVal: 127,
             },
 
             tiltFine: {
@@ -49,7 +48,6 @@ export default ModelFactory({
                     {chVal: 0, val: 0},
                     {chVal: 255, val: 1.3},
                 ],
-                defaultVal: 127,
             },
 
             speed: {
@@ -62,7 +60,7 @@ export default ModelFactory({
             },
 
             washDimmer: rangeProp({channel: 6, label: "Wash Dimmer", defaultVal: 255}),
-            spot: rangeProp({channel: 7, label: "Spot Light", defaultVal: 255}),
+            spot: rangeProp({channel: 7, label: "Spot Light", defaultVal: 0}),
             strobe: rangeProp({channel: 8, label: "Strobe", defaultVal: 0}),
             colorWheel: {
                 channel: 9,
@@ -95,13 +93,13 @@ export default ModelFactory({
                 label: "Gobo",
                 modes: [
                     {chVal: 0, val: "Off"},
-                    {chVal: 16, val: "Flower"},
-                    {chVal: 32, val: "Bubbles"},
-                    {chVal: 48, val: "Fishes"},
-                    {chVal: 64, val: "Vortex"},
-                    {chVal: 80, val: "Triangles"},
-                    {chVal: 96, val: "Rosebud"},
-                    {chVal: 112, val: "Swirl"},
+                    {chVal: 16, val: "Fog"},
+                    {chVal: 32, val: "Vortex"},
+                    {chVal: 48, val: "Bubbles"},
+                    {chVal: 64, val: "Angular"},
+                    {chVal: 80, val: "Tri-dots"},
+                    {chVal: 96, val: "Aliens"},
+                    {chVal: 112, val: "Focus Ring"},
                     {chVal: 128, val: "Gobos C-Clockwise"},
 
                     {chVal: 190, val: "Gobos C-Clockwise"},

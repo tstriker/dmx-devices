@@ -56,7 +56,10 @@ export class Device {
             this.pixels[group].push(pixel);
         });
 
-        let controlChannels = this.pixels.map(pixel => pixel.channels).flat();
+        let controlChannels = this.pixels
+            .flat()
+            .map(pixel => pixel.channels)
+            .flat();
         this.unmanagedProps = this.props.filter(prop => !controlChannels.includes(prop.channel));
 
         // tell API consumers what features all of this device's pixels have

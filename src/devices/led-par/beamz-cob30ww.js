@@ -6,7 +6,7 @@ export default ModelFactory({
     type: "w-light",
     config: {
         props: {
-            dimmer: rangeProp({channel: 1, label: "Dimmer", defaultVal: 255}),
+            dimmer: rangeProp({channel: 1, label: "Dimmer", defaultDMXVal: 255}),
             strobe: {
                 channel: 2,
                 label: "Strobe",
@@ -15,7 +15,7 @@ export default ModelFactory({
                     {chVal: 10, val: 0.01},
                     {chVal: 255, val: 1},
                 ],
-                defaultVal: 0,
+                defaultDMXVal: 0,
             },
             mode: {
                 channel: 3,
@@ -30,7 +30,7 @@ export default ModelFactory({
                     {chVal: 160, val: "sound_2", label: "Equalizer Dim"},
                     {chVal: 190, val: "sound_3", label: "Equalizer Pulse 2"},
                 ],
-                defaultVal: 10,
+                defaultDMXVal: 10,
             },
 
             modeRate: {

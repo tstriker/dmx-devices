@@ -3,7 +3,7 @@ import {Prop} from "./props.js";
 import {Pixel} from "./controls.js";
 
 export class Device {
-    constructor({address, channels, label, props, pixels, render, onChange, resetDMX = false, ...other}) {
+    constructor({address, channels, label, props, pixels, render, onChange, resetDMX = true, ...other}) {
         this.address = address;
         this.channels = channels;
         this.label = label;
@@ -36,7 +36,7 @@ export class Device {
                 // avoid if you are not controlling all aspects of the device (e.g. when you just want to change
                 // a few channels and don't want to touch the rest)
                 if (!prop.modifies && prop.channel >= 1 && prop.channel <= 512) {
-                    this.dmx[propChannel] = prop.defaultVal || 0;
+                    this.dmx[propChannel] = prop.defaultDMXVal || 0;
                 }
             }
             this[key] = prop;
@@ -63,7 +63,7 @@ export class Device {
         this.unmanagedProps = this.props.filter(prop => !controlChannels.includes(prop.channel));
 
         // tell API consumers what features all of this device's pixels have
-        let deviceFeatures = ["strobe", "white", "amber", "uv"].filter(feature =>
+        let deviceFeatures = ["dimmer", "strobe", "white", "amber", "uv"].filter(feature =>
             pixels.every(pixel => feature in pixel)
         );
         this.features = deviceFeatures;
@@ -172,14 +172,14 @@ export function ModelFactory({config, ...modelInfo}) {
     return Model;
 }
 
-export function rangeProp({channel, label, defaultVal = 0}) {
+export function rangeProp({channel, label, defaultDMXVal = 0}) {
     return {
         channel,
         label,
         stops: [
             {chVal: 0, val: 0},
-            {chVal: 255, val: 255},
+            {chVal: 255, val: 1},
         ],
-        defaultVal,
+        defaultDMXVal,
     };
 }

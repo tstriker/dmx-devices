@@ -59,7 +59,7 @@ let configs = [];
         let colorAddress = (idx - 1) * 7;
         config.props = {
             ...config.props,
-            [`dimmer${idx}`]: rangeProp({channel: colorAddress + 1, label: `Dimmer ${idx}`, defaultVal: 255}),
+            [`dimmer${idx}`]: rangeProp({channel: colorAddress + 1, label: `Dimmer ${idx}`, defaultDMXVal: 255}),
 
             [`strobe${idx}`]: {
                 channel: colorAddress + 2,
@@ -69,7 +69,7 @@ let configs = [];
                     {chVal: 1, val: 0.001},
                     {chVal: 255, val: 1},
                 ],
-                defaultVal: 0,
+                defaultDMXVal: 0,
             },
             [`red${idx}`]: rangeProp({channel: colorAddress + 3, label: `Red ${idx}`}),
             [`green${idx}`]: rangeProp({channel: colorAddress + 4, label: `Green ${idx}`}),

@@ -17,7 +17,7 @@ let strobe = {
         {chVal: 128, val: "pulse", label: "Pulse"},
         {chVal: 192, val: "random", label: "Random"},
     ],
-    defaultVal: 32,
+    defaultDMXVal: 32,
 };
 
 let strobeSpeed = {
@@ -81,7 +81,7 @@ export default ModelFactory({
         {channels: 4, props: {red, green, blue, uv}, pixels: getPixels({color: colorControl, uv: "uv"})},
         {
             channels: 5,
-            props: {red, green, blue, uv, dimmer: rangeProp({channel: 5, label: "Dimmer", defaultVal: 255})},
+            props: {red, green, blue, uv, dimmer: rangeProp({channel: 5, label: "Dimmer", defaultDMXVal: 255})},
             pixels: getPixels({color: colorControl, dimmer: "dimmer", uv: "uv"}),
         },
         {
@@ -93,7 +93,7 @@ export default ModelFactory({
                 uv,
                 strobe,
                 strobeSpeed,
-                dimmer: rangeProp({channel: 6, label: "Dimmer", defaultVal: 255}),
+                dimmer: rangeProp({channel: 6, label: "Dimmer", defaultDMXVal: 255}),
             },
             pixels: getPixels({color: colorControl, dimmer: "dimmer", uv: "uv", strobe: Strobe}),
         },

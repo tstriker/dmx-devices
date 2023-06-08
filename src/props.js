@@ -1,7 +1,7 @@
 import {range} from "./utils.js";
 
 export class Prop {
-    constructor({name, channel, label, stops, modes, modifies, condition, defaultVal, onPropChange, ...other}) {
+    constructor({name, channel, label, stops, modes, modifies, condition, defaultDMXVal, onPropChange, ...other}) {
         this.name = name;
         this.channel = channel;
         this.label = label;
@@ -26,8 +26,8 @@ export class Prop {
         this.modeMap = calcModeMap({stops, modes});
         this.modeMapEntries = Object.entries(this.modeMap);
 
-        this.defaultVal = defaultVal;
-        this.chVal = defaultVal || Object.values(this.modeMap)[0].cur.chVal;
+        this.defaultDMXVal = defaultDMXVal;
+        this.chVal = defaultDMXVal || Object.values(this.modeMap)[0].cur.chVal;
         this.cur = this.modeMap[this.chVal].cur;
         this.interpolated = this.modeMap[this.chVal].val;
         this.onPropChange = onPropChange;

@@ -66,7 +66,7 @@ let pixelControls = {
         },
         set(props, value) {
             let [r, g, b, a] = chroma(value).rgba();
-            [props.red.val, props.green.val, props.blue.val] = [
+            [props.red.dmx, props.green.dmx, props.blue.dmx] = [
                 Math.round(r * a),
                 Math.round(g * a),
                 Math.round(b * a),
@@ -83,7 +83,7 @@ let pixelControls = {
             let [r, g, b, a] = chroma(value).rgba();
             let w = colorToRGBW(value)[3];
 
-            [props.red.val, props.green.val, props.blue.val, props.white.val] = [
+            [props.red.dmx, props.green.dmx, props.blue.dmx, props.white.dmx] = [
                 Math.round(r * a),
                 Math.round(g * a),
                 Math.round(b * a),
@@ -100,7 +100,7 @@ let pixelControls = {
             let [r, g, b, a] = chroma(value).rgba();
             let w = Math.max(r, g, b);
 
-            props.white.val = Math.round(w * a);
+            props.white.dmx = Math.round(w * a);
         },
     },
 };

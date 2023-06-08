@@ -59,9 +59,9 @@ export default ModelFactory({
                 ],
             },
 
-            washDimmer: rangeProp({channel: 6, label: "Wash Dimmer", defaultVal: 255}),
-            spot: rangeProp({channel: 7, label: "Spot Light", defaultVal: 0}),
-            strobe: rangeProp({channel: 8, label: "Strobe", defaultVal: 0}),
+            washDimmer: rangeProp({channel: 6, label: "Wash Dimmer", defaultDMXVal: 255}),
+            spot: rangeProp({channel: 7, label: "Spot Light", defaultDMXVal: 0}),
+            strobe: rangeProp({channel: 8, label: "Strobe", defaultDMXVal: 0}),
             colorWheel: {
                 channel: 9,
                 label: "Color Wheel",

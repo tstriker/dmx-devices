@@ -1,5 +1,4 @@
 import {ModelFactory, rangeProp} from "../../device.js";
-import {Pixel} from "../../controls.js";
 
 let red = rangeProp({channel: 1, label: "Red"});
 let green = rangeProp({channel: 2, label: "Green"});
@@ -7,7 +6,7 @@ let blue = rangeProp({channel: 3, label: "Blue"});
 let white = rangeProp({channel: 4, label: "White"});
 let amber = rangeProp({channel: 5, label: "Amber"});
 let uv = rangeProp({channel: 6, label: "Ultraviolet"});
-let dimmer = rangeProp({channel: 7, label: "Dimmer", defaultVal: 255});
+let dimmer = rangeProp({channel: 7, label: "Dimmer", defaultDMXVal: 255});
 
 function between(val, bounds) {
     return bounds.some(([lower, upper]) => val >= lower && val <= upper);
@@ -22,7 +21,7 @@ let strobe = {
         {chVal: 128, val: "pulse", label: "Pulse"},
         {chVal: 192, val: "random", label: "Random"},
     ],
-    defaultVal: 32,
+    defaultDMXVal: 32,
 };
 
 let strobeSpeed = {

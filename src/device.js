@@ -80,7 +80,6 @@ export class Device {
 
                     // update our own dmx
                     target.dmx[target[prop].channel] = target[prop].dmx;
-                    target._notify();
                     return true;
                 } else if (prop == "pan" && target.deviceOptions?.swivelFine) {
                     let coarseBitDegs = target.panCoarse.degrees / 255;

@@ -56,6 +56,7 @@ export class Pixel {
         });
 
         this.channels = [...usedChannels];
+        this.features = ["color", "dimmer", "strobe", "white", "amber", "uv"].filter(feature => feature in this);
     }
 }
 

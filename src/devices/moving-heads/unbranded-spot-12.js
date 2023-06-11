@@ -1,7 +1,7 @@
 import {ModelFactory, rangeProp} from "../../device.js";
 
 export default ModelFactory({
-    label: "Unbranded moving head 12ch",
+    model: "Unbranded moving head 12ch",
     type: "moving head",
     config: {
         props: {

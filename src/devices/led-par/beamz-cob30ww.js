@@ -1,7 +1,7 @@
 import {ModelFactory, rangeProp} from "../../device.js";
 
 export default ModelFactory({
-    label: "Beamz COB30WW",
+    model: "Beamz COB30WW",
     widthCm: 20,
     type: "w-light",
     config: {

@@ -2,7 +2,7 @@ import {ModelFactory} from "../../device.js";
 
 export default ModelFactory({
     company: "Eurolite",
-    label: "Eurolite SD-201",
+    model: "Eurolite SD-201",
     type: "bubble-machine",
     config: {
         props: {

@@ -5,7 +5,7 @@ let green = rangeProp({channel: 2, label: "Green"});
 let blue = rangeProp({channel: 3, label: "Blue"});
 
 export default ModelFactory({
-    label: "Chauvet Slim PAR 56",
+    model: "Chauvet Slim PAR 56",
     widthCm: 20,
     type: "rgb-light",
 

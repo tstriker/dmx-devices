@@ -1,7 +1,7 @@
 import {ModelFactory, rangeProp} from "../../device.js";
 
 export default ModelFactory({
-    label: "RGB Par",
+    model: "RGB Par",
     widthCm: 20,
     type: "rgb-light",
     config: [

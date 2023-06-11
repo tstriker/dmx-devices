@@ -1,7 +1,7 @@
 import {ModelFactory} from "../../device.js";
 
 export default ModelFactory({
-    label: "Shark Spot One - 14",
+    model: "Shark Spot One - 14",
     type: "moving head",
     config: {
         props: {

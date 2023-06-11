@@ -1,7 +1,7 @@
 import {ModelFactory} from "../../device.js";
 
 export default ModelFactory({
-    label: "F1600 Pro Faze",
+    model: "F1600 Pro Faze",
     config: {
         props: {
             haze: {

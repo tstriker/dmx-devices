@@ -101,7 +101,7 @@ let configs = [];
 });
 
 export default ModelFactory({
-    label: `Beamz LCB 244`,
+    model: `Beamz LCB 244`,
     widthCm: 110,
     type: "rgbw-bar",
     config: configs,

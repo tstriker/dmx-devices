@@ -61,7 +61,7 @@ let configs = [
 ];
 
 export default ModelFactory({
-    label: `Cosmos 108`,
+    model: `Cosmos 108`,
     widthCm: 60,
     type: "par-bar",
     config: configs,

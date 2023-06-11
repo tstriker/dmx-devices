@@ -73,7 +73,7 @@ function getPixels(controls) {
 }
 
 export default ModelFactory({
-    label: "ADJ Mega TRI Par",
+    model: "ADJ Mega TRI Par",
     widthCm: 20,
     type: "rgb-light",
 

@@ -1,14 +1,14 @@
 import {ModelFactory, rangeProp} from "../../device.js";
 
 export default ModelFactory({
-    label: "Beamz MHL75",
+    model: "Beamz MHL75",
     type: "moving head",
     config: {
         props: {
-            panCoarse: {
+            pan: {
                 channel: 1,
                 degrees: 540,
-                label: "Pan Degrees",
+                label: "Pan",
                 stops: [
                     {chVal: 0, val: 0},
                     // {chVal: 42, val: 90},
@@ -22,28 +22,26 @@ export default ModelFactory({
 
             panFine: {
                 channel: 2,
-                degrees: 3.6,
-                label: "Pan+",
+                label: "Pan Fine",
                 stops: [
                     {chVal: 0, val: 0},
                     {chVal: 255, val: 3.6},
                 ],
             },
 
-            tiltCoarse: {
+            tilt: {
                 channel: 3,
-                degrees: 270,
-                label: "Tilt Degrees",
+                degrees: 180,
+                label: "Tilt",
                 stops: [
                     {chVal: 0, val: 0},
-                    {chVal: 255, val: 270},
+                    {chVal: 255, val: 180},
                 ],
             },
 
             tiltFine: {
                 channel: 4,
-                degrees: 1.3,
-                label: "Tilt+",
+                label: "Tilt Fine",
                 stops: [
                     {chVal: 0, val: 0},
                     {chVal: 255, val: 1.3},
@@ -59,7 +57,7 @@ export default ModelFactory({
                 ],
             },
 
-            washDimmer: rangeProp({channel: 6, label: "Wash Dimmer", defaultDMXVal: 255}),
+            dimmer: rangeProp({channel: 6, label: "Dimmer", defaultDMXVal: 255}),
             spot: rangeProp({channel: 7, label: "Spot Light", defaultDMXVal: 0}),
             strobe: rangeProp({channel: 8, label: "Strobe", defaultDMXVal: 0}),
             colorWheel: {
@@ -119,6 +117,7 @@ export default ModelFactory({
                 id: "light",
                 label: "Light",
                 controls: {
+                    dimmer: "dimmer",
                     color: {
                         type: "rgbw-light",
                         props: {
@@ -128,14 +127,30 @@ export default ModelFactory({
                             white: "washWhite",
                         },
                     },
-                },
-                dimmer: "washDimmer",
-                strobe: "washStrobe",
-                gobo: "gobo",
-                colorWheel: "colorWheel",
+                    washStrobe: "washStrobe",
 
-                tilt: "tilt",
-                pan: "pan",
+                    spot: "spot",
+                    gobo: "gobo",
+                    colorWheel: "colorWheel",
+                    strobe: "strobe",
+                    pan: {
+                        type: "degrees",
+                        degrees: 540,
+                        props: {
+                            coarse: "pan",
+                            fine: "panFine",
+                        },
+                    },
+                    tilt: {
+                        type: "degrees",
+                        degrees: 180,
+                        props: {
+                            coarse: "tilt",
+                            fine: "tiltFine",
+                        },
+                    },
+                    speed: "speed",
+                },
             },
         ],
     },

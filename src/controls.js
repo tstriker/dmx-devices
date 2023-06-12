@@ -122,27 +122,20 @@ let pixelControls = {
         constructor(config, props) {
             super(config, props);
 
-            // how many degrees to we fit in the coarse math
-            // e.g. 1 DMX channel value if it's 540 degrees total would be 540/255 = 2.11
-            // the fine control then takes care of the res
-            this.degPerDMX = this.coarse.degrees / 255;
+            // two channel rotation means we have 255 * 255 values to express all of degrees
+            this.dmxPerDeg = 65025 / this.coarse.degrees;
         }
 
         get() {
             // convert channel DMX vals to degrees
-            let degrees = this.coarse.dmx * this.degPerDMX;
-            degrees += (this.fine.dmx / 255) * this.degPerDMX;
-            return degrees;
+            return (this.coarse.dmx * 255 + this.fine.dmx) / this.dmxPerDeg;
         }
 
         set(degrees) {
-            degrees = degrees % this.coarse.degrees;
+            let dmx = Math.round(degrees * this.dmxPerDeg);
 
-            let coarseDMX = Math.floor(degrees / this.degPerDMX);
-            this.coarse.dmx = coarseDMX;
-
-            let fineDegrees = Math.max(degrees - coarseDMX * this.degPerDMX, 0);
-            this.fine.dmx = Math.floor(fineDegrees * (255 / this.degPerDMX));
+            this.coarse.dmx = Math.floor(dmx / 255);
+            this.fine.dmx = dmx % 255;
         }
     },
 };

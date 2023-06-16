@@ -66,8 +66,8 @@ export class Device {
         this.unmanagedProps = this.props.filter(prop => !controlChannels.includes(prop.channel));
 
         // tell API consumers what features all of this device's pixels have
-        let deviceFeatures = ["dimmer", "strobe", "white", "amber", "uv", "pan", "tilt"].filter(feature =>
-            pixels.every(pixel => feature in pixel)
+        let deviceFeatures = ["dimmer", "strobe", "white", "amber", "uv", "pan", "tilt"].filter(
+            feature => feature in this || pixels.every(pixel => feature in pixel)
         );
         this.features = deviceFeatures;
 
@@ -149,25 +149,18 @@ export class Device {
 export function ModelFactory({config, ...modelInfo}) {
     // ended up using a func instead of subclassing, as the constructor gets fired too early for JS classes:
     // before the props have actually initialized, and we need it to run after that
-
     if (!Array.isArray(config)) {
         config = [config];
     }
 
-    let countChannels = config => {
-        // where we don't have channel options provided, we just count them ourselves based on defined props
-        return config.channels || new Set(Object.values(config.props).map(prop => prop.channel)).size;
-    };
-
-    let byChannelCount = Object.fromEntries(config.map(c => [countChannels(c), c]));
+    let byConfigName = Object.fromEntries(config.map(c => [c.name, c]));
 
     class Model {
-        static channelOptions = config.map(c => countChannels(c));
         static configNames = config.map(c => c.name);
 
-        constructor(address, {channels, ...options}) {
-            let channelConfig = byChannelCount[channels];
-            return new Device({address, ...modelInfo, ...channelConfig, ...options, channels});
+        constructor(address, {config, ...options}) {
+            let channelConfig = byConfigName[config];
+            return new Device({address, ...modelInfo, ...channelConfig, ...options});
         }
     }
     Object.entries(modelInfo).forEach(([field, val]) => {

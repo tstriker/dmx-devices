@@ -20,7 +20,7 @@ import {BeamzLCB244} from "dmx-devices";
 
 // init at address 1 in 58 channel mode (this specific bar supports 9, 16,
 // 30, and 58 channel modes)
-let bar = new BeamzLCB244(1, 58);
+let bar = new BeamzLCB244(1, "58ch");
 
 // set color to pink. the reason why the property is called `light1` is
 // because in 58 channel mode you get access to 8 individual light groups

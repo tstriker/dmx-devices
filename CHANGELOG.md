@@ -1,3 +1,10 @@
+# 0.3.0
+
+* Switch from identifying configs by channel count to a
+  symbolic name
+* Add repeatProps and repeatPixels funcs to utils that
+  allow packing pixels for pixel and par bars
+
 # 0.2.0
 
 * Switch the API over from an amalgamation of controls to

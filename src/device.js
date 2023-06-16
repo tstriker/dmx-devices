@@ -163,6 +163,8 @@ export function ModelFactory({config, ...modelInfo}) {
 
     class Model {
         static channelOptions = config.map(c => countChannels(c));
+        static configNames = config.map(c => c.name);
+
         constructor(address, {channels, ...options}) {
             let channelConfig = byChannelCount[channels];
             return new Device({address, ...modelInfo, ...channelConfig, ...options, channels});

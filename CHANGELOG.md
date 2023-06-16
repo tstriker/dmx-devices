@@ -1,3 +1,8 @@
+# 0.3.1
+
+* Add an easy way to access all config names via a static prop
+  on the fixture class
+
 # 0.3.0
 
 * Switch from identifying configs by channel count to a

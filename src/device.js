@@ -48,7 +48,7 @@ export class Device {
 
         this.pixels = [];
 
-        pixels = pixels.map((pixel, idx) => new Pixel(pixel, idx + 1, this.props));
+        pixels = (pixels || []).map((pixel, idx) => new Pixel(pixel, idx + 1, this.props));
         pixels.forEach(pixel => {
             // math the specific pixel so we can go straight to this.light8 and so on
             this[pixel.id] = pixel;

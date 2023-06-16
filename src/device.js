@@ -18,11 +18,14 @@ export class Device {
         this.props = [];
 
         // populate props
-        Object.entries(props).forEach(([key, config]) => {
+        Object.entries(props).forEach(([key, config], idx) => {
             // init all the props
             // and if we are modifying another prop, pass in the reference so we can work with that
             let modifies = config.modifies ? this[config.modifies] : null;
-            let propChannel = address + config.channel - 1;
+
+            // channel can be explicitly specified or will be assumed from the packing order
+            let propChannel = config.channel || idx + 1;
+            propChannel = address + propChannel - 1;
             let prop = new Prop({
                 ...config,
                 name: key,
@@ -170,16 +173,4 @@ export function ModelFactory({config, ...modelInfo}) {
     });
 
     return Model;
-}
-
-export function rangeProp({channel, label, defaultDMXVal = 0}) {
-    return {
-        channel,
-        label,
-        stops: [
-            {chVal: 0, val: 0},
-            {chVal: 255, val: 1},
-        ],
-        defaultDMXVal,
-    };
 }

@@ -1,4 +1,5 @@
-import {ModelFactory, rangeProp} from "../../device.js";
+import {ModelFactory} from "../../device.js";
+import {rangeProp} from "../../utils.js";
 
 export default ModelFactory({
     model: "RGB Par",
@@ -6,7 +7,7 @@ export default ModelFactory({
     type: "rgb-light",
     config: [
         {
-            channels: 3,
+            name: "3ch",
             props: {
                 red: rangeProp({channel: 1, label: "Red"}),
                 green: rangeProp({channel: 2, label: "Red"}),
@@ -30,7 +31,7 @@ export default ModelFactory({
             ],
         },
         {
-            channels: 6,
+            name: "6ch",
             props: {
                 dimmer: rangeProp({channel: 1, label: "Dimmer", defaultDMXVal: 255}),
                 red: rangeProp({channel: 2, label: "Red"}),

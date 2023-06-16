@@ -1,4 +1,6 @@
-import {ModelFactory, rangeProp} from "../../device.js";
+import {ModelFactory} from "../../device.js";
+import {rangeProp} from "../../utils.js";
+
 function between(val, bounds) {
     return bounds.some(([lower, upper]) => val >= lower && val <= upper);
 }
@@ -78,14 +80,18 @@ export default ModelFactory({
     type: "rgb-light",
 
     config: [
-        {channels: 4, props: {red, green, blue, uv}, pixels: getPixels({color: colorControl, uv: "uv"})},
         {
-            channels: 5,
+            name: "4ch",
+            props: {red, green, blue, uv},
+            pixels: getPixels({color: colorControl, uv: "uv"}),
+        },
+        {
+            name: "5ch",
             props: {red, green, blue, uv, dimmer: rangeProp({channel: 5, label: "Dimmer", defaultDMXVal: 255})},
             pixels: getPixels({color: colorControl, dimmer: "dimmer", uv: "uv"}),
         },
         {
-            channels: 6,
+            name: "6ch",
             props: {
                 red,
                 green,

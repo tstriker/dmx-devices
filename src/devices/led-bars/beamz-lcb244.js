@@ -1,5 +1,5 @@
-import {ModelFactory, rangeProp} from "../../device.js";
-import {Pixel} from "../../controls.js";
+import {ModelFactory} from "../../device.js";
+import {rangeProp} from "../../utils.js";
 
 let configs = [];
 

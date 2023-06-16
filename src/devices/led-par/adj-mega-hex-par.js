@@ -1,4 +1,5 @@
-import {ModelFactory, rangeProp} from "../../device.js";
+import {ModelFactory} from "../../device.js";
+import {rangeProp} from "../../utils.js";
 import {Control} from "../../controls.js";
 
 let red = rangeProp({channel: 1, label: "Red"});
@@ -229,17 +230,17 @@ export default ModelFactory({
 
     config: [
         {
-            channels: 6,
+            name: "6ch",
             props: {red, green, blue, white, amber, uv},
             pixels: getPixels({color: colorControl, amber: "amber", uv: "uv"}),
         },
         {
-            channels: 7,
+            name: "7ch",
             props: {red, green, blue, white, amber, uv, dimmer},
             pixels: getPixels({color: colorControl, amber: "amber", uv: "uv", dimmer: "dimmer"}),
         },
         {
-            channels: 8,
+            name: "8ch",
             props: {red, green, blue, white, amber, uv, dimmer, strobe, strobeSpeed},
             pixels: getPixels({
                 color: colorControl,
@@ -250,7 +251,7 @@ export default ModelFactory({
             }),
         },
         {
-            channels: 11,
+            name: "11ch",
             props: {
                 red,
                 green,
@@ -275,7 +276,7 @@ export default ModelFactory({
             }),
         },
         {
-            channels: 12,
+            name: "12ch",
             props: {
                 red,
                 green,

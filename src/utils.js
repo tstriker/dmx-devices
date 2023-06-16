@@ -61,3 +61,58 @@ export function colorToRGBW(color) {
 
     return [r, g, b, w];
 }
+
+export function rangeProp({channel, label, defaultDMXVal = 0}) {
+    return {
+        channel,
+        label,
+        stops: [
+            {chVal: 0, val: 0},
+            {chVal: 255, val: 1},
+        ],
+        defaultDMXVal,
+    };
+}
+
+export function repeatProps(fromChannel, repetitions, props) {
+    let res = {};
+
+    let channel = fromChannel;
+    for (let i = 1; i <= repetitions; i += 1) {
+        Object.entries(props).forEach(([propName, config]) => {
+            propName = propName.replace("#", i);
+            res[propName] = {...config, channel};
+            channel += 1;
+        });
+    }
+    return res;
+}
+
+export function repeatPixels(repetitions, pixelConfig) {
+    let res = [];
+    for (let i = 1; i <= repetitions; i += 1) {
+        let pixel = {
+            id: pixelConfig.id.replace("#", i),
+            label: pixelConfig.label.replace("#", i),
+            group: (pixelConfig.group instanceof Function ? pixelConfig.group(i) : pixelConfig.group) || 0,
+            controls: {},
+        };
+        Object.entries(pixelConfig.controls).forEach(([control, config]) => {
+            if (typeof config == "string") {
+                // direct mapping
+                pixel.controls[control] = config.replace("#", i);
+            } else if (config.props) {
+                // a type of sorts, this one will come with props
+                pixel.controls[control] = {
+                    ...config,
+                    props: Object.fromEntries(
+                        Object.entries(config.props).map(([controlProp, prop]) => [controlProp, prop.replace("#", i)])
+                    ),
+                };
+            }
+        });
+
+        res.push(pixel);
+    }
+    return res;
+}

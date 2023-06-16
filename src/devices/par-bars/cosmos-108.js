@@ -1,4 +1,5 @@
-import {ModelFactory, rangeProp} from "../../device.js";
+import {ModelFactory} from "../../device.js";
+import {rangeProp} from "../../utils.js";
 
 function rgb(...addresses) {
     // generates the rgb props triplet and colors pixel
@@ -46,23 +47,21 @@ function strobe(channel, label) {
     };
 }
 
-let configs = [
-    {
-        channels: 15,
-        lights: 4,
-        props: {
-            mode: rangeProp({channel: 1, label: "Mode", defaultDMXVal: 0}),
-            dimmer: rangeProp({channel: 2, label: "Dimmer", defaultDMXVal: 255}),
-            spotStrobe: strobe(3, "Strobe Speed"),
-            ...rgb(4, 7, 10, 13).props,
-        },
-        pixels: [...rgb(4, 7, 10, 13).pixels],
-    },
-];
-
 export default ModelFactory({
     model: `Cosmos 108`,
     widthCm: 60,
     type: "par-bar",
-    config: configs,
+    config: [
+        {
+            name: "15ch",
+            lights: 4,
+            props: {
+                mode: rangeProp({channel: 1, label: "Mode", defaultDMXVal: 0}),
+                dimmer: rangeProp({channel: 2, label: "Dimmer", defaultDMXVal: 255}),
+                spotStrobe: strobe(3, "Strobe Speed"),
+                ...rgb(4, 7, 10, 13).props,
+            },
+            pixels: [...rgb(4, 7, 10, 13).pixels],
+        },
+    ],
 });

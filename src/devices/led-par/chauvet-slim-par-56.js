@@ -1,4 +1,5 @@
-import {ModelFactory, rangeProp} from "../../device.js";
+import {ModelFactory} from "../../device.js";
+import {rangeProp} from "../../utils.js";
 
 let red = rangeProp({channel: 1, label: "Red"});
 let green = rangeProp({channel: 2, label: "Green"});
@@ -11,7 +12,7 @@ export default ModelFactory({
 
     config: [
         {
-            channels: 3,
+            name: "3ch",
             props: {red, green, blue},
             pixels: [
                 {
@@ -31,7 +32,7 @@ export default ModelFactory({
             ],
         },
         {
-            channels: 7,
+            name: "7ch",
             props: {
                 red,
                 green,

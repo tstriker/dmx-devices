@@ -14,13 +14,15 @@ let red = rangeProp({label: "Red"});
 let green = rangeProp({label: "Green"});
 let blue = rangeProp({label: "Blue"});
 
+// the spectrapix batten is exactly same as the beamz 224, except they put the strobe in 53 channel mode at the start
+// not in the end (makes way more sense)
 export default ModelFactory({
-    model: "Beamz LCB 224",
+    model: "Equinox SpectraPix Batten",
     widthCm: 110,
     type: "two-row-bar",
     config: [
         {
-            name: "3ch",
+            name: "3ch 2",
             lights: 1,
             props: {red, green, blue},
             pixels: [
@@ -65,6 +67,30 @@ export default ModelFactory({
         },
 
         {
+            name: "24ch",
+            lights: 8,
+            props: repeatProps(1, 8, {"red#": red, "green#": green, "blue#": blue}),
+            pixels: repeatPixels(8, {
+                id: "light#",
+                label: "Light #",
+                group: idx => (idx <= 8 ? 0 : 1),
+
+                controls: {
+                    dimmer: "dimmer#",
+                    strobe: "strobe#",
+                    color: {
+                        type: "rgb-light",
+                        props: {
+                            red: "red#",
+                            green: "green#",
+                            blue: "blue#",
+                        },
+                    },
+                },
+            }),
+        },
+
+        {
             name: "48ch",
             lights: 16,
 
@@ -94,8 +120,8 @@ export default ModelFactory({
             lights: 16,
             props: {
                 dimmer,
+                strobe,
                 ...repeatProps(1, 16, {"red#": red, "green#": green, "blue#": blue}),
-                strobe: {...strobe, channel: 53},
             },
             pixels: repeatPixels(16, {
                 id: "light#",

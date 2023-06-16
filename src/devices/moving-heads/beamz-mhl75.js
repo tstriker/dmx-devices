@@ -1,4 +1,5 @@
-import {ModelFactory, rangeProp} from "../../device.js";
+import {ModelFactory} from "../../device.js";
+import {rangeProp} from "../../utils.js";
 
 export default ModelFactory({
     model: "Beamz MHL75",

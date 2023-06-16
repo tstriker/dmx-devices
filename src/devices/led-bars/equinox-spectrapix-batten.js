@@ -73,8 +73,6 @@ export default ModelFactory({
             pixels: repeatPixels(8, {
                 id: "light#",
                 label: "Light #",
-                group: idx => (idx <= 8 ? 0 : 1),
-
                 controls: {
                     dimmer: "dimmer#",
                     strobe: "strobe#",
@@ -99,7 +97,6 @@ export default ModelFactory({
                 id: "light#",
                 label: "Light #",
                 group: idx => (idx <= 8 ? 0 : 1),
-
                 controls: {
                     dimmer: "dimmer#",
                     strobe: "strobe#",
@@ -121,13 +118,12 @@ export default ModelFactory({
             props: {
                 dimmer,
                 strobe,
-                ...repeatProps(1, 16, {"red#": red, "green#": green, "blue#": blue}),
+                ...repeatProps(16, {"red#": red, "green#": green, "blue#": blue}),
             },
             pixels: repeatPixels(16, {
                 id: "light#",
                 label: "Light #",
                 group: idx => (idx <= 8 ? 0 : 1),
-
                 controls: {
                     dimmer: "dimmer#",
                     strobe: "strobe#",

@@ -66,7 +66,7 @@ export class Device {
         this.unmanagedProps = this.props.filter(prop => !controlChannels.includes(prop.channel));
 
         // tell API consumers what features all of this device's pixels have
-        let deviceFeatures = ["dimmer", "strobe", "white", "amber", "uv", "pan", "tilt"].filter(
+        let deviceFeatures = ["color", "dimmer", "strobe", "white", "amber", "uv", "pan", "tilt"].filter(
             feature => feature in this || pixels.every(pixel => feature in pixel)
         );
         this.features = deviceFeatures;

@@ -74,15 +74,18 @@ export function rangeProp({channel, label, defaultDMXVal = 0}) {
     };
 }
 
-export function repeatProps(fromChannel, repetitions, props) {
+export function repeatProps(repetitions, props, fromChannel) {
     let res = {};
 
     let channel = fromChannel;
     for (let i = 1; i <= repetitions; i += 1) {
         Object.entries(props).forEach(([propName, config]) => {
             propName = propName.replace("#", i);
-            res[propName] = {...config, channel};
-            channel += 1;
+            res[propName] = {...config};
+            if (channel) {
+                res.channel = channel;
+                channel += 1;
+            }
         });
     }
     return res;

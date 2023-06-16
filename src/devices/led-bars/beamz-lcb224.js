@@ -67,16 +67,12 @@ export default ModelFactory({
         {
             name: "48ch",
             lights: 16,
-
-            props: repeatProps(1, 16, {"red#": red, "green#": green, "blue#": blue}),
+            props: repeatProps(16, {"red#": red, "green#": green, "blue#": blue}),
             pixels: repeatPixels(16, {
                 id: "light#",
                 label: "Light #",
                 group: idx => (idx <= 8 ? 0 : 1),
-
                 controls: {
-                    dimmer: "dimmer#",
-                    strobe: "strobe#",
                     color: {
                         type: "rgb-light",
                         props: {
@@ -94,17 +90,14 @@ export default ModelFactory({
             lights: 16,
             props: {
                 dimmer,
-                ...repeatProps(1, 16, {"red#": red, "green#": green, "blue#": blue}),
+                ...repeatProps(16, {"red#": red, "green#": green, "blue#": blue}),
                 strobe: {...strobe, channel: 53},
             },
             pixels: repeatPixels(16, {
                 id: "light#",
                 label: "Light #",
                 group: idx => (idx <= 8 ? 0 : 1),
-
                 controls: {
-                    dimmer: "dimmer#",
-                    strobe: "strobe#",
                     color: {
                         type: "rgb-light",
                         props: {

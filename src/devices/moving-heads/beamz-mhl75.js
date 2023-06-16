@@ -5,6 +5,7 @@ export default ModelFactory({
     model: "Beamz MHL75",
     type: "moving head",
     config: {
+        name: "15ch",
         props: {
             pan: {
                 channel: 1,

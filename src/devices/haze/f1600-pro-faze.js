@@ -3,6 +3,7 @@ import {ModelFactory} from "../../device.js";
 export default ModelFactory({
     model: "F1600 Pro Faze",
     config: {
+        name: "2ch",
         props: {
             haze: {
                 channel: 1,

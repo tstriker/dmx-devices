@@ -6,6 +6,7 @@ export default ModelFactory({
     widthCm: 20,
     type: "w-light",
     config: {
+        name: "3ch",
         props: {
             dimmer: rangeProp({channel: 1, label: "Dimmer", defaultDMXVal: 255}),
             strobe: {

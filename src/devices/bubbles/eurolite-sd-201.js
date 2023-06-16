@@ -5,6 +5,7 @@ export default ModelFactory({
     model: "Eurolite SD-201",
     type: "bubble-machine",
     config: {
+        name: "1ch",
         props: {
             bubbles: {
                 channel: 1,

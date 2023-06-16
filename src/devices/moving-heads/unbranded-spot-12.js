@@ -5,6 +5,7 @@ export default ModelFactory({
     model: "Unbranded moving head 12ch",
     type: "moving head",
     config: {
+        name: "12ch",
         props: {
             panCoarse: {
                 channel: 1,

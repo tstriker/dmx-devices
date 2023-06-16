@@ -4,6 +4,7 @@ export default ModelFactory({
     model: "Shark Spot One - 14",
     type: "moving head",
     config: {
+        name: "14ch",
         props: {
             panCoarse: {
                 channel: 1,

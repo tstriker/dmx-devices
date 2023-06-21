@@ -97,7 +97,7 @@ let configs = [];
         });
     }
 
-    configs.push({...config, channels});
+    configs.push({...config, channels, name: `${channels}ch`});
 });
 
 export default ModelFactory({

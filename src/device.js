@@ -160,6 +160,9 @@ export function ModelFactory({config, ...modelInfo}) {
 
         constructor(address, {config, ...options}) {
             let channelConfig = byConfigName[config];
+            if (!channelConfig) {
+                throw `Could not find config '${config}' for ${modelInfo.model}`;
+            }
             return new Device({address, ...modelInfo, ...channelConfig, ...options});
         }
     }

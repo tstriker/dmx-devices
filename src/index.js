@@ -9,6 +9,7 @@ export {default as ADJMegaHEXPar} from "./devices/led-par/adj-mega-hex-par.js";
 export {default as ADJMegaTRIPar} from "./devices/led-par/adj-mega-tri-par.js";
 export {default as BeamzCOB30WW} from "./devices/led-par/beamz-cob30ww.js";
 export {default as ChauvetSlimPAR56} from "./devices/led-par/chauvet-slim-par-56.js";
+export {default as EquinoxColorRaider} from "./devices/led-par/equinox-color-raider.js";
 
 export {default as LEDPar} from "./devices/led-par/par.js";
 

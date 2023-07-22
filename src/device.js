@@ -66,9 +66,8 @@ export class Device {
         this.unmanagedProps = this.props.filter(prop => !controlChannels.includes(prop.channel));
 
         // tell API consumers what features all of this device's pixels have
-        let deviceFeatures = ["color", "dimmer", "strobe", "white", "amber", "uv", "pan", "tilt"].filter(
-            feature => feature in this || pixels.every(pixel => feature in pixel)
-        );
+        let deviceFeatures = ["color", "dimmer", "strobe", "white", "amber", "uv", "pan", "tilt", "wheel", "spot"];
+        deviceFeatures = deviceFeatures.filter(feature => feature in this || pixels.every(pixel => feature in pixel));
         this.features = deviceFeatures;
 
         // proxy anything else through - this allows us to inject custom attributes on construction time

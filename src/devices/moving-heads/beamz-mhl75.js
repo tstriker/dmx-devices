@@ -62,7 +62,7 @@ export default ModelFactory({
             dimmer: rangeProp({channel: 6, label: "Dimmer", defaultDMXVal: 255}),
             spot: rangeProp({channel: 7, label: "Spot Light", defaultDMXVal: 0}),
             strobe: rangeProp({channel: 8, label: "Strobe", defaultDMXVal: 0}),
-            colorWheel: {
+            wheel: {
                 channel: 9,
                 label: "Color Wheel",
                 modes: [
@@ -75,7 +75,7 @@ export default ModelFactory({
                     {chVal: 56, val: "blue"},
                     {chVal: 64, val: "blue-yellow"},
                     {chVal: 72, val: "yellow"},
-                    {chVal: 80, val: "80 yellow-purple"},
+                    {chVal: 80, val: "yellow-purple"},
                     {chVal: 88, val: "purple"},
                     {chVal: 96, val: "purple-orange"},
                     {chVal: 104, val: "orange"},
@@ -133,7 +133,7 @@ export default ModelFactory({
 
                     spot: "spot",
                     gobo: "gobo",
-                    colorWheel: "colorWheel",
+                    wheel: "wheel",
                     strobe: "strobe",
                     pan: {
                         type: "degrees",

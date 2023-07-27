@@ -1,4 +1,5 @@
 import {ModelFactory} from "../../device.js";
+import {rangeProp} from "../../utils.js";
 
 export default ModelFactory({
     company: "Eurolite",
@@ -7,15 +8,14 @@ export default ModelFactory({
     config: {
         name: "1ch",
         props: {
-            bubbles: {
-                channel: 1,
-                label: "Bubbles",
-                stops: [
-                    {label: "off", chVal: 0, discrete: true, val: 0},
-                    {label: "slow", chVal: 5, val: 0.01},
-                    {label: "fast", chVal: 255, val: 1},
-                ],
-            },
+            speed: rangeProp({label: "Speed"}),
         },
+        pixels: [
+            {
+                id: `bubbles`,
+                label: `Bubbles`,
+                speed: "speed",
+            },
+        ],
     },
 });

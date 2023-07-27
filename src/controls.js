@@ -31,7 +31,7 @@ export class Pixel {
         // during initiation it will get passed in actual device props
         let usedChannels = new Set();
 
-        Object.entries(controls).forEach(([controlName, config]) => {
+        Object.entries(controls || {}).forEach(([controlName, config]) => {
             let setter, getter;
             if (typeof config == "string" && this._allProps[config]) {
                 // a proxy to prop

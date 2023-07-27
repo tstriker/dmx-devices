@@ -69,7 +69,6 @@ let configs = [];
                     {chVal: 1, val: 0.001},
                     {chVal: 255, val: 1},
                 ],
-                defaultDMXVal: 0,
             },
             [`red${idx}`]: rangeProp({channel: colorAddress + 3, label: `Red ${idx}`}),
             [`green${idx}`]: rangeProp({channel: colorAddress + 4, label: `Green ${idx}`}),

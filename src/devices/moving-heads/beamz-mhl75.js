@@ -8,7 +8,6 @@ export default ModelFactory({
         name: "15ch",
         props: {
             pan: {
-                channel: 1,
                 degrees: 540,
                 label: "Pan",
                 stops: [
@@ -20,10 +19,10 @@ export default ModelFactory({
                     // {chVal: 212, val: 450},
                     {chVal: 255, val: 540},
                 ],
+                defaultDMXVal: 170, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
             },
 
             panFine: {
-                channel: 2,
                 label: "Pan Fine",
                 stops: [
                     {chVal: 0, val: 0},
@@ -32,17 +31,16 @@ export default ModelFactory({
             },
 
             tilt: {
-                channel: 3,
                 degrees: 180,
                 label: "Tilt",
                 stops: [
                     {chVal: 0, val: 0},
                     {chVal: 255, val: 180},
                 ],
+                defaultDMXVal: 127, // point straight up/down  by default to avoid blinding anyone
             },
 
             tiltFine: {
-                channel: 4,
                 label: "Tilt Fine",
                 stops: [
                     {chVal: 0, val: 0},
@@ -51,7 +49,6 @@ export default ModelFactory({
             },
 
             speed: {
-                channel: 5,
                 label: "Speed",
                 stops: [
                     {chVal: 0, val: 1},
@@ -59,11 +56,10 @@ export default ModelFactory({
                 ],
             },
 
-            dimmer: rangeProp({channel: 6, label: "Dimmer", defaultDMXVal: 255}),
-            spot: rangeProp({channel: 7, label: "Spot Light", defaultDMXVal: 0}),
-            strobe: rangeProp({channel: 8, label: "Strobe", defaultDMXVal: 0}),
+            dimmer: rangeProp({label: "Dimmer", defaultDMXVal: 255}),
+            spot: rangeProp({label: "Spot Light"}),
+            strobe: rangeProp({label: "Strobe"}),
             wheel: {
-                channel: 9,
                 label: "Color Wheel",
                 modes: [
                     {chVal: 0, val: "white"},
@@ -86,10 +82,10 @@ export default ModelFactory({
                     {chVal: 190, val: "stop rotation"},
                     {chVal: 194, val: "CW rotation"},
                 ],
+                defaultDMXVal: 72, // yellow sits in the middle of color wheel, so a good place to return to
             },
 
             gobo: {
-                channel: 10,
                 label: "Gobo",
                 modes: [
                     {chVal: 0, val: "Off"},
@@ -107,11 +103,11 @@ export default ModelFactory({
                 ],
             },
 
-            washRed: rangeProp({channel: 11, label: "Wash Red"}),
-            washGreen: rangeProp({channel: 12, label: "Wash Green"}),
-            washBlue: rangeProp({channel: 13, label: "Wash Blue"}),
-            washWhite: rangeProp({channel: 14, label: "Wash White"}),
-            washStrobe: rangeProp({channel: 15, label: `Wash Strobe`}),
+            washRed: rangeProp({label: "Wash Red"}),
+            washGreen: rangeProp({label: "Wash Green"}),
+            washBlue: rangeProp({label: "Wash Blue"}),
+            washWhite: rangeProp({label: "Wash White"}),
+            washStrobe: rangeProp({label: `Wash Strobe`}),
         },
 
         pixels: [

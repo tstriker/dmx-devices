@@ -21,7 +21,7 @@ export class Pixel {
         this.idx = idx;
         this.label = label;
         this.group = group || 0;
-        this.controls = controls;
+        this.controls = controls || {};
 
         this._allProps = Object.fromEntries(props.map(prop => [prop.name, prop]));
         this.props = {};
@@ -135,7 +135,9 @@ let pixelControls = {
             let dmx = Math.round(degrees * this.dmxPerDeg);
 
             this.coarse.dmx = Math.floor(dmx / 255);
-            this.fine.dmx = dmx % 255;
+            if (this.fine) {
+                this.fine.dmx = dmx % 255;
+            }
         }
     },
 };

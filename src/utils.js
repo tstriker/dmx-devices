@@ -62,13 +62,13 @@ export function colorToRGBW(color) {
     return [r, g, b, w];
 }
 
-export function rangeProp({channel, label, defaultDMXVal = 0}) {
+export function rangeProp({channel, label, defaultDMXVal = 0, startVal = 0, endVal = 1}) {
     return {
         channel,
         label,
         stops: [
-            {chVal: 0, val: 0},
-            {chVal: 255, val: 1},
+            {chVal: 0, val: startVal},
+            {chVal: 255, val: endVal},
         ],
         defaultDMXVal,
     };

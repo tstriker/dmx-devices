@@ -9,7 +9,7 @@ export default ModelFactory({
         {
             name: "2ch",
             props: {
-                brightness: rangeProp({label: "Brightness"}),
+                brightness: rangeProp({label: "Dimmer"}),
                 zoom: rangeProp({label: "Zoom"}),
             },
 
@@ -33,7 +33,7 @@ export default ModelFactory({
         {
             name: "3ch",
             props: {
-                brightness: rangeProp({label: "brightness"}),
+                brightness: rangeProp({label: "Dimmer"}),
                 strobe: {
                     label: "Strobe",
                     stops: [

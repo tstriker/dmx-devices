@@ -1,37 +1,6 @@
 import {ModelFactory} from "../../device.js";
 import {rangeProp} from "../../utils.js";
 
-function between(val, bounds) {
-    return bounds.some(([lower, upper]) => val >= lower && val <= upper);
-}
-
-let strobe = {
-    label: "Strobe",
-    modes: [
-        {chVal: 0, val: "off", label: "Off"},
-        {chVal: 32, val: "on", label: "On"},
-        {chVal: 64, val: "pulse", label: "Strobe"},
-        {chVal: 128, val: "pulse", label: "Pulse"},
-        {chVal: 192, val: "random", label: "Random"},
-    ],
-    defaultDMXVal: 32,
-};
-
-let strobeSpeed = {
-    label: "Strobe Speed",
-    modifies: "strobe",
-    condition: device =>
-        between(device.strobe.dmx, [
-            [64, 95],
-            [128, 159],
-            [192, 223],
-        ]),
-    stops: [
-        {chVal: 0, val: 0, label: "Slow"},
-        {chVal: 31, val: 1, label: "Fast"},
-    ],
-};
-
 let Strobe = {
     props: {strobe: "strobe"},
     get(props) {
@@ -53,21 +22,6 @@ let Strobe = {
     },
 };
 
-let colorControl = {
-    name: "light",
-    type: "rgb-light",
-    label: "Light",
-    props: {
-        red: "red",
-        green: "green",
-        blue: "blue",
-    },
-};
-
-function getPixels(controls) {
-    return [{id: "light", label: "Light", controls}];
-}
-
 export default ModelFactory({
     model: "Centolight Plot FZ6200",
     widthCm: 20,
@@ -79,6 +33,8 @@ export default ModelFactory({
             props: {
                 dimmer: rangeProp({label: "Dimmer", defaultDMXVal: 255}),
                 cct: rangeProp({label: "CCT"}),
+                // dimmer change determines wheter we specify output in kelvins, or RGB
+                // right now we can only work with RGB as my kelvin math is weak
                 dimmerChange: rangeProp({label: "Dimmer Change", defaultDMXVal: 255}),
 
                 red: rangeProp({label: "Red"}),
@@ -97,7 +53,26 @@ export default ModelFactory({
                     ],
                 },
             },
-            pixels: getPixels({color: colorControl, dimmer: "dimmer", strobe: Strobe}),
+            pixels: [
+                {
+                    id: "light",
+                    label: "Light",
+                    controls: {
+                        color: {
+                            name: "light",
+                            type: "rgb-light",
+                            label: "Light",
+                            props: {
+                                red: "red",
+                                green: "green",
+                                blue: "blue",
+                            },
+                        },
+                        dimmer: "dimmer",
+                        strobe: "strobe",
+                    },
+                },
+            ],
         },
     ],
 });

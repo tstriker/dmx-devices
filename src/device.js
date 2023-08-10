@@ -39,7 +39,7 @@ export class Device {
                 // avoid if you are not controlling all aspects of the device (e.g. when you just want to change
                 // a few channels and don't want to touch the rest)
                 if (!prop.modifies && prop.channel >= 1 && prop.channel <= 512) {
-                    this.dmx[propChannel] = prop.defaultDMXVal || 0;
+                    this.dmx[propChannel] = prop.defaultDMXVal;
                 }
             }
             this[key] = prop;

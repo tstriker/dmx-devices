@@ -4,6 +4,7 @@ export {default as F1600ProFaze} from "./devices/haze/f1600-pro-faze.js";
 
 export {default as BeamzLCB224} from "./devices/led-bars/beamz-lcb224.js";
 export {default as BeamzLCB244} from "./devices/led-bars/beamz-lcb244.js";
+export {default as ShowtecSunstrip} from "./devices/led-bars/showtec-sunstrip.js";
 
 export {default as ADJMegaHEXPar} from "./devices/led-par/adj-mega-hex-par.js";
 export {default as ADJMegaTRIPar} from "./devices/led-par/adj-mega-tri-par.js";
@@ -24,3 +25,4 @@ export {default as Fusion100Spot} from "./devices/moving-heads/fusion-100-spot.j
 export {default as Cosmo108} from "./devices/par-bars/cosmos-108.js";
 
 export {default as TranscensionMulti4} from "./devices/misc/transcension-multipack-ddp-405.js";
+export {default as RGBMonsterDebug} from "./devices/misc/debug.js";

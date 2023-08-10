@@ -1,5 +1,5 @@
-import {ModelFactory} from "../../device.js";
-import {rangeProp} from "../../utils.js";
+import {ModelFactory} from "../device.js";
+import {rangeProp} from "../utils.js";
 
 let configs = [];
 

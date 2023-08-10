@@ -1,5 +1,5 @@
-import {ModelFactory} from "../../device.js";
-import {rangeProp} from "../../utils.js";
+import {ModelFactory} from "../device.js";
+import {rangeProp} from "../utils.js";
 
 function rgb(...addresses) {
     // generates the rgb props triplet and colors pixel

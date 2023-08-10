@@ -38,4 +38,4 @@ console.log(bar.dmx);
 
 Check the [devices directory](https://github.com/tstriker/dmx-devices/tree/main/src/devices) for all currently recognized devices.
 
-The [LED Par](https://github.com/tstriker/dmx-devices/blob/main/src/devices/led-par/par.js) is a good starting point for figuring how to create your own config.
+The [LED Par](https://github.com/tstriker/dmx-devices/blob/main/src/devices/pars/par.js) is a good starting point for figuring how to create your own config.

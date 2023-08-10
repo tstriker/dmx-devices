@@ -1,4 +1,4 @@
-import {ModelFactory} from "../../device.js";
+import {ModelFactory} from "../device.js";
 
 export default ModelFactory({
     model: "Shark Spot One - 14",

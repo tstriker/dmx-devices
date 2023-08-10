@@ -1,5 +1,5 @@
-import {ModelFactory} from "../../device.js";
-import {rangeProp} from "../../utils.js";
+import {ModelFactory} from "../device.js";
+import {rangeProp} from "../utils.js";
 
 function between(val, bounds) {
     return bounds.some(([lower, upper]) => val >= lower && val <= upper);

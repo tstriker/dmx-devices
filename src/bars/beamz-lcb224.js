@@ -1,5 +1,5 @@
-import {ModelFactory} from "../../device.js";
-import {rangeProp, repeatProps, repeatPixels} from "../../utils.js";
+import {ModelFactory} from "../device.js";
+import {rangeProp, repeatProps, repeatPixels} from "../utils.js";
 
 let dimmer = rangeProp({label: "Dimmer", defaultDMXVal: 255});
 let strobe = {

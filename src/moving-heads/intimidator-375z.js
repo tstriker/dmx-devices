@@ -94,10 +94,9 @@ export default ModelFactory({
             dimmer: rangeProp({label: "Dimmer", defaultDMXVal: 255}),
 
             shutter: rangeProp({label: "Shutter"}),
-            strobe: rangeProp({label: "Strobe"}),
 
-            f1: rangeProp({label: "f1"}),
-            f2: rangeProp({label: "f2"}),
+            function: rangeProp({label: "Function"}),
+            movement_macros: rangeProp({label: "Movement Macros"}),
             zoom: rangeProp({label: "zoom"}),
         },
 

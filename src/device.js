@@ -68,6 +68,7 @@ export class Device {
         // tell API consumers what features all of this device's pixels have
         let deviceFeatures = [
             "color",
+            "red", // this is to tell apart RGB from pseudo colors
             "dimmer",
             "strobe",
             "white",

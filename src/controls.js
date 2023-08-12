@@ -70,7 +70,7 @@ export class Pixel {
         });
 
         this.channels = [...usedChannels];
-        this.features = ["color", "dimmer", "strobe", "white", "amber", "uv", "pan", "tilt"].filter(
+        this.features = ["color", "red", "dimmer", "strobe", "white", "amber", "uv", "pan", "tilt"].filter(
             feature => feature in this
         );
     }

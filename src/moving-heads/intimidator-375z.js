@@ -123,6 +123,8 @@ export default ModelFactory({
                             fine: "tiltFine",
                         },
                     },
+                    zoom: "zoom",
+                    focus: "focus",
                 },
             },
         ],

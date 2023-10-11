@@ -7,6 +7,8 @@ export {default as ChauvetSlimPAR56} from "./pars/chauvet-slim-par-56.js";
 export {default as EquinoxColorRaider} from "./pars/equinox-color-raider.js";
 export {default as CentoLightPlot200FZ} from "./pars/centolight-plot-200fz.js";
 export {default as CentoLightPlot6200FZ} from "./pars/centolight-plot-6200fz.js";
+export {default as LedjCZ120} from "./pars/ledj-cz-120.js";
+export {default as LedjCZ100} from "./pars/ledj-cz-100.js";
 
 export {default as BeamzLCB224} from "./bars/beamz-lcb224.js";
 export {default as BeamzLCB244} from "./bars/beamz-lcb244.js";

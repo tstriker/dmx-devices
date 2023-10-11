@@ -9,9 +9,9 @@ export default ModelFactory({
         {
             name: "3ch",
             props: {
-                red: rangeProp({channel: 1, label: "Red"}),
-                green: rangeProp({channel: 2, label: "Red"}),
-                blue: rangeProp({channel: 3, label: "Red"}),
+                red: rangeProp({label: "Red"}),
+                green: rangeProp({label: "Green"}),
+                blue: rangeProp({label: "Blue"}),
             },
             pixels: [
                 {

@@ -1,3 +1,13 @@
+# 0.4.0
+
+All in all cleaner and simpler way to add new devices. Still massively WIP
+
+* allow having different same-number of channel modes (e.g. 8ch-a, 8ch-b)
+* if channel is not provided for a prop, assume packing and just assign whichever
+  channel follows next
+* add bunch of devices (potentially those will move out into config layer)
+* improved support for moving heads but all still TBD
+
 # 0.3.1
 
 * Add an easy way to access all config names via a static prop

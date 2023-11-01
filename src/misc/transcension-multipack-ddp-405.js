@@ -17,9 +17,9 @@ export default ModelFactory({
                     label: `Light`,
                     controls: {
                         color: {
-                            type: "w-light",
+                            type: "light",
                             props: {
-                                white: "dimmer1",
+                                light: "dimmer1",
                             },
                         },
                     },
@@ -41,9 +41,9 @@ export default ModelFactory({
                     label: `Light 1`,
                     controls: {
                         color: {
-                            type: "w-light",
+                            type: "light",
                             props: {
-                                white: "dimmer1",
+                                light: "dimmer1",
                             },
                         },
                     },
@@ -53,9 +53,9 @@ export default ModelFactory({
                     label: `Light 2`,
                     controls: {
                         color: {
-                            type: "w-light",
+                            type: "light",
                             props: {
-                                white: "dimmer2",
+                                light: "dimmer2",
                             },
                         },
                     },
@@ -65,9 +65,9 @@ export default ModelFactory({
                     label: `Light 3`,
                     controls: {
                         color: {
-                            type: "w-light",
+                            type: "light",
                             props: {
-                                white: "dimmer3",
+                                light: "dimmer3",
                             },
                         },
                     },
@@ -77,9 +77,9 @@ export default ModelFactory({
                     label: `Light 4`,
                     controls: {
                         color: {
-                            type: "w-light",
+                            type: "light",
                             props: {
-                                white: "dimmer4",
+                                light: "dimmer4",
                             },
                         },
                     },

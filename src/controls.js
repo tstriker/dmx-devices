@@ -114,7 +114,21 @@ let pixelControls = {
             let [r, g, b, a] = chroma(value).rgba();
             let w = Math.max(r, g, b);
 
-            this.white.dmx = Math.round(w * a);
+            this.light.dmx = Math.round(w * a);
+        }
+    },
+
+    light: class extends Control {
+        // same as w-light, except we don't assume it's white
+        // single color light; assuming white but that would be gel-dependant
+        get() {
+            return chroma(this.light, this.light, this.light).hex();
+        }
+        set(value) {
+            let [r, g, b, a] = chroma(value).rgba();
+            let w = Math.max(r, g, b);
+
+            this.light.dmx = Math.round(w * a);
         }
     },
 

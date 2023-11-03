@@ -25,7 +25,7 @@ export default ModelFactory({
                 label: `Light`,
                 controls: {
                     color: {
-                        type: "w-light",
+                        type: "light",
                         props: {
                             light: "brightness",
                         },

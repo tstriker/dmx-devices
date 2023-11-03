@@ -114,7 +114,7 @@ let pixelControls = {
             let [r, g, b, a] = chroma(value).rgba();
             let w = Math.max(r, g, b);
 
-            this.light.dmx = Math.round(w * a);
+            this.white.dmx = Math.round(w * a);
         }
     },
 

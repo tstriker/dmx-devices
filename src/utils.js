@@ -24,6 +24,10 @@ export function range(start, end, step) {
     return [...iterator()];
 }
 
+export function between(val, bounds) {
+    return bounds.some(([lower, upper]) => val >= lower && val <= upper);
+}
+
 export function colorToRGBW(color) {
     // note - while this func might be correct, it seems to diminish other colors
     // one solution is to use the white additively.
@@ -62,7 +66,7 @@ export function colorToRGBW(color) {
     return [r, g, b, w];
 }
 
-export function rangeProp({channel, label, defaultDMXVal = 0, startVal = 0, endVal = 1}) {
+export function rangeProp({channel = null, label = null, defaultDMXVal = 0, startVal = 0, endVal = 1}) {
     return {
         channel,
         label,

@@ -4,7 +4,7 @@ export class Prop {
     constructor({name, channel, label, stops, modes, modifies, condition, defaultDMXVal, onPropChange, ...other}) {
         this.name = name;
         this.channel = channel;
-        this.label = label;
+        this.label = label || name;
         if (stops) {
             this.stops = stops;
         }

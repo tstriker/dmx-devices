@@ -156,6 +156,12 @@ export class Device {
         });
         this._externalUpdate = false;
     }
+
+    reset() {
+        for (let prop of this.props) {
+            prop.dmx = prop.defaultDMXVal;
+        }
+    }
 }
 
 export function ModelFactory({config, ...modelInfo}) {

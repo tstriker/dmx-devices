@@ -8,7 +8,7 @@ export default ModelFactory({
     config: {
         name: "1ch",
         props: {
-            brightness: rangeProp({label: "Brightness", defaultDMXVal: 255}),
+            brightness: rangeProp({label: "Brightness", defaultVal: 1}),
         },
 
         pixels: [

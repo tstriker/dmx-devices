@@ -8,7 +8,7 @@ export default ModelFactory({
     config: {
         name: "3ch",
         props: {
-            brightness: rangeProp({channel: 1, label: "Brightness", defaultDMXVal: 255}),
+            brightness: rangeProp({channel: 1, label: "Brightness", defaultVal: 1}),
             strobe: {
                 label: "Strobe",
                 stops: [
@@ -29,7 +29,7 @@ export default ModelFactory({
                     {chVal: 160, val: "sound_2", label: "Equalizer Dim"},
                     {chVal: 190, val: "sound_3", label: "Equalizer Pulse 2"},
                 ],
-                defaultDMXVal: 10,
+                defaultVal: "auto_1",
             },
 
             modeRate: {

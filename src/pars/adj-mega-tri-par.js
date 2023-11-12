@@ -5,12 +5,12 @@ let strobe = {
     // even though the tripar is capable of several strobe modes, we default to the standard
     // as anything more sophisticated can be implemented on software side
     label: "Strobe",
-    defaultDMXVal: 63,
     stops: [
         {val: 0, chVal: 63},
         {val: 0.1, chVal: 64},
         {val: 1, chVal: 95},
     ],
+    defaultVal: 0,
 };
 
 let colorControl = {
@@ -57,7 +57,7 @@ export default ModelFactory({
                 blue: rangeProp({}),
                 uv: rangeProp({}),
                 strobe: strobe,
-                brightness: rangeProp({defaultDMXVal: 255}),
+                brightness: rangeProp({defaultVal: 1}),
             },
             pixels: [
                 {

@@ -19,7 +19,7 @@ export default ModelFactory({
                     // {chVal: 212, val: 450},
                     {chVal: 255, val: 540},
                 ],
-                defaultDMXVal: 170, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
+                defaultVal: 360, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
             },
 
             panFine: {
@@ -37,7 +37,7 @@ export default ModelFactory({
                     {chVal: 0, val: 0},
                     {chVal: 255, val: 180},
                 ],
-                defaultDMXVal: 127, // point straight up/down  by default to avoid blinding anyone
+                defaultVal: 90, // point straight up/down  by default to avoid blinding anyone
             },
 
             tiltFine: {
@@ -54,9 +54,10 @@ export default ModelFactory({
                     {chVal: 0, val: 1},
                     {chVal: 255, val: 0.01},
                 ],
+                defaultVal: 1,
             },
 
-            dimmer: rangeProp({label: "Dimmer", defaultDMXVal: 255}),
+            dimmer: rangeProp({label: "Dimmer", defaultVal: 0}),
             spot: rangeProp({label: "Spot Light"}),
             strobe: rangeProp({label: "Strobe"}),
             wheel: {
@@ -82,7 +83,7 @@ export default ModelFactory({
                     {chVal: 190, val: "stop rotation"},
                     {chVal: 194, val: "CW rotation"},
                 ],
-                defaultDMXVal: 72, // yellow sits in the middle of color wheel, so a good place to return to
+                defaultVal: "yellow", // yellow sits in the middle of color wheel, so a good place to return to
             },
 
             gobo: {

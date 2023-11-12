@@ -31,11 +31,11 @@ export default ModelFactory({
         {
             name: "12ch",
             props: {
-                dimmer: rangeProp({label: "Dimmer", defaultDMXVal: 255}),
+                dimmer: rangeProp({label: "Dimmer", defaultVal: 1}),
                 cct: rangeProp({label: "CCT"}),
                 // dimmer change determines wheter we specify output in kelvins, or RGB
                 // right now we can only work with RGB as my kelvin math is weak
-                dimmerChange: rangeProp({label: "Dimmer Change", defaultDMXVal: 255}),
+                dimmerChange: rangeProp({label: "Dimmer Change", defaultVal: 1}),
 
                 red: rangeProp({label: "Red"}),
                 green: rangeProp({label: "Green"}),

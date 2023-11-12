@@ -20,7 +20,7 @@ export default ModelFactory({
                         // {chVal: 212, val: 450},
                         {chVal: 255, val: 540},
                     ],
-                    defaultDMXVal: 170, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
+                    defaultVal: 360, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
                 },
 
                 tilt: {
@@ -30,7 +30,7 @@ export default ModelFactory({
                         {chVal: 0, val: 0},
                         {chVal: 255, val: 180},
                     ],
-                    defaultDMXVal: 127, // point straight up/down  by default to avoid blinding anyone
+                    defaultVal: 90, // point straight up/down  by default to avoid blinding anyone
                 },
 
                 dimmer: rangeProp({label: "Dimmer"}),
@@ -47,7 +47,7 @@ export default ModelFactory({
                         {chVal: 104, val: "magenta"},
                         {chVal: 122, val: "blue"},
                     ],
-                    defaultDMXVal: 68, // by default sit in the middle for faster spin-to times
+                    defaultVal: "green", // by default sit in the middle for faster spin-to times
                 },
 
                 gobo: {
@@ -110,7 +110,7 @@ export default ModelFactory({
                         // {chVal: 212, val: 450},
                         {chVal: 255, val: 540},
                     ],
-                    defaultDMXVal: 170, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
+                    defaultVal: 360, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
                 },
 
                 panFine: {
@@ -128,7 +128,7 @@ export default ModelFactory({
                         {chVal: 0, val: 0},
                         {chVal: 255, val: 180},
                     ],
-                    defaultDMXVal: 127, // point straight up/down  by default to avoid blinding anyone
+                    defaultVal: 90, // point straight up/down  by default to avoid blinding anyone
                 },
 
                 tiltFine: {
@@ -148,7 +148,7 @@ export default ModelFactory({
                 },
 
                 dimmer: rangeProp({label: "Dimmer"}),
-                strobe: rangeProp({label: "Strobe", defaultDMXVal: 255}),
+                strobe: rangeProp({label: "Strobe", defaultVal: 1}),
 
                 wheel: {
                     label: "Color Wheel",
@@ -162,7 +162,7 @@ export default ModelFactory({
                         {chVal: 104, val: "magenta"},
                         {chVal: 122, val: "blue"},
                     ],
-                    defaultDMXVal: 68, // yellow sits in the middle of color wheel, so a good place to return to
+                    defaultVal: "green", // yellow sits in the middle of color wheel, so a good place to return to
                 },
 
                 gobo: {

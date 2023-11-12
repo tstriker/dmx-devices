@@ -33,7 +33,7 @@ export default ModelFactory({
         {
             name: "7ch RGBW",
             props: {
-                dimmer: rangeProp({label: "Dimmer", defaultDMXVal: 255}),
+                dimmer: rangeProp({label: "Dimmer", defaultVal: 1}),
                 strobe: rangeProp({label: "Strobe"}),
                 red: rangeProp({label: "Red"}),
                 green: rangeProp({label: "Red"}),

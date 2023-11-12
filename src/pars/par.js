@@ -33,7 +33,7 @@ export default ModelFactory({
         {
             name: "6ch",
             props: {
-                dimmer: rangeProp({channel: 1, label: "Dimmer", defaultDMXVal: 255}),
+                dimmer: rangeProp({channel: 1, label: "Dimmer", defaultVal: 1}),
                 red: rangeProp({channel: 2, label: "Red"}),
                 green: rangeProp({channel: 3, label: "Red"}),
                 blue: rangeProp({channel: 4, label: "Red"}),

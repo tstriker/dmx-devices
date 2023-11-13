@@ -59,15 +59,14 @@ export default ModelFactory({
             wheel: {
                 label: "Color Wheel",
                 modes: [
-                    {chVal: 0, val: "white"},
-                    {chVal: 8, val: "orange"},
-                    {chVal: 16, val: "lime green"},
-                    {chVal: 24, val: "cyan"},
-                    {chVal: 32, val: "red"},
-                    {chVal: 40, val: "green"},
-                    {chVal: 48, val: "magenta"},
-                    {chVal: 56, val: "yellow"},
-                    {chVal: 64, val: "white"},
+                    {chVal: 0, val: "white", color: "#fff"},
+                    {chVal: 8, val: "orange", color: "#ed982e"},
+                    {chVal: 16, val: "lime green", color: "#ccff0b"},
+                    {chVal: 24, val: "cyan", color: "#00ffff"},
+                    {chVal: 32, val: "red", color: "#ff0000"},
+                    {chVal: 40, val: "green", color: "#00ff00"},
+                    {chVal: 48, val: "magenta", color: "#ff00ff"},
+                    {chVal: 56, val: "yellow", color: "#f5ef27"},
                 ],
                 defaultVal: 32, // sit in the middle of the wheel by default
             },

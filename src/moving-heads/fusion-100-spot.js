@@ -38,14 +38,14 @@ export default ModelFactory({
                 wheel: {
                     label: "Color Wheel",
                     modes: [
-                        {chVal: 0, val: "white"},
-                        {chVal: 14, val: "red"},
-                        {chVal: 32, val: "yellow"},
-                        {chVal: 50, val: "cyan"},
-                        {chVal: 68, val: "green"},
-                        {chVal: 86, val: "orange"},
-                        {chVal: 104, val: "magenta"},
-                        {chVal: 122, val: "blue"},
+                        {chVal: 0, val: "white", color: "#fff"},
+                        {chVal: 14, val: "red", color: "#ff0000"},
+                        {chVal: 32, val: "yellow", color: "#f5ef27"},
+                        {chVal: 50, val: "cyan", color: "#00ffff"},
+                        {chVal: 68, val: "green", color: "#00ff00"},
+                        {chVal: 86, val: "orange", color: "#ed982e"},
+                        {chVal: 104, val: "magenta", color: "#ff00ff"},
+                        {chVal: 122, val: "blue", color: "#4f9ae5"},
                     ],
                     defaultVal: "green", // by default sit in the middle for faster spin-to times
                 },

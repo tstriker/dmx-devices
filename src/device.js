@@ -3,9 +3,8 @@ import {Prop} from "./props.js";
 import {Pixel} from "./controls.js";
 
 export class Device {
-    constructor({address, channels, label, props, pixels, render, onChange, resetDMX = true, ...other}) {
+    constructor({address, label, props, pixels, render, onChange, resetDMX = true, ...other}) {
         this.address = address;
-        this.channels = channels;
         this.label = label;
         this.deviceOptions = {};
         this.dmx = {};
@@ -91,39 +90,13 @@ export class Device {
         return new Proxy(this, {
             set(target, prop, value, receiver) {
                 if (target[prop] instanceof Prop) {
+                    // handle prop bits
                     target[prop].val = value;
-
-                    // update our own dmx
-                    target.dmx[target[prop].channel] = target[prop].dmx;
-                    return true;
-                } else if (prop == "pan" && target.deviceOptions?.swivelFine) {
-                    let coarseBitDegs = target.panCoarse.degrees / 255;
-                    let coarseDegs = Math.floor(value / coarseBitDegs) * coarseBitDegs;
-                    let fineDegs = value - coarseDegs;
-
-                    target.panCoarse.val = coarseDegs;
-                    target.panFine.val = fineDegs;
-                    return true;
-                } else if (prop == "tilt" && target.deviceOptions?.swivelFine) {
-                    let coarseBitDegs = target.tiltCoarse.degrees / 255;
-                    let coarseDegs = Math.floor(value / coarseBitDegs) * coarseBitDegs;
-                    let fineDegs = value - coarseDegs;
-
-                    target.tiltCoarse.val = coarseDegs;
-                    target.tiltFine.val = fineDegs;
                     return true;
                 } else {
+                    // if it's not a prop deal with it the normal way
                     return Reflect.set(target, prop, value, receiver);
                 }
-            },
-
-            get(target, prop) {
-                if (prop == "pan" && target.deviceOptions?.swivelFine) {
-                    return round(target.panCoarse.val + target.panFine.val, 1);
-                } else if (prop == "tilt" && target.deviceOptions?.swivelFine) {
-                    return round(target.tiltCoarse.val + target.tiltFine.val, 1);
-                }
-                return Reflect.get(...arguments);
             },
         });
     }

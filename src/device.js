@@ -3,7 +3,7 @@ import {Prop} from "./props.js";
 import {Pixel} from "./controls.js";
 
 export class Device {
-    constructor({address, label, props, pixels, render, onChange, resetDMX = true, ...other}) {
+    constructor({address, label, props, pixels, render, onChange, options, resetDMX = true, ...other}) {
         this.address = address;
         this.label = label;
         this.deviceOptions = {};
@@ -15,6 +15,8 @@ export class Device {
         this._notifyTimeout = null;
 
         this.props = [];
+
+        this.options = options || {}; // custom options for props/controls/etc. for now it's just flip for heads
 
         // populate props
         Object.entries(props).forEach(([key, config], idx) => {
@@ -47,7 +49,7 @@ export class Device {
 
         this.pixels = [];
 
-        pixels = (pixels || []).map((pixel, idx) => new Pixel(pixel, idx + 1, this.props));
+        pixels = (pixels || []).map((pixel, idx) => new Pixel(pixel, idx + 1, this.props, this.options));
         pixels.forEach(pixel => {
             // math the specific pixel so we can go straight to this.light8 and so on
             this[pixel.id] = pixel;

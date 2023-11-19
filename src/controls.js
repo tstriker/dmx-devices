@@ -16,7 +16,7 @@ export class Control {
 export class Pixel {
     // abstracts away all the possible controls in individual pixels
     // so that you can do light8.color = "fuchsia" or bubbles.speed = 5
-    constructor({id, label, group, controls}, idx, props) {
+    constructor({id, label, group, controls}, idx, props, options) {
         this.id = id;
         this.idx = idx;
         this.label = label;
@@ -32,7 +32,6 @@ export class Pixel {
         let usedChannels = new Set();
 
         Object.entries(controls || {}).forEach(([controlName, config]) => {
-            let setter, getter;
             if (typeof config == "string" && this._allProps[config]) {
                 // a proxy to prop
                 Object.defineProperty(this, controlName, {
@@ -40,6 +39,10 @@ export class Pixel {
                     set: val => (this._allProps[config].val = val),
                 });
             } else if (config.type) {
+                if (options[controlName]) {
+                    config = {...config, ...options[controlName]};
+                }
+
                 // a config class that maps to one of the pixel controls below
                 let control =
                     typeof config.type == "string"
@@ -146,6 +149,10 @@ let pixelControls = {
         }
 
         set(degrees) {
+            if (this.config.flip) {
+                degrees = this.coarse.degrees - degrees;
+            }
+
             let dmx = Math.round(degrees * this.dmxPerDeg);
 
             this.coarse.dmx = Math.floor(dmx / 255);

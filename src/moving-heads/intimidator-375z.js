@@ -7,7 +7,7 @@ export default ModelFactory({
     config: {
         name: "15ch",
         props: {
-            pan: {
+            panCoarse: {
                 degrees: 540,
                 label: "Pan",
                 stops: [
@@ -30,7 +30,7 @@ export default ModelFactory({
                 ],
             },
 
-            tilt: {
+            tiltCoarse: {
                 degrees: 180,
                 label: "Tilt",
                 stops: [
@@ -110,7 +110,7 @@ export default ModelFactory({
                         type: "degrees",
                         degrees: 540,
                         props: {
-                            coarse: "pan",
+                            coarse: "panCoarse",
                             fine: "panFine",
                         },
                     },
@@ -118,7 +118,7 @@ export default ModelFactory({
                         type: "degrees",
                         degrees: 270,
                         props: {
-                            coarse: "tilt",
+                            coarse: "tiltCoarse",
                             fine: "tiltFine",
                         },
                     },

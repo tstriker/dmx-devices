@@ -7,7 +7,7 @@ export default ModelFactory({
     config: {
         name: "15ch",
         props: {
-            pan: {
+            panCoarse: {
                 degrees: 540,
                 label: "Pan",
                 stops: [
@@ -30,7 +30,7 @@ export default ModelFactory({
                 ],
             },
 
-            tilt: {
+            tiltCoarse: {
                 degrees: 180,
                 label: "Tilt",
                 stops: [
@@ -57,7 +57,7 @@ export default ModelFactory({
                 defaultVal: 1,
             },
 
-            dimmer: rangeProp({label: "Dimmer", defaultVal: 1}),
+            light: rangeProp({label: "Dimmer (always on)", defaultVal: 1}),
             spot: rangeProp({label: "Spot Light"}),
             strobe: rangeProp({label: "Strobe"}),
             wheel: {
@@ -115,7 +115,6 @@ export default ModelFactory({
                 id: "light",
                 label: "Light",
                 controls: {
-                    dimmer: "dimmer",
                     color: {
                         type: "rgbw-light",
                         props: {
@@ -135,7 +134,7 @@ export default ModelFactory({
                         type: "degrees",
                         degrees: 540,
                         props: {
-                            coarse: "pan",
+                            coarse: "panCoarse",
                             fine: "panFine",
                         },
                     },
@@ -143,7 +142,7 @@ export default ModelFactory({
                         type: "degrees",
                         degrees: 180,
                         props: {
-                            coarse: "tilt",
+                            coarse: "tiltCoarse",
                             fine: "tiltFine",
                         },
                     },

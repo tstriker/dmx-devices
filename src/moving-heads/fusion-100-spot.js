@@ -8,7 +8,7 @@ export default ModelFactory({
         {
             name: "8ch",
             props: {
-                pan: {
+                panCoarse: {
                     degrees: 540,
                     label: "Pan",
                     stops: [
@@ -23,7 +23,7 @@ export default ModelFactory({
                     defaultVal: 360, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
                 },
 
-                tilt: {
+                tiltCoarse: {
                     degrees: 180,
                     label: "Tilt",
                     stops: [
@@ -81,14 +81,14 @@ export default ModelFactory({
                             type: "degrees",
                             degrees: 540,
                             props: {
-                                coarse: "pan",
+                                coarse: "panCoarse",
                             },
                         },
                         tilt: {
                             type: "degrees",
                             degrees: 180,
                             props: {
-                                coarse: "tilt",
+                                coarse: "tiltCoarse",
                             },
                         },
                     },
@@ -98,7 +98,7 @@ export default ModelFactory({
         {
             name: "15ch",
             props: {
-                pan: {
+                panCoarse: {
                     degrees: 540,
                     label: "Pan",
                     stops: [
@@ -121,7 +121,7 @@ export default ModelFactory({
                     ],
                 },
 
-                tilt: {
+                tiltCoarse: {
                     degrees: 180,
                     label: "Tilt",
                     stops: [
@@ -203,7 +203,7 @@ export default ModelFactory({
                             type: "degrees",
                             degrees: 540,
                             props: {
-                                coarse: "pan",
+                                coarse: "panCoarse",
                                 fine: "panFine",
                             },
                         },
@@ -211,7 +211,7 @@ export default ModelFactory({
                             type: "degrees",
                             degrees: 180,
                             props: {
-                                coarse: "tilt",
+                                coarse: "tiltCoarse",
                                 fine: "tiltFine",
                             },
                         },

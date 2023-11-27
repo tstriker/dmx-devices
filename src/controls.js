@@ -145,7 +145,11 @@ let pixelControls = {
 
         get() {
             // convert channel DMX vals to degrees
-            return (this.coarse.dmx * 255 + this.fine.dmx) / this.dmxPerDeg;
+            if (this.fine) {
+                return (this.coarse.dmx * 255 + this.fine.dmx) / this.dmxPerDeg;
+            } else {
+                return this.coarse.dmx / this.dmxPerDeg;
+            }
         }
 
         set(degrees) {

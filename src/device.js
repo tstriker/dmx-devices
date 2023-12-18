@@ -156,6 +156,8 @@ export function ModelFactory({config, ...modelInfo}) {
             if (!channelConfig) {
                 throw `Could not find config '${config}' for ${modelInfo.model}`;
             }
+
+            modelInfo.brand = modelInfo.brand || modelInfo.model.split(" ")[0];
             return new Device({address, ...modelInfo, ...channelConfig, ...options});
         }
     }

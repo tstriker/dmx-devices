@@ -11,6 +11,8 @@ export {default as EquinoxColorRaider} from "./pars/equinox-color-raider.js";
 export {default as LedjCZ120} from "./pars/ledj-cz-120.js";
 export {default as LedjCZ100} from "./pars/ledj-cz-100.js";
 export {default as LEDJSlimlineQ5} from "./pars/ledj-slimline-q5.js";
+export {default as StairvillePar56} from "./pars/thomann-stairville-par-56.js";
+export {default as StairvilleOctagonCWWW} from "./pars/thomann-stairville-octagon-theatre-cw-ww.js";
 
 export {default as BeamzLCB224} from "./bars/beamz-lcb224.js";
 export {default as BeamzLCB244} from "./bars/beamz-lcb244.js";

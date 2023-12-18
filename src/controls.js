@@ -121,6 +121,19 @@ let pixelControls = {
         }
     },
 
+    "cool-warm-light": class extends Control {
+        get() {
+            return chroma(this.cool, this.cool, this.cool).hex();
+        }
+        set(value) {
+            let [r, g, b, a] = chroma(value).rgba();
+            let w = Math.max(r, g, b);
+
+            this.cool.dmx = Math.round(w * a);
+            this.warm.dmx = Math.round(w * a);
+        }
+    },
+
     light: class extends Control {
         // same as w-light, except we don't assume it's white
         // single color light; assuming white but that would be gel-dependant

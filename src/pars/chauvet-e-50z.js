@@ -8,7 +8,7 @@ export default ModelFactory({
     config: {
         name: "3ch",
         props: {
-            brightness: rangeProp({label: "Brightness", defaultVal: 1}),
+            brightness: rangeProp({label: "Brightness", defaultVal: 0}),
             strobe: {
                 label: "Strobe",
                 stops: [

@@ -18,7 +18,7 @@ export default ModelFactory({
             amber: rangeProp({}),
             strobe: {
                 stops: [
-                    {val: 0, chVal: 63},
+                    {val: 0, chVal: 0},
                     {val: 0.1, chVal: 64},
                     {val: 1, chVal: 95},
                 ],

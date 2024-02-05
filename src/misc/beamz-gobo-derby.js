@@ -12,8 +12,6 @@ export default ModelFactory({
             props: {
                 rotation: rangeProp({}),
                 dimmer: rangeProp({defaultVal: 1}),
-                strobe: rangeProp({defaultVal: 0}),
-
                 wheel: {
                     label: "Derby Color",
                     modes: [
@@ -39,28 +37,19 @@ export default ModelFactory({
                     ],
                     defaultVal: "red + green",
                 },
-                uvStrobe: rangeProp({defaultVal: 0}),
 
+                strobe: rangeProp({defaultVal: 0}),
                 uv1: rangeProp({defaultVal: 0}),
                 uv2: rangeProp({defaultVal: 0}),
 
-                strobe: {
-                    stops: [
-                        {val: 0, chVal: 0},
-                        {val: 0.1, chVal: 10},
-                        {val: 0.2, chVal: 20},
-                        {val: 1, chVal: 255},
-                    ],
-                    defaultVal: 0,
-                },
+                autoSound: rangeProp({defaultVal: 0}),
+                autoSoundUV: rangeProp({defaultVal: 0}),
             },
             pixels: [
                 {
                     id: "light",
                     label: "Light",
-                    controls: {
-
-                    },
+                    controls: {},
                 },
             ],
         },

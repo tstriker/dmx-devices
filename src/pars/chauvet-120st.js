@@ -3,7 +3,7 @@ import {rangeProp} from "../utils.js";
 
 export default ModelFactory({
     model: "Chauvet 120ST",
-    type: "rgb-light",
+    type: "w-light",
     config: {
         name: "3ch",
         props: {

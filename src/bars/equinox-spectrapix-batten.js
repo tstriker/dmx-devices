@@ -69,7 +69,7 @@ export default ModelFactory({
         {
             name: "24ch",
             lights: 8,
-            props: repeatProps(1, 8, {"red#": red, "green#": green, "blue#": blue}),
+            props: repeatProps(8, {"red#": red, "green#": green, "blue#": blue}),
             pixels: repeatPixels(8, {
                 id: "light#",
                 label: "Light #",
@@ -92,7 +92,7 @@ export default ModelFactory({
             name: "48ch",
             lights: 16,
 
-            props: repeatProps(1, 16, {"red#": red, "green#": green, "blue#": blue}),
+            props: repeatProps(16, {"red#": red, "green#": green, "blue#": blue}),
             pixels: repeatPixels(16, {
                 id: "light#",
                 label: "Light #",

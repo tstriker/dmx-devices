@@ -10,6 +10,7 @@ export class Prop {
         }
         if (modes) {
             this.modes = modes;
+            this.modeLabels = Object.fromEntries(modes.map(mode => [mode.val, mode.label || mode.val]));
         }
 
         if (modifies) {

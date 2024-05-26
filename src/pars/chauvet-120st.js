@@ -12,8 +12,8 @@ export default ModelFactory({
             wheel: {
                 label: "Color Wheel",
                 modes: [
-                    {chVal: 0, val: "coolWhite", color: "#fff"},
-                    {chVal: 32, val: "warmWhite", color: "#fff"},
+                    {chVal: 0, val: "coolWhite", label: "cool white", color: "#fff"},
+                    {chVal: 32, val: "warmWhite", label: "warm white", color: "#fff"},
 
                     {chVal: 64, val: "yellow", color: "#f5ef27"},
                     {chVal: 96, val: "purple", color: "#ad2eed"},

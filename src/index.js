@@ -20,6 +20,7 @@ export {default as StairvilleOctagonCWWW} from "./pars/thomann-stairville-octago
 
 export {default as BeamzLCB224} from "./bars/beamz-lcb224.js";
 export {default as BeamzLCB244} from "./bars/beamz-lcb244.js";
+export {default as Gear4MusicGalaxy1938} from "./bars/gear4music-galaxy1938.js";
 export {default as EventPixbar12x3} from "./bars/event-pixbar-12x3.js";
 export {default as EuroliteLEDBar2RGBA25210} from "./bars/eurolite-led-bar-2-rgba-252-10.js";
 export {default as ShowtecSunstrip} from "./bars/showtec-sunstrip.js";
@@ -37,5 +38,7 @@ export {default as F1600ProFaze} from "./haze/f1600-pro-faze.js";
 
 export {default as BeamzGoboDerby} from "./misc/beamz-gobo-derby.js";
 export {default as Dimmer} from "./misc/dimmer.js";
-export {default as TranscensionMulti4} from "./misc/transcension-multipack-ddp-405.js";
+export {default as Fader} from "./misc/fader.js";
 export {default as RGBMonsterDebug} from "./misc/debug.js";
+export {default as Strand6Pack} from "./misc/strand-6pack.js";
+export {default as TranscensionMulti4} from "./misc/transcension-multipack-ddp-405.js";

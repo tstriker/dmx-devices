@@ -77,6 +77,7 @@ export default ModelFactory({
                     controls: {
                         gobo: "gobo",
                         wheel: "wheel",
+                        speed: "speed",
                         pan: {
                             type: "degrees",
                             degrees: 540,
@@ -141,6 +142,7 @@ export default ModelFactory({
 
                 speed: {
                     label: "Speed",
+                    defaultVal: 1,
                     stops: [
                         {chVal: 0, val: 1},
                         {chVal: 255, val: 0.01},
@@ -215,7 +217,6 @@ export default ModelFactory({
                                 fine: "tiltFine",
                             },
                         },
-                        speed: "speed",
                     },
                 },
             ],

@@ -80,6 +80,7 @@ export class Device {
             "wheel",
             "spot",
             "gobo",
+            "speed",
         ];
         deviceFeatures = deviceFeatures.filter(feature => feature in this || pixels.every(pixel => feature in pixel));
         this.features = deviceFeatures;

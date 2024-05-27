@@ -21,7 +21,7 @@ export class Pixel {
         this.idx = idx;
         this.label = label;
         this.group = group || 0;
-        this.controls = controls || {};
+        this.controls = {};
 
         this._allProps = Object.fromEntries(props.map(prop => [prop.name, prop]));
         this.props = {};
@@ -53,6 +53,7 @@ export class Pixel {
                     get: () => control.get(),
                     set: val => control.set(val),
                 });
+                this.controls[controlName] = control;
 
                 // the goal is to set each of the controls to be a setter/getter
                 // and all their props are accessible directly as well
@@ -81,6 +82,8 @@ export class Pixel {
 
 let pixelControls = {
     "rgb-light": class extends Control {
+        defaultVal = "#000";
+
         get() {
             chroma(this.red.val, this.green.val, this.blue.val).hex();
         }
@@ -92,6 +95,8 @@ let pixelControls = {
     },
 
     "rgbw-light": class extends Control {
+        defaultVal = "#000";
+
         get() {
             let color = chroma(this.red.val, this.green.val, this.blue.val);
             return color.hex();
@@ -110,6 +115,8 @@ let pixelControls = {
     },
 
     "w-light": class extends Control {
+        defaultVal = "#000";
+
         get() {
             return chroma(this.white, this.white, this.white).hex();
         }
@@ -122,6 +129,8 @@ let pixelControls = {
     },
 
     "cool-warm-light": class extends Control {
+        defaultVal = "#000";
+
         get() {
             return chroma(this.cool, this.cool, this.cool).hex();
         }
@@ -135,6 +144,8 @@ let pixelControls = {
     },
 
     light: class extends Control {
+        defaultVal = "#000";
+
         // same as w-light, except we don't assume it's white
         // single color light; assuming white but that would be gel-dependant
         get() {
@@ -154,6 +165,10 @@ let pixelControls = {
 
             // two channel rotation means we have 255 * 255 values to express all of degrees
             this.dmxPerDeg = 65025 / this.coarse.degrees;
+        }
+
+        get defaultVal() {
+            return this.coarse.defaultVal;
         }
 
         get() {

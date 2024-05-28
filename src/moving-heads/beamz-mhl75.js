@@ -58,7 +58,7 @@ export default ModelFactory({
             },
 
             light: rangeProp({label: "Dimmer (always on)", defaultVal: 1, ui: false}),
-            spot: rangeProp({label: "Spot Light"}),
+            dimmer: rangeProp({label: "Spot Light"}),
             strobe: rangeProp({label: "Strobe"}),
             wheel: {
                 label: "Color Wheel",

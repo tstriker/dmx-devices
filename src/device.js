@@ -82,7 +82,9 @@ export class Device {
             "gobo",
             "speed",
         ];
-        deviceFeatures = deviceFeatures.filter(feature => feature in this || pixels.every(pixel => feature in pixel));
+        deviceFeatures = deviceFeatures.filter(
+            feature => feature in this || (pixels.length && pixels.every(pixel => feature in pixel))
+        );
         this.features = deviceFeatures;
 
         // proxy anything else through - this allows us to inject custom attributes on construction time

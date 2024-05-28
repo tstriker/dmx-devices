@@ -38,7 +38,7 @@ export default ModelFactory({
                 green: rangeProp({channel: 3, label: "Red"}),
                 blue: rangeProp({channel: 4, label: "Red"}),
                 strobe: rangeProp({channel: 5, label: "Strobe"}),
-                colorCycle: rangeProp({channel: 6, label: "Color Cycle"}),
+                colorCycle: rangeProp({channel: 6, label: "Color Cycle", ui: false}),
             },
             pixels: [
                 {

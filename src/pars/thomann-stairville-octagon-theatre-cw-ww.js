@@ -19,8 +19,8 @@ export default ModelFactory({
                         {chVal: 255, val: 1},
                     ],
                 },
-                mode: rangeProp({}),
-                pixelDimmer: rangeProp({label: "Dimmer (always on)", defaultVal: 1}),
+                mode: rangeProp({ui: false}),
+                brightness: rangeProp({label: "Dimmer (always on)", defaultVal: 1, ui: false}),
             },
 
             pixels: [

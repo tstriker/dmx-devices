@@ -19,6 +19,7 @@ export default ModelFactory({
             },
             dimmerMode: {
                 label: "Dimmer Mode",
+                ui: false,
                 modes: [
                     {chVal: 0, val: "display", label: "From Display"},
                     {chVal: 52, val: "off", label: "Mode Off"},

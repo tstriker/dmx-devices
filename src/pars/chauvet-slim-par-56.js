@@ -37,7 +37,7 @@ export default ModelFactory({
                 red,
                 green,
                 blue,
-                colorMacros: rangeProp({channel: 4, label: "Color Macros"}),
+                colorMacros: rangeProp({channel: 4, label: "Color Macros", ui: false}),
                 strobe: rangeProp({channel: 5, label: "Strobe"}),
                 programs: rangeProp({channel: 6, label: "Program"}),
                 dimmer: rangeProp({channel: 7, label: "Dimmer", defaultVal: 1}),

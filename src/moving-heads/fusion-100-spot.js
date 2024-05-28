@@ -65,7 +65,7 @@ export default ModelFactory({
                     ],
                 },
 
-                gobo_rotation: rangeProp({label: "Gobo Rotation"}),
+                rotation: rangeProp({label: "Gobo Rotation"}),
                 focus: rangeProp({label: "Focus"}),
                 prism: rangeProp({label: "Prism"}),
             },
@@ -155,14 +155,14 @@ export default ModelFactory({
                 wheel: {
                     label: "Color Wheel",
                     modes: [
-                        {chVal: 0, val: "white"},
-                        {chVal: 14, val: "red"},
-                        {chVal: 32, val: "yellow"},
-                        {chVal: 50, val: "cyan"},
-                        {chVal: 68, val: "green"},
-                        {chVal: 86, val: "orange"},
-                        {chVal: 104, val: "magenta"},
-                        {chVal: 122, val: "blue"},
+                        {chVal: 0, val: "white", color: "#fff"},
+                        {chVal: 14, val: "red", color: "#ff0000"},
+                        {chVal: 32, val: "yellow", color: "#f5ef27"},
+                        {chVal: 50, val: "cyan", color: "#00ffff"},
+                        {chVal: 68, val: "green", color: "#00ff00"},
+                        {chVal: 86, val: "orange", color: "#ed982e"},
+                        {chVal: 104, val: "magenta", color: "#ff00ff"},
+                        {chVal: 122, val: "blue", color: "#4f9ae5"},
                     ],
                     defaultVal: "green", // yellow sits in the middle of color wheel, so a good place to return to
                 },
@@ -189,8 +189,8 @@ export default ModelFactory({
                 focus: rangeProp({label: "Focus"}),
                 prism: rangeProp({label: "Prism"}),
 
-                led_macro: rangeProp({label: "LED macro"}),
-                tilt_macro: rangeProp({label: "Tilt macro"}),
+                led_macro: rangeProp({label: "LED macro", ui: false}),
+                tilt_macro: rangeProp({label: "Tilt macro", ui: false}),
             },
 
             pixels: [

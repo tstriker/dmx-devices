@@ -10,6 +10,7 @@ export default ModelFactory({
             name: "5ch",
             props: {
                 mode: {
+                    ui: false,
                     modes: [
                         {chVal: 0, val: "RGB"},
                         {chVal: 64, val: "7 Color fade"},
@@ -20,7 +21,7 @@ export default ModelFactory({
                 red: rangeProp({label: "Red"}),
                 green: rangeProp({label: "Green"}),
                 blue: rangeProp({label: "Blue"}),
-                speed: rangeProp({label: "Speed"}),
+                color_change_speed: rangeProp({label: "Speed", ui: false}),
             },
             pixels: [
                 {

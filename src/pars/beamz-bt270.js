@@ -66,14 +66,14 @@ export default ModelFactory({
         {
             name: "8ch",
             props: {
-                brightness: rangeProp({label: "Dimmer (always on)", defaultVal: 1}),
+                brightness: rangeProp({label: "Dimmer (always on)", defaultVal: 1, ui: false}),
                 strobe: rangeProp({}),
                 red: rangeProp({}),
                 green: rangeProp({}),
                 blue: rangeProp({}),
                 white: rangeProp({}),
-                staticColor: rangeProp({}),
-                colorMacro: rangeProp({}),
+                staticColor: rangeProp({ui: false}),
+                colorMacro: rangeProp({ui: false}),
             },
             pixels: [
                 {

@@ -19,6 +19,7 @@ export default ModelFactory({
             },
             mode: {
                 label: "Mode",
+                ui: false,
                 modes: [
                     {chVal: 0, val: 0, label: "Light Off"},
                     {chVal: 10, val: "auto_1", label: "Light On"},
@@ -30,17 +31,6 @@ export default ModelFactory({
                     {chVal: 190, val: "sound_3", label: "Equalizer Pulse 2"},
                 ],
                 defaultVal: "auto_1",
-            },
-
-            modeRate: {
-                channel: 3,
-                label: "Rate",
-                modifies: "mode",
-                condition: device => device.mode.dmx >= 10,
-                stops: [
-                    {chVal: 0, val: 0, label: "Slow"},
-                    {chVal: 29, val: 1, label: "Fast"},
-                ],
             },
         },
 

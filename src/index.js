@@ -25,8 +25,6 @@ export {default as EventPixbar12x3} from "./bars/event-pixbar-12x3.js";
 export {default as EuroliteLEDBar2RGBA25210} from "./bars/eurolite-led-bar-2-rgba-252-10.js";
 export {default as ShowtecSunstrip} from "./bars/showtec-sunstrip.js";
 
-export {default as SharkSpot1} from "./moving-heads/shark-spot-one.js";
-export {default as UnbrandedSpot12} from "./moving-heads/unbranded-spot-12.js";
 export {default as BeamzMHL75} from "./moving-heads/beamz-mhl75.js";
 export {default as Fusion100Spot} from "./moving-heads/fusion-100-spot.js";
 export {default as Intimidator375z} from "./moving-heads/intimidator-375z.js";

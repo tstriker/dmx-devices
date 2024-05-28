@@ -60,9 +60,8 @@ export default ModelFactory({
         {
             name: "8ch",
             props: {
-                dimmer: rangeProp({channel: 1, label: "Dimmer", defaultVal: 1}),
+                dimmer: rangeProp({label: "Dimmer", defaultVal: 1}),
                 strobe: rangeProp({
-                    channel: 2,
                     label: "Strobe",
                     stops: [
                         {chVal: 0, val: 0},
@@ -70,12 +69,12 @@ export default ModelFactory({
                         {chVal: 255, val: 1},
                     ],
                 }),
-                red: rangeProp({channel: 3, label: "Red"}),
-                green: rangeProp({channel: 4, label: "Red"}),
-                blue: rangeProp({channel: 5, label: "Red"}),
-                white: rangeProp({channel: 6, label: "White"}),
-                colorPreset: rangeProp({channel: 7, label: "Color Preset"}),
-                colorFade: rangeProp({channel: 8, label: "Color Fade"}),
+                red: rangeProp({label: "Red"}),
+                green: rangeProp({label: "Red"}),
+                blue: rangeProp({label: "Red"}),
+                white: rangeProp({label: "White"}),
+                colorPreset: rangeProp({label: "Color Preset", ui: false}),
+                colorFade: rangeProp({label: "Color Fade", ui: false}),
             },
             pixels: [
                 {

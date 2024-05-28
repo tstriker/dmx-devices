@@ -6,8 +6,8 @@ export default ModelFactory({
     config: {
         name: "2ch",
         props: {
-            intensity: rangeProp({label: "Haze Intensity"}),
-            fan_speed: rangeProp({label: "Fan Speed"}),
+            dimmer: rangeProp({label: "Intensity"}),
+            speed: rangeProp({label: "Fan Speed"}),
 
             // haze: {
             //     channel: 1,
@@ -35,7 +35,7 @@ export default ModelFactory({
                 label: `Haze`,
                 props: {
                     intensity: "intensity",
-                    fan_speed: "fan_speed",
+                    speed: "speed",
                 },
             },
         ],

@@ -39,7 +39,7 @@ export default ModelFactory({
                 green: rangeProp({label: "Red"}),
                 blue: rangeProp({label: "Red"}),
                 white: rangeProp({label: "White"}),
-                colorCycle: rangeProp({label: "Color Cycle"}),
+                colorCycle: rangeProp({label: "Color Cycle", ui: false}),
             },
             pixels: [
                 {

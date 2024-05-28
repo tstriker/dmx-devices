@@ -86,16 +86,13 @@ export default ModelFactory({
                 ],
             },
 
-            gobo_rotation: rangeProp({label: "Gobo Rotation"}),
+            rotation: rangeProp({label: "Gobo Rotation"}),
             prism: rangeProp({label: "Prism"}),
             focus: rangeProp({label: "Focus"}),
-
             dimmer: rangeProp({label: "Dimmer", defaultVal: 1}),
-
             shutter: rangeProp({label: "Shutter"}),
-
-            function: rangeProp({label: "Function"}),
-            movement_macros: rangeProp({label: "Movement Macros"}),
+            function: rangeProp({label: "Function", ui: false}),
+            movement_macros: rangeProp({label: "Movement Macros", ui: false}),
             zoom: rangeProp({label: "zoom"}),
         },
 

@@ -57,7 +57,7 @@ export default ModelFactory({
                 defaultVal: 1,
             },
 
-            light: rangeProp({label: "Dimmer (always on)", defaultVal: 1}),
+            light: rangeProp({label: "Dimmer (always on)", defaultVal: 1, ui: false}),
             spot: rangeProp({label: "Spot Light"}),
             strobe: rangeProp({label: "Strobe"}),
             wheel: {
@@ -107,7 +107,7 @@ export default ModelFactory({
             washGreen: rangeProp({label: "Wash Green"}),
             washBlue: rangeProp({label: "Wash Blue"}),
             washWhite: rangeProp({label: "Wash White"}),
-            washStrobe: rangeProp({label: `Wash Strobe`}),
+            wash_strobe: rangeProp({label: `Wash Strobe`}),
         },
 
         pixels: [
@@ -124,12 +124,6 @@ export default ModelFactory({
                             white: "washWhite",
                         },
                     },
-                    washStrobe: "washStrobe",
-
-                    spot: "spot",
-                    gobo: "gobo",
-                    wheel: "wheel",
-                    strobe: "strobe",
                     pan: {
                         type: "degrees",
                         degrees: 540,
@@ -146,7 +140,6 @@ export default ModelFactory({
                             fine: "tiltFine",
                         },
                     },
-                    speed: "speed",
                 },
             },
         ],

@@ -16,6 +16,7 @@ let configs = [];
             chase: {
                 channel: channels - 1,
                 label: "Chase",
+                ui: false,
                 modes: [
                     {chVal: 0, val: 0, label: "Off"},
                     {chVal: 8, val: "chase1", label: "Built-in program 1"},
@@ -42,6 +43,7 @@ let configs = [];
                 channel: channels - 1,
                 label: "Chase Sensitivity",
                 modifies: "chase",
+                ui: false,
                 condition: device => device.chase.dmx < 248,
                 stops: [
                     {label: "off", chVal: 0, val: 0},
@@ -49,7 +51,7 @@ let configs = [];
                 ],
             },
 
-            chaseSpeed: rangeProp({channel: channels, label: "Chase Speed"}),
+            chaseSpeed: rangeProp({channel: channels, label: "Chase Speed", ui: false}),
         },
 
         pixels: [],
@@ -59,11 +61,12 @@ let configs = [];
         let colorAddress = (idx - 1) * 7;
         config.props = {
             ...config.props,
-            [`dimmer${idx}`]: rangeProp({channel: colorAddress + 1, label: `Dimmer ${idx}`, defaultVal: 1}),
+            [`dimmer${idx}`]: rangeProp({channel: colorAddress + 1, label: `Dimmer ${idx}`, defaultVal: 1, ui: false}),
 
             [`strobe${idx}`]: {
                 channel: colorAddress + 2,
                 label: `Strobe ${idx}`,
+                ui: false,
                 stops: [
                     {chVal: 0, val: 0},
                     {chVal: 1, val: 0.001},
@@ -74,7 +77,7 @@ let configs = [];
             [`green${idx}`]: rangeProp({channel: colorAddress + 4, label: `Green ${idx}`}),
             [`blue${idx}`]: rangeProp({channel: colorAddress + 5, label: `Blue ${idx}`}),
             [`white${idx}`]: rangeProp({channel: colorAddress + 6, label: `White ${idx}`}),
-            [`cycle${idx}`]: rangeProp({channel: colorAddress + 7, label: `Auto ${idx}`}),
+            [`cycle${idx}`]: rangeProp({channel: colorAddress + 7, label: `Auto ${idx}`, ui: false}),
         };
 
         config.pixels.push({

@@ -7,21 +7,14 @@ export default ModelFactory({
     type: "rgb-light",
     config: [
         {
-            name: "5ch",
+            name: "6ch",
             props: {
-                mode: {
-                    ui: false,
-                    modes: [
-                        {chVal: 0, val: "RGB"},
-                        {chVal: 64, val: "7 Color fade"},
-                        {chVal: 128, val: "7 Colour Change"},
-                        {chVal: 192, val: "3 Colour Change"},
-                    ],
-                },
                 red: rangeProp({label: "Red"}),
                 green: rangeProp({label: "Green"}),
                 blue: rangeProp({label: "Blue"}),
-                color_change_speed: rangeProp({label: "Speed", ui: false}),
+                colorMacro: rangeProp({ui: false}),
+                strobe: rangeProp({}),
+                macro: rangeProp({ui: false}),
             },
             pixels: [
                 {

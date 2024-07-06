@@ -1,3 +1,5 @@
+export {parseFixtureConfig} from "./parser.js";
+
 export {default as LEDPar} from "./pars/par.js";
 
 export {default as ADJMegaHEXPar} from "./pars/adj-mega-hex-par.js";

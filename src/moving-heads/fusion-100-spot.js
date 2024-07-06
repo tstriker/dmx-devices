@@ -33,7 +33,7 @@ export default ModelFactory({
                     defaultVal: 90, // point straight up/down  by default to avoid blinding anyone
                 },
 
-                dimmer: rangeProp({label: "Dimmer"}),
+                dimmer: rangeProp({label: "Dimmer", activeDefault: 1}),
 
                 wheel: {
                     label: "Color Wheel",
@@ -75,6 +75,7 @@ export default ModelFactory({
                     id: "light",
                     label: "Light",
                     controls: {
+                        fader: "dimmer",
                         gobo: "gobo",
                         wheel: "wheel",
                         speed: "speed",
@@ -149,7 +150,7 @@ export default ModelFactory({
                     ],
                 },
 
-                dimmer: rangeProp({label: "Dimmer"}),
+                dimmer: rangeProp({label: "Dimmer", activeDefault: 1}),
                 strobe: rangeProp({label: "Strobe", defaultVal: 1}),
 
                 wheel: {
@@ -198,6 +199,7 @@ export default ModelFactory({
                     id: "light",
                     label: "Light",
                     controls: {
+                        fader: "dimmer",
                         gobo: "gobo",
                         wheel: "wheel",
                         strobe: "strobe",

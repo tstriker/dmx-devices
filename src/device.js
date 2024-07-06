@@ -1,4 +1,3 @@
-import {round} from "./utils.js";
 import {Prop} from "./props.js";
 import {Pixel} from "./controls.js";
 
@@ -34,18 +33,10 @@ export class Device {
                 modifies,
                 onPropChange: this.onPropChange.bind(this),
             });
-
-            if (resetDMX) {
-                // if specified will reset DMX to default values / zeroes, making output deterministic
-                // avoid if you are not controlling all aspects of the device (e.g. when you just want to change
-                // a few channels and don't want to touch the rest)
-                if (!prop.modifies && prop.channel >= 1 && prop.channel <= 512) {
-                    this[prop] = prop.defaultVal || 0;
-                }
-            }
             this[key] = prop;
             this.props.push(prop);
         });
+        this.reset();
 
         this.pixels = [];
 
@@ -137,7 +128,9 @@ export class Device {
 
     reset() {
         for (let prop of this.props) {
-            prop.val = prop.defaultVal;
+            if (!prop.modifies && prop.channel >= 1 && prop.channel <= 512) {
+                prop.val = prop.defaultVal || 0;
+            }
         }
     }
 }

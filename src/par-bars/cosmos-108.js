@@ -56,8 +56,8 @@ export default ModelFactory({
             name: "15ch",
             lights: 4,
             props: {
-                mode: rangeProp({channel: 1, label: "Mode", defaultVal: 0, ui: false}),
-                dimmer: rangeProp({channel: 2, label: "Dimmer", defaultVal: 1}),
+                mode: rangeProp({channel: 1, label: "Mode", ui: false}),
+                dimmer: rangeProp({channel: 2, label: "Dimmer", activeDefault: 1}),
                 strobe: strobe(3, "Strobe Speed"),
                 ...rgb(4, 7, 10, 13).props,
             },

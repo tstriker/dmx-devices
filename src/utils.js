@@ -66,7 +66,7 @@ export function colorToRGBW(color) {
     return [r, g, b, w];
 }
 
-export function rangeProp({channel = null, label = null, defaultVal = 0, ...other}) {
+export function rangeProp({channel = null, label = null, defaultVal = 0, activeDefault = 0, ...other}) {
     return {
         channel,
         label,
@@ -75,6 +75,7 @@ export function rangeProp({channel = null, label = null, defaultVal = 0, ...othe
             {chVal: 255, val: 1},
         ],
         defaultVal,
+        activeDefault,
         ...other,
     };
 }

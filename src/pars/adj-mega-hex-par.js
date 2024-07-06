@@ -9,7 +9,7 @@ let strobe = {
         {val: 0.1, chVal: 64},
         {val: 1, chVal: 95},
     ],
-    defaultVal: 0,
+    activeDefault: 0,
 };
 
 let colorControl = {
@@ -53,7 +53,7 @@ export default ModelFactory({
                 white: rangeProp({}),
                 amber: rangeProp({}),
                 uv: rangeProp({}),
-                brightness: rangeProp({label: "Dimmer (always on)", defaultVal: 1, ui: false}),
+                dimmer: rangeProp({label: "Dimmer (always on)", activeDefault: 1, ui: false}),
                 strobe,
             },
             pixels: getPixels({

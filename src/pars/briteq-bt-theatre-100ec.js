@@ -4,11 +4,11 @@ import {rangeProp} from "../utils.js";
 export default ModelFactory({
     model: "Briteq BT-Theatre 100EC",
     widthCm: 20,
-    type: "light",
+    type: "w-light",
     config: {
         name: "2ch",
         props: {
-            brightness: rangeProp({label: "Brightness", defaultVal: 1}),
+            dimmer: rangeProp({activeDefault: 1}),
             strobe: {
                 label: "Strobe",
                 stops: [
@@ -25,9 +25,9 @@ export default ModelFactory({
                 label: `Light`,
                 controls: {
                     color: {
-                        type: "light",
+                        type: "w-light",
                         props: {
-                            light: "brightness",
+                            dimmer: "dimmer",
                         },
                     },
                     strobe: "strobe",

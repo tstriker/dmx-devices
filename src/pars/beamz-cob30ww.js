@@ -8,7 +8,7 @@ export default ModelFactory({
     config: {
         name: "3ch",
         props: {
-            brightness: rangeProp({channel: 1, label: "Brightness", defaultVal: 1}),
+            dimmer: rangeProp({channel: 1, label: "Dimmer"}),
             strobe: {
                 label: "Strobe",
                 stops: [
@@ -42,7 +42,7 @@ export default ModelFactory({
                     color: {
                         type: "w-light",
                         props: {
-                            white: "brightness",
+                            dimmer: "dimmer",
                         },
                     },
                     strobe: "strobe",

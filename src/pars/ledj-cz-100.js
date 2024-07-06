@@ -9,7 +9,7 @@ export default ModelFactory({
         {
             name: "4ch",
             props: {
-                brightness: rangeProp({label: "Brightness"}),
+                dimmer: rangeProp({activeDefault: 1}),
             },
             pixels: [
                 {
@@ -19,7 +19,7 @@ export default ModelFactory({
                         color: {
                             type: "w-light",
                             props: {
-                                white: "brightness",
+                                dimmer: "dimmer",
                             },
                         },
                     },

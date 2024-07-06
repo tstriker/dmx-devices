@@ -4,22 +4,22 @@ import {rangeProp} from "../utils.js";
 export default ModelFactory({
     model: "Fader",
     widthCm: 20,
-    type: "light",
+    type: "fader",
     config: {
         name: "1ch",
         props: {
-            brightness: rangeProp({label: "Brightness"}),
+            fader: rangeProp({}),
         },
 
         pixels: [
             {
-                id: `light`,
-                label: `Light`,
+                id: `fader`,
+                label: `Fader`,
                 controls: {
                     color: {
-                        type: "light",
+                        type: "fader",
                         props: {
-                            light: "brightness",
+                            light: "fader",
                         },
                     },
                 },

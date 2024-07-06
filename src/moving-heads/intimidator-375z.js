@@ -68,7 +68,7 @@ export default ModelFactory({
                     {chVal: 48, val: "magenta", color: "#ff00ff"},
                     {chVal: 56, val: "yellow", color: "#f5ef27"},
                 ],
-                defaultVal: 32, // sit in the middle of the wheel by default
+                activeDefault: 32, // sit in the middle of the wheel by default
             },
 
             gobo: {
@@ -89,7 +89,7 @@ export default ModelFactory({
             rotation: rangeProp({label: "Gobo Rotation"}),
             prism: rangeProp({label: "Prism"}),
             focus: rangeProp({label: "Focus"}),
-            dimmer: rangeProp({label: "Dimmer", defaultVal: 1}),
+            dimmer: rangeProp({label: "Dimmer", activeDefault: 1}),
             shutter: rangeProp({label: "Shutter"}),
             function: rangeProp({label: "Function", ui: false}),
             movement_macros: rangeProp({label: "Movement Macros", ui: false}),
@@ -101,6 +101,7 @@ export default ModelFactory({
                 id: "light",
                 label: "Light",
                 controls: {
+                    fader: "dimmer",
                     gobo: "gobo",
                     wheel: "wheel",
                     pan: {

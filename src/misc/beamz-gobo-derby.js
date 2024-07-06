@@ -11,7 +11,7 @@ export default ModelFactory({
             name: "9ch",
             props: {
                 rotation: rangeProp({label: "Rotation"}),
-                dimmer: rangeProp({defaultVal: 1}),
+                dimmer: rangeProp({activeDefault: 1}),
                 wheel: {
                     label: "Derby Color",
                     modes: [
@@ -38,12 +38,12 @@ export default ModelFactory({
                     defaultVal: "red + green",
                 },
 
-                strobe: rangeProp({defaultVal: 0}),
-                uv1: rangeProp({defaultVal: 0, label: "UV 1"}),
-                uv2: rangeProp({defaultVal: 0, label: "UV 2"}),
+                strobe: rangeProp({}),
+                uv1: rangeProp({label: "UV 1"}),
+                uv2: rangeProp({label: "UV 2"}),
 
-                autoSound: rangeProp({defaultVal: 0, ui: false}),
-                autoSoundUV: rangeProp({defaultVal: 0, ui: false}),
+                autoSound: rangeProp({ui: false}),
+                autoSoundUV: rangeProp({ui: false}),
             },
             pixels: [
                 {

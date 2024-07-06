@@ -9,8 +9,8 @@ export default ModelFactory({
         {
             name: "2ch",
             props: {
-                brightness: rangeProp({label: "Dimmer"}),
-                zoom: rangeProp({label: "Zoom"}),
+                dimmer: rangeProp({activeDefault: 1}),
+                zoom: rangeProp({}),
             },
 
             pixels: [
@@ -21,7 +21,7 @@ export default ModelFactory({
                         color: {
                             type: "w-light",
                             props: {
-                                white: "brightness",
+                                dimmer: "dimmer",
                             },
                         },
                         zoom: "zoom",
@@ -33,7 +33,7 @@ export default ModelFactory({
         {
             name: "3ch",
             props: {
-                brightness: rangeProp({label: "Dimmer"}),
+                dimmer: rangeProp({activeDefault: 1}),
                 strobe: {
                     label: "Strobe",
                     stops: [
@@ -53,7 +53,7 @@ export default ModelFactory({
                         color: {
                             type: "w-light",
                             props: {
-                                white: "brightness",
+                                dimmer: "dimmer",
                             },
                         },
                         strobe: "strobe",

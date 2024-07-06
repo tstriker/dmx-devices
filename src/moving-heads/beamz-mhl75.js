@@ -37,7 +37,7 @@ export default ModelFactory({
                     {chVal: 0, val: 0},
                     {chVal: 255, val: 180},
                 ],
-                defaultVal: 90, // point straight up/down  by default to avoid blinding anyone
+                defaultVal: 90, // point straight up/down on defaultVal to avoid blinding anyone
             },
 
             tiltFine: {
@@ -57,8 +57,8 @@ export default ModelFactory({
                 defaultVal: 1,
             },
 
-            light: rangeProp({label: "Dimmer (always on)", defaultVal: 1, ui: false}),
-            dimmer: rangeProp({label: "Spot Light"}),
+            dimmer: rangeProp({label: "Dimmer (always on)", activeDefault: 1, ui: false}),
+            spot_light: rangeProp({label: "Spot Light", defaultVal: 1}),
             strobe: rangeProp({label: "Strobe"}),
             wheel: {
                 label: "Color Wheel",
@@ -97,10 +97,8 @@ export default ModelFactory({
                     {chVal: 96, val: "Aliens"},
                     {chVal: 112, val: "Focus Ring"},
                     {chVal: 128, val: "Gobos C-Clockwise"},
-
-                    {chVal: 190, val: "Gobos C-Clockwise"},
-                    {chVal: 194, val: "Gobos C-Clockwise"},
                 ],
+                defaultVal: "Angular",
             },
 
             washRed: rangeProp({label: "Wash Red"}),
@@ -115,6 +113,7 @@ export default ModelFactory({
                 id: "light",
                 label: "Light",
                 controls: {
+                    fader: "dimmer",
                     color: {
                         type: "rgbw-light",
                         props: {

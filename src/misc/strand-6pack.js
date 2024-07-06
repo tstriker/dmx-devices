@@ -22,9 +22,9 @@ export default ModelFactory({
                     label: `Light 1`,
                     controls: {
                         color: {
-                            type: "light",
+                            type: "w-light",
                             props: {
-                                light: "dimmer1",
+                                dimmer: "dimmer1",
                             },
                         },
                     },
@@ -34,9 +34,9 @@ export default ModelFactory({
                     label: `Light 2`,
                     controls: {
                         color: {
-                            type: "light",
+                            type: "w-light",
                             props: {
-                                light: "dimmer2",
+                                dimmer: "dimmer2",
                             },
                         },
                     },
@@ -46,9 +46,9 @@ export default ModelFactory({
                     label: `Light 3`,
                     controls: {
                         color: {
-                            type: "light",
+                            type: "w-light",
                             props: {
-                                light: "dimmer3",
+                                dimmer: "dimmer3",
                             },
                         },
                     },
@@ -58,9 +58,9 @@ export default ModelFactory({
                     label: `Light 4`,
                     controls: {
                         color: {
-                            type: "light",
+                            type: "w-light",
                             props: {
-                                light: "dimmer4",
+                                dimmer: "dimmer4",
                             },
                         },
                     },
@@ -70,9 +70,9 @@ export default ModelFactory({
                     label: `Light 5`,
                     controls: {
                         color: {
-                            type: "light",
+                            type: "w-light",
                             props: {
-                                light: "dimmer5",
+                                dimmer: "dimmer5",
                             },
                         },
                     },
@@ -82,9 +82,9 @@ export default ModelFactory({
                     label: `Light 6`,
                     controls: {
                         color: {
-                            type: "light",
+                            type: "w-light",
                             props: {
-                                light: "dimmer6",
+                                dimmer: "dimmer6",
                             },
                         },
                     },

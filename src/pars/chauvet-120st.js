@@ -40,6 +40,12 @@ export default ModelFactory({
                 id: "light",
                 label: "Light",
                 controls: {
+                    color: {
+                        type: "w-light",
+                        props: {
+                            dimmer: "dimmer",
+                        },
+                    },
                     strobe: "strobe",
                 },
             },

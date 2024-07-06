@@ -118,13 +118,13 @@ let pixelControls = {
         defaultVal = "#000";
 
         get() {
-            return chroma(this.white, this.white, this.white).hex();
+            return chroma(this.dimmer, this.dimmer, this.dimmer).hex();
         }
         set(value) {
             let [r, g, b, a] = chroma(value).rgba();
             let w = Math.max(r, g, b);
 
-            this.white.dmx = Math.round(w * a);
+            this.dimmer.dmx = Math.round(w * a);
         }
     },
 
@@ -143,19 +143,19 @@ let pixelControls = {
         }
     },
 
-    light: class extends Control {
+    fader: class extends Control {
         defaultVal = "#000";
 
         // same as w-light, except we don't assume it's white
         // single color light; assuming white but that would be gel-dependant
         get() {
-            return chroma(this.light, this.light, this.light).hex();
+            return chroma(this.fader, this.fader, this.fader).hex();
         }
         set(value) {
             let [r, g, b, a] = chroma(value).rgba();
             let w = Math.max(r, g, b);
 
-            this.light.dmx = Math.round(w * a);
+            this.fader.dmx = Math.round(w * a);
         }
     },
 
@@ -168,7 +168,9 @@ let pixelControls = {
         }
 
         get defaultVal() {
-            return this.coarse.defaultVal;
+            // default val comes in degrees from our old-style fixtures, and in the normalized form from
+            // the json configs
+            return this.config.normalized ? this.coarse.degrees * this.coarse.defaultVal : this.coarse.defaultVal;
         }
 
         get() {

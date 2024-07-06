@@ -1,7 +1,7 @@
 import {range} from "./utils.js";
 
 export class Prop {
-    constructor({name, channel, label, stops, modes, modifies, condition, defaultVal, onPropChange, ...other}) {
+    constructor({name, channel, label, stops, modes, modifies, condition, defaultVal, activeDefault, onPropChange, ...other}) {
         this.name = name;
         this.channel = channel;
         this.label = label || name;
@@ -27,7 +27,8 @@ export class Prop {
         this.modeMap = calcModeMap({stops, modes});
         this.modeMapEntries = Object.entries(this.modeMap);
 
-        this.defaultVal = defaultVal || 0;
+        this.defaultVal = defaultVal || 0; // stand by is the value that should be set on reset
+        this.activeDefault = activeDefault || 0; // activeDefault can be used when the device is turned on
         this.onPropChange = onPropChange;
         this.val = this.defaultVal;
     }
@@ -89,7 +90,7 @@ export class Prop {
     }
 }
 
-function calcModeMap({stops, modes}) {
+export function calcModeMap({stops, modes}) {
     let modeMap = {};
 
     let closestMode = chVal => {

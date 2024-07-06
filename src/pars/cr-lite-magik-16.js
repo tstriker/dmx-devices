@@ -9,7 +9,7 @@ export default ModelFactory({
     config: {
         name: "9ch",
         props: {
-            brightness: rangeProp({label: "Dimmer (always on)", defaultVal: 1, ui: false}),
+            brightness: rangeProp({label: "Dimmer (always on)", activeDefault: 1, ui: false}),
             red: rangeProp({}),
             green: rangeProp({}),
             blue: rangeProp({}),

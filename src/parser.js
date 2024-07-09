@@ -113,7 +113,7 @@ export function parseFixtureConfig(config) {
         let maxRepetitions = Math.max(...Object.values(propsCounter));
 
         let pixels = [];
-        for (let group = 0; group < maxRepetitions; group++) {
+        for (let group = 0; group <= maxRepetitions; group++) {
             let numbered = propName => (group == 0 ? propName : `${propName}${group}`);
             let numberedProp = propName => propsDict[numbered(propName)];
             let exists = propName => numberedProp(propName) !== undefined;
@@ -170,8 +170,7 @@ export function parseFixtureConfig(config) {
         }
         pixels.forEach((pixel, idx) => {
             // add the superfluous ID; not sure why we have it tbh
-            pixel.id = `Light ${idx + 1}`;
-            pixel.label = "Light";
+            pixel.id = `light-${idx + 1}`;
         });
         //console.log("pixels", pixels);
 

@@ -19,7 +19,7 @@ export default ModelFactory({
                     color: {
                         type: "fader",
                         props: {
-                            light: "fader",
+                            fader: "fader",
                         },
                     },
                 },

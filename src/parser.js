@@ -17,7 +17,8 @@ export function parseFixtureConfig(config) {
         let props = JSON.parse(JSON.stringify(mode.props));
 
         // make sure each prop is present
-        for (let channel = 0; channel < mode.channels; channel++) {
+        let totalChannels = Math.max(mode.channels, props.length);
+        for (let channel = 0; channel < totalChannels; channel++) {
             props[channel] = props[channel] || {type: null, label: ""};
         }
 
@@ -44,70 +45,68 @@ export function parseFixtureConfig(config) {
 
         props.forEach(prop => {
             delete prop.val; // just in case value has wondered in somehow; XXX - delete it upstream instead
-            let defaultActiveVal = prop.default_active;
-            let defaultVal = prop.default_value;
+            let defaultActiveVal = parseInt(prop.default_active || 0);
+            let defaultVal = parseInt(prop.default_value || 0);
             delete prop.default_active;
             delete prop.default_value;
 
-            let propType = prop.type == "custom" ? prop.label : prop.type;
+            let propName = prop.type == "custom" ? prop.label : prop.type;
+            propsCounter[propName] = (propsCounter[propName] || 0) + 1;
 
-            propsCounter[propType] = (propsCounter[propType] || 0) + 1;
-            let propName = propType;
-            if (propsCounter[propType] > 1 || prop.repetition) {
-                propName = `${propType}${propsCounter[propType]}`;
+            let propObj;
+            if (prop.modes) {
+                // deal with props that have modes, either as stops or ranges
+                let modes = (prop.modes || []).map((conf, idx) => {
+                    let mode = {
+                        chVal: conf.ch_val,
+                        val: conf.color ? conf.color : conf.val,
+                    };
+                    if (conf.color) {
+                        mode.color = conf.color;
+                    }
+
+                    if (conf.custom == "stop") {
+                        mode.stop = conf.val;
+                    } else if (conf.custom == "range") {
+                        let nextChVal = prop.modes[idx + 1]?.ch_val || 256;
+                        mode.range = nextChVal - mode.chVal - 1;
+                    }
+
+                    return mode;
+                });
+                propObj = {...prop, modes};
+            } else {
+                // if we don't have modes, we assume a simple full range
+                propObj = {
+                    ...prop,
+                    stops: [
+                        {chVal: 0, val: 0},
+                        {chVal: 255, val: 1},
+                    ],
+                };
             }
 
-            let propObj = rangeProp({...prop, occurence: propsCounter[propType]});
-            propObj.ui = prop.ui === false ? false : true; //
-            if (!propType) {
+            propObj.defaultVal = prop.defaultVal;
+            propObj.activeDefault = prop.activeDefault;
+            propObj.occurence = propsCounter[propName];
+            if (!propName) {
                 propObj.ui = false;
+            } else {
+                propObj.ui = prop.ui === false ? false : true;
             }
 
-            if (propType == "gobo") {
-                propObj.modes = (propObj.modes || []).map(obj => ({chVal: obj.ch_val, val: obj.val}));
+            if (defaultActiveVal || defaultVal) {
+                let modeMap = calcModeMap(propObj.modes || propObj.stops);
+                propObj.activeDefault = defaultActiveVal ? modeMap[defaultActiveVal].val : null;
+                propObj.defaultVal = defaultVal ? modeMap[defaultVal]?.val : null;
             }
 
-            if (propType == "wheel") {
-                propObj.modes = (propObj.modes || []).map(obj => ({
-                    chVal: obj.ch_val,
-                    val: obj.color,
-                    color: obj.color,
-                }));
+            if (propsCounter[propName] > 1 || prop.repetition) {
+                propName = `${propName}${propsCounter[propName]}`;
             }
-
-            if (defaultActiveVal) {
-                if (propObj.modes) {
-                    let defaultMode = propObj.modes.filter(mode => mode.chVal == defaultActiveVal)[0];
-                    if (defaultMode) {
-                        propObj.activeDefault = defaultMode.val;
-                    }
-                } else {
-                    let modeMap = calcModeMap({stops: propObj.stops});
-                    propObj.activeDefault = modeMap[defaultActiveVal].val;
-                }
-            }
-
-            if (defaultVal) {
-                if (propObj.modes) {
-                    let defaultMode = propObj.modes.filter(mode => mode.chVal == defaultVal)[0];
-                    if (defaultMode) {
-                        propObj.defaultVal = defaultMode.val;
-                    }
-                } else {
-                    let modeMap = calcModeMap({stops: propObj.stops});
-                    propObj.defaultVal = modeMap[defaultVal].val;
-                }
-            }
-
             propsDict[propName] = propObj;
         });
         // console.log("props dict", propsDict);
-
-        if ((propsDict.red || propsDict.red1) && propsDict.dimmer) {
-            // if we have the red channel, we can mix colors and so dimmer should be always on
-            //propsDict.dimmer.activeDefault = 1;
-            //propsDict.dimmer.ui = false;
-        }
 
         // get max repetitions so that we can dumbly go through bunch of inferring
         let maxRepetitions = Math.max(...Object.values(propsCounter));

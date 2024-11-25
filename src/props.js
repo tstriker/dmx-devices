@@ -1,30 +1,29 @@
 import {range} from "./utils.js";
 
 export class Prop {
-    constructor({name, channel, label, stops, modes, modifies, condition, defaultVal, activeDefault, onPropChange, ...other}) {
+    constructor({name, type, channel, label, stops, modes, defaultVal, activeDefault, onPropChange, ...other}) {
         this.name = name;
+        this.type = type;
         this.channel = channel;
         this.label = label || name;
+
         if (stops) {
             this.stops = stops;
         }
         if (modes) {
             this.modes = modes;
-            this.modeLabels = Object.fromEntries(modes.map(mode => [mode.val, mode.label || mode.val]));
-        }
-
-        if (modifies) {
-            this.modifies = modifies;
-        }
-        if (condition) {
-            this.condition = condition;
+            this.modesByName = Object.fromEntries(modes.map(mode => [mode.val, mode]));
         }
 
         Object.entries(other).forEach(([key, val]) => {
             this[key] = val;
         });
 
-        this.modeMap = calcModeMap({stops, modes});
+        this.modeMap = calcModeMap(stops || modes);
+        this.modeByVal = Object.fromEntries(
+            Object.entries(this.modeMap).map(([chVal, rec]) => [rec.label, {...rec, chVal}])
+        );
+
         this.modeMapEntries = Object.entries(this.modeMap);
 
         this.defaultVal = defaultVal || 0; // stand by is the value that should be set on reset
@@ -44,7 +43,7 @@ export class Prop {
         this.interpolated = this.modeMap[chVal]?.val;
 
         if (this.onPropChange) {
-            this.onPropChange(this.channel, this.chVal, this.modifies);
+            this.onPropChange(this.channel, this.chVal);
         }
     }
 
@@ -59,9 +58,11 @@ export class Prop {
             // direct mapping means there is no dmx <-> val translation and we can save time on processing
             // this is true for all RGB lights, as well as dimmers, strobes, and so on
             dmx = val;
+        } else if (this.modeByVal[val] !== undefined) {
+            dmx = this.modeByVal[val].chVal;
         } else {
             // finds closest by value to determine which channel this value maps to
-            let closest = this.modeMapEntries
+            let byDistance = this.modeMapEntries
                 .map(rec => {
                     let distance;
                     if (rec[1].val == val) {
@@ -76,7 +77,9 @@ export class Prop {
                 })
                 .sort((a, b) => a.distance - b.distance);
 
-            dmx = closest[0].chVal;
+            //console.log("found by distance", this.name, val, byDistance[0].chVal);
+
+            dmx = byDistance[0].chVal;
         }
         this.dmx = dmx;
     }
@@ -90,41 +93,50 @@ export class Prop {
     }
 }
 
-export function calcModeMap({stops, modes}) {
+export function calcModeMap(stops) {
+    // determines value and respective stop for each channel
+    // this way we can cheaply map from channel to specific state and don't have to calc it on the fly
     let modeMap = {};
 
-    let closestMode = chVal => {
-        let mode = modes[0];
-        for (let i = 0; i < modes.length; i++) {
-            if (modes[i].chVal > chVal) {
+    let closest = channel => {
+        let modeStop = stops[0];
+        for (let i = 0; i < stops.length; i++) {
+            if (stops[i].chVal > channel) {
                 break;
             }
-            mode = modes[i];
+            modeStop = stops[i];
         }
-        return mode;
+        return modeStop;
     };
 
-    if (modes) {
-        for (let i = 0; i <= 255; i++) {
-            let closest = closestMode(i);
-            modeMap[i] = {cur: closest, val: closest.val};
+    if (
+        (stops.length == 1 && stops[0].range == 255) ||
+        (stops.length == 2 && stops[0].chVal == 0 && stops[1].chVal == 255)
+    ) {
+        // if we have a linear range that goes from one end to the other, we can return a very simple
+        for (let channel = 0; channel <= 255; channel++) {
+            let cur = channel == 255 ? stops[stops.length - 1] : stops[0];
+            let progressVal = channel == 0 ? cur.val : `${cur.val}:${channel}`;
+            modeMap[channel] = {cur, val: channel / 255, progress: channel, label: progressVal};
         }
-    } else if (stops) {
-        for (let i = 0; i < stops.length - 1; i++) {
-            let cur = stops[i];
-            let next = stops[i + 1];
+        return modeMap;
+    }
 
-            range(cur.chVal, next.chVal + 1).forEach(chVal => {
-                if (cur.discrete) {
-                    modeMap[chVal] = {cur: cur, val: cur.val};
-                } else {
-                    let normalized = (chVal - cur.chVal) / (next.chVal - cur.chVal);
-                    let val = cur.val * (1 - normalized) + next.val * normalized;
+    stops = [...stops];
+    if (stops[0].chVal != 0) {
+        stops.splice(0, 0, {chVal: 0, val: null});
+    }
 
-                    modeMap[chVal] = {cur: cur, val: val};
-                }
-            });
-        }
+    for (let channel = 0; channel <= 255; channel++) {
+        // find the stop closest to the current channel value
+        let cur = closest(channel);
+        let progress = channel - cur.chVal;
+
+        // progressVal allows us to set value programmatically when we are tweening between different
+        // non-interpolatable states
+        let curVal = cur.val || "null";
+        let progressVal = progress == 0 ? curVal : `${curVal}:${progress}`;
+        modeMap[channel] = {cur: cur, progress, label: progressVal};
     }
 
     return modeMap;

@@ -60,6 +60,10 @@ export class Pixel {
                 Object.entries(config.props).forEach(([propName, propField]) => {
                     let prop = this._allProps[propField];
 
+                    if (!prop) {
+                        return;
+                    }
+
                     this.props[propName] = prop;
                     if (!Object.hasOwn(this, propName)) {
                         Object.defineProperty(this, propName, {
@@ -67,7 +71,6 @@ export class Pixel {
                             set: val => (prop = val),
                         });
                     }
-
                     usedChannels.add(prop.channel);
                 });
             }

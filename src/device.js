@@ -20,9 +20,6 @@ export class Device {
         // populate props
         Object.entries(props).forEach(([key, config], idx) => {
             // init all the props
-            // and if we are modifying another prop, pass in the reference so we can work with that
-            let modifies = config.modifies ? this[config.modifies] : null;
-
             // channel can be explicitly specified or will be assumed from the packing order
             let propChannel = config.channel || idx + 1;
             propChannel = address + propChannel - 1;
@@ -30,7 +27,6 @@ export class Device {
                 ...config,
                 name: key,
                 channel: propChannel,
-                modifies,
                 onPropChange: this.onPropChange.bind(this),
             });
             this[key] = prop;
@@ -74,7 +70,7 @@ export class Device {
             "speed",
         ];
         deviceFeatures = deviceFeatures.filter(
-            feature => feature in this || (pixels.length && pixels.every(pixel => feature in pixel))
+            feature => feature in this || (pixels.length && pixels.some(pixel => feature in pixel))
         );
         this.features = deviceFeatures;
 
@@ -97,12 +93,8 @@ export class Device {
         });
     }
 
-    onPropChange(ch, val, modifies) {
-        if (modifies) {
-            this.dmx[ch] = parseInt(modifies?.cur?.chVal || 0) + parseInt(val);
-        } else {
-            this.dmx[ch] = val;
-        }
+    onPropChange(ch, val) {
+        this.dmx[ch] = val;
 
         if (!this._notifyTimeout && !this._externalUpdate) {
             this._notifyTimeout = setTimeout(() => {
@@ -117,9 +109,6 @@ export class Device {
         this.props.forEach(prop => {
             if (dmx[prop.channel] != null) {
                 let val = dmx[prop.channel];
-                if (prop.modifies) {
-                    val = val - prop.modifies.cur.chVal;
-                }
                 prop.dmx = val;
             }
         });
@@ -128,7 +117,7 @@ export class Device {
 
     reset() {
         for (let prop of this.props) {
-            if (!prop.modifies && prop.channel >= 1 && prop.channel <= 512) {
+            if (prop.channel >= 1 && prop.channel <= 512) {
                 prop.val = prop.defaultVal || 0;
             }
         }

@@ -1,4 +1,4 @@
-import {range} from "./utils.js";
+import {round} from "./utils.js";
 
 export class Prop {
     constructor({name, type, channel, label, stops, modes, defaultVal, activeDefault, onPropChange, ...other}) {
@@ -26,8 +26,16 @@ export class Prop {
 
         this.modeMapEntries = Object.entries(this.modeMap);
 
-        this.defaultVal = defaultVal || 0; // stand by is the value that should be set on reset
-        this.activeDefault = activeDefault || 0; // activeDefault can be used when the device is turned on
+        if (defaultVal != undefined) {
+            // stand by is the value that should be set on reset
+            this.defaultVal = this.modeMap[defaultVal].label;
+        }
+
+        if (activeDefault != undefined) {
+            // activeDefault is used when the device is turned on
+            this.activeDefault = this.modeMap[activeDefault].label;
+        }
+
         this.onPropChange = onPropChange;
         this.val = this.defaultVal;
     }
@@ -62,6 +70,7 @@ export class Prop {
             dmx = this.modeByVal[val].chVal;
         } else {
             // finds closest by value to determine which channel this value maps to
+            // note - if config is correct, this should not fire anymore
             let byDistance = this.modeMapEntries
                 .map(rec => {
                     let distance;
@@ -113,10 +122,10 @@ export function calcModeMap(stops) {
         (stops.length == 1 && stops[0].range == 255) ||
         (stops.length == 2 && stops[0].chVal == 0 && stops[1].chVal == 255)
     ) {
-        // if we have a linear range that goes from one end to the other, we can return a very simple
+        // if we have a linear range that goes from one end to the other, the value label will be 0..1
         for (let channel = 0; channel <= 255; channel++) {
             let cur = channel == 255 ? stops[stops.length - 1] : stops[0];
-            let progressVal = channel == 0 ? cur.val : `${cur.val}:${channel}`;
+            let progressVal = round(channel / 255, 4);
             modeMap[channel] = {cur, val: channel / 255, progress: channel, label: progressVal};
         }
         return modeMap;

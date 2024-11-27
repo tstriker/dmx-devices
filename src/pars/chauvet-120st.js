@@ -22,7 +22,7 @@ export default ModelFactory({
                     {chVal: 192, val: "blue", color: "#4f9ae5"},
                     {chVal: 224, val: "orange", color: "#ed982e"},
                 ],
-                defaultVal: "warmWhite", // yellow sits in the middle of color wheel, so a good place to return to
+                defaultVal: 32, // yellow sits in the middle of color wheel, so a good place to return to
             },
 
             strobe: {
@@ -31,7 +31,7 @@ export default ModelFactory({
                     {val: 0.1, chVal: 8},
                     {val: 1, chVal: 215},
                 ],
-                defaultVal: 0,
+                defaultVal: 7,
             },
         },
 

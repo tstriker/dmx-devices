@@ -35,7 +35,7 @@ export default ModelFactory({
                         {chVal: 150, val: "All On"},
                         {chVal: 160, val: "LED Automatic"},
                     ],
-                    defaultVal: "red + green",
+                    defaultVal: 80,
                 },
 
                 strobe: rangeProp({}),

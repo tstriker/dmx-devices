@@ -19,7 +19,7 @@ export default ModelFactory({
                     // {chVal: 212, val: 450},
                     {chVal: 255, val: 540},
                 ],
-                defaultVal: 360, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
+                defaultVal: 127, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
             },
 
             panFine: {
@@ -37,7 +37,7 @@ export default ModelFactory({
                     {chVal: 0, val: 0},
                     {chVal: 255, val: 180},
                 ],
-                defaultVal: 90, // point straight up/down on defaultVal to avoid blinding anyone
+                defaultVal: 127, // point straight up/down on defaultVal to avoid blinding anyone
             },
 
             tiltFine: {
@@ -54,11 +54,11 @@ export default ModelFactory({
                     {chVal: 0, val: 1},
                     {chVal: 255, val: 0.01},
                 ],
-                defaultVal: 1,
+                defaultVal: 0,
             },
 
-            dimmer: rangeProp({label: "Dimmer (always on)", activeDefault: 1, ui: false}),
-            spot_light: rangeProp({label: "Spot Light", defaultVal: 1}),
+            dimmer: rangeProp({label: "Dimmer (always on)", activeDefault: 255, ui: false}),
+            spot_light: rangeProp({label: "Spot Light", defaultVal: 255}),
             strobe: rangeProp({label: "Strobe"}),
             wheel: {
                 label: "Color Wheel",
@@ -82,7 +82,7 @@ export default ModelFactory({
                     {chVal: 190, val: "stop rotation"},
                     {chVal: 194, val: "CW rotation"},
                 ],
-                defaultVal: "yellow", // yellow sits in the middle of color wheel, so a good place to return to
+                defaultVal: 72, // yellow sits in the middle of color wheel, so a good place to return to
             },
 
             gobo: {
@@ -98,7 +98,7 @@ export default ModelFactory({
                     {chVal: 112, val: "Focus Ring"},
                     {chVal: 128, val: "Gobos C-Clockwise"},
                 ],
-                defaultVal: "Angular",
+                defaultVal: 64,
             },
 
             washRed: rangeProp({label: "Wash Red"}),

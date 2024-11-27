@@ -20,7 +20,7 @@ export default ModelFactory({
                         // {chVal: 212, val: 450},
                         {chVal: 255, val: 540},
                     ],
-                    defaultVal: 360, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
+                    defaultVal: 127, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
                 },
 
                 tiltCoarse: {
@@ -30,7 +30,7 @@ export default ModelFactory({
                         {chVal: 0, val: 0},
                         {chVal: 255, val: 180},
                     ],
-                    defaultVal: 90, // point straight up/down  by default to avoid blinding anyone
+                    defaultVal: 127, // point straight up/down  by default to avoid blinding anyone
                 },
 
                 dimmer: rangeProp({label: "Dimmer", activeDefault: 1}),
@@ -112,7 +112,7 @@ export default ModelFactory({
                         // {chVal: 212, val: 450},
                         {chVal: 255, val: 540},
                     ],
-                    defaultVal: 360, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
+                    defaultVal: 127, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
                 },
 
                 panFine: {
@@ -130,7 +130,7 @@ export default ModelFactory({
                         {chVal: 0, val: 0},
                         {chVal: 255, val: 180},
                     ],
-                    defaultVal: 90, // point straight up/down  by default to avoid blinding anyone
+                    defaultVal: 127, // point straight up/down  by default to avoid blinding anyone
                 },
 
                 tiltFine: {
@@ -143,15 +143,15 @@ export default ModelFactory({
 
                 speed: {
                     label: "Speed",
-                    defaultVal: 1,
+                    defaultVal: 0,
                     stops: [
                         {chVal: 0, val: 1},
                         {chVal: 255, val: 0.01},
                     ],
                 },
 
-                dimmer: rangeProp({label: "Dimmer", activeDefault: 1}),
-                strobe: rangeProp({label: "Strobe", defaultVal: 1}),
+                dimmer: rangeProp({label: "Dimmer", activeDefault: 255}),
+                strobe: rangeProp({label: "Strobe", defaultVal: 255}),
 
                 wheel: {
                     label: "Color Wheel",
@@ -165,7 +165,7 @@ export default ModelFactory({
                         {chVal: 104, val: "magenta", color: "#ff00ff"},
                         {chVal: 122, val: "blue", color: "#4f9ae5"},
                     ],
-                    defaultVal: "green", // yellow sits in the middle of color wheel, so a good place to return to
+                    defaultVal: 68, // middle of the color wheel
                 },
 
                 gobo: {

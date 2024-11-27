@@ -30,7 +30,7 @@ export default ModelFactory({
                     {chVal: 160, val: "sound_2", label: "Equalizer Dim"},
                     {chVal: 190, val: "sound_3", label: "Equalizer Pulse 2"},
                 ],
-                defaultVal: "auto_1",
+                defaultVal: 10,
             },
         },
 

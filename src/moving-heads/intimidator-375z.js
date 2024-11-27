@@ -19,7 +19,7 @@ export default ModelFactory({
                     // {chVal: 212, val: 450},
                     {chVal: 255, val: 540},
                 ],
-                defaultVal: 360, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
+                defaultVal: 127, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
             },
 
             panFine: {
@@ -37,7 +37,7 @@ export default ModelFactory({
                     {chVal: 0, val: 0},
                     {chVal: 255, val: 180},
                 ],
-                defaultVal: 90, // point straight up/down  by default to avoid blinding anyone
+                defaultVal: 127, // point straight up/down  by default to avoid blinding anyone
             },
 
             tiltFine: {

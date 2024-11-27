@@ -45,15 +45,16 @@ export function parseFixtureConfig(config) {
 
         props.forEach(prop => {
             delete prop.val; // just in case value has wondered in somehow; XXX - delete it upstream instead
-            let defaultActiveVal = parseInt(prop.default_active || 0);
-            let defaultVal = parseInt(prop.default_value || 0);
-            delete prop.default_active;
-            delete prop.default_value;
 
-            let propName = prop.type == "custom" ? prop.label : prop.type;
-            propsCounter[propName] = (propsCounter[propName] || 0) + 1;
+            if (prop.default_value != undefined) {
+                prop.defaultVal = parseInt(prop.default_value || 0);
+                delete prop.default_value;
+            }
+            if (prop.default_active != undefined) {
+                prop.activeDefault = parseInt(prop.default_active || 0);
+                delete prop.default_active;
+            }
 
-            let propObj;
             if (prop.modes) {
                 // deal with props that have modes, either as stops or ranges
                 let modes = (prop.modes || []).map((conf, idx) => {
@@ -74,37 +75,29 @@ export function parseFixtureConfig(config) {
 
                     return mode;
                 });
-                propObj = {...prop, modes};
+                prop.modes = modes;
             } else {
                 // if we don't have modes, we assume a simple full range
-                propObj = {
-                    ...prop,
-                    stops: [
-                        {chVal: 0, val: 0},
-                        {chVal: 255, val: 1},
-                    ],
-                };
+                prop.stops = [
+                    {chVal: 0, val: 0},
+                    {chVal: 255, val: 1},
+                ];
             }
 
-            propObj.defaultVal = prop.defaultVal;
-            propObj.activeDefault = prop.activeDefault;
-            propObj.occurence = propsCounter[propName];
+            let propName = prop.type == "custom" ? prop.label : prop.type;
             if (!propName) {
-                propObj.ui = false;
+                prop.ui = false;
             } else {
-                propObj.ui = prop.ui === false ? false : true;
+                prop.ui = prop.ui === false ? false : true;
             }
 
-            if (defaultActiveVal || defaultVal) {
-                let modeMap = calcModeMap(propObj.modes || propObj.stops);
-                propObj.activeDefault = defaultActiveVal ? modeMap[defaultActiveVal].val : null;
-                propObj.defaultVal = defaultVal ? modeMap[defaultVal]?.val : null;
-            }
+            propsCounter[propName] = (propsCounter[propName] || 0) + 1;
+            prop.occurence = propsCounter[propName];
 
             if (propsCounter[propName] > 1 || prop.repetition) {
                 propName = `${propName}${propsCounter[propName]}`;
             }
-            propsDict[propName] = propObj;
+            propsDict[propName] = prop;
         });
         // console.log("props dict", propsDict);
 
@@ -150,7 +143,6 @@ export function parseFixtureConfig(config) {
             });
 
             if (exists("red")) {
-                // moving head pixels and rgb are mutually exclusive RN
                 if (exists("white")) {
                     controls.color = {type: "rgbw-light", props: ["red", "green", "blue", "white"]};
                 } else {

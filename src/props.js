@@ -1,5 +1,26 @@
 import {round} from "./utils.js";
 
+function binarySearch(arr, val) {
+    let start = 0;
+    let end = arr.length - 1;
+    let mid;
+
+    while (start <= end) {
+        mid = Math.floor((start + end) / 2);
+
+        if (arr[mid].label === val) {
+            return mid;
+        }
+
+        if (val < arr[mid].label) {
+            end = mid - 1;
+        } else {
+            start = mid + 1;
+        }
+    }
+    return mid;
+}
+
 export class Prop {
     constructor({name, type, channel, label, stops, modes, defaultVal, activeDefault, onPropChange, ...other}) {
         this.name = name;
@@ -24,7 +45,7 @@ export class Prop {
             Object.entries(this.modeMap).map(([chVal, rec]) => [rec.label, {...rec, chVal}])
         );
 
-        this.modeMapEntries = Object.entries(this.modeMap);
+        this.modeMapEntries = Object.values(this.modeMap);
 
         // stand by is the value that should be set on reset
         this.defaultVal = this.modeMap[defaultVal || 0].label;
@@ -59,34 +80,18 @@ export class Prop {
 
     set val(val) {
         this.interpolated = val;
-        let dmx;
-        if (this.stops?.length == 2 && this.stops[0].val == 0 && this.stops[this.stops.length - 1].val == 255) {
-            // direct mapping means there is no dmx <-> val translation and we can save time on processing
-            // this is true for all RGB lights, as well as dimmers, strobes, and so on
-            dmx = val;
-        } else if (this.modeByVal[val] !== undefined) {
-            dmx = this.modeByVal[val].chVal;
-        } else {
-            // finds closest by value to determine which channel this value maps to
-            // note - if config is correct, this should not fire anymore
-            let byDistance = this.modeMapEntries
-                .map(rec => {
-                    let distance;
-                    if (rec[1].val == val) {
-                        distance = 0;
-                    } else if (isNaN(val)) {
-                        distance = 999999;
-                    } else {
-                        distance = Math.abs(rec[1].val - val);
-                    }
 
-                    return {chVal: rec[0], distance};
-                })
-                .sort((a, b) => a.distance - b.distance);
-
-            //console.log("found by distance", this.name, val, byDistance[0].chVal);
-
-            dmx = byDistance[0].chVal;
+        // try exact match and fall back on search
+        let dmx = this.modeByVal[val]?.chVal;
+        if (dmx == undefined) {
+            if (this.stops?.length == 2 && this.stops[0].chVal == 0 && this.stops[this.stops.length - 1].chVal == 255) {
+                // scale with just a single 0..255 range, meaning we can interpolate from normalized to channel
+                dmx = Math.round(val * 255);
+            } else {
+                // for more complex situations perform binary search
+                let idx = binarySearch(this.modeMapEntries, val);
+                dmx = idx;
+            }
         }
         this.dmx = dmx;
     }
@@ -124,7 +129,7 @@ export function calcModeMap(stops) {
         for (let channel = 0; channel <= 255; channel++) {
             let cur = channel == 255 ? stops[stops.length - 1] : stops[0];
             let progressVal = round(channel / 255, 4);
-            modeMap[channel] = {cur, val: channel / 255, progress: channel, label: progressVal};
+            modeMap[channel] = {cur, val: progressVal, progress: channel, label: progressVal};
         }
         return modeMap;
     }

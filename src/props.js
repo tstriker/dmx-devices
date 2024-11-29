@@ -26,10 +26,8 @@ export class Prop {
 
         this.modeMapEntries = Object.entries(this.modeMap);
 
-        if (defaultVal != undefined) {
-            // stand by is the value that should be set on reset
-            this.defaultVal = this.modeMap[defaultVal].label;
-        }
+        // stand by is the value that should be set on reset
+        this.defaultVal = this.modeMap[defaultVal || 0].label;
 
         if (activeDefault != undefined) {
             // activeDefault is used when the device is turned on

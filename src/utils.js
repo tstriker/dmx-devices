@@ -28,11 +28,16 @@ export function between(val, bounds) {
     return bounds.some(([lower, upper]) => val >= lower && val <= upper);
 }
 
+export function parseColor(color) {
+    let parsed = color.hex ? color.hex() : color;
+    return chroma(parsed);
+}
+
 export function colorToRGBW(color) {
     // note - while this func might be correct, it seems to diminish other colors
     // one solution is to use the white additively.
     // megamath https://www.neltnerlabs.com/saikoled/how-to-convert-from-hsi-to-rgb-white
-    color = chroma(color);
+    color = parseColor(color);
     let [h, s, i] = color.hsi();
 
     h = ((h || 0) * Math.PI) / 180;

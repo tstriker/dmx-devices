@@ -1,6 +1,6 @@
 import chroma from "chroma-js";
 
-import {colorToRGBW} from "./utils.js";
+import {parseColor, colorToRGBW} from "./utils.js";
 
 export class Control {
     constructor(config, props) {
@@ -92,7 +92,7 @@ let pixelControls = {
         }
 
         set(value) {
-            let [r, g, b, a] = chroma(value).rgba();
+            let [r, g, b, a] = parseColor(value).rgba();
             [this.red.dmx, this.green.dmx, this.blue.dmx] = [Math.round(r * a), Math.round(g * a), Math.round(b * a)];
         }
     },
@@ -105,7 +105,7 @@ let pixelControls = {
             return color.hex();
         }
         set(value) {
-            let [r, g, b, a] = chroma(value).rgba();
+            let [r, g, b, a] = parseColor(value).rgba();
             let w = colorToRGBW(value)[3];
 
             [this.red.dmx, this.green.dmx, this.blue.dmx, this.white.dmx] = [
@@ -124,7 +124,7 @@ let pixelControls = {
             return chroma(this.dimmer, this.dimmer, this.dimmer).hex();
         }
         set(value) {
-            let [r, g, b, a] = chroma(value).rgba();
+            let [r, g, b, a] = parseColor(value).rgba();
             let w = Math.max(r, g, b);
 
             this.dimmer.dmx = Math.round(w * a);
@@ -138,7 +138,7 @@ let pixelControls = {
             return chroma(this.cool, this.cool, this.cool).hex();
         }
         set(value) {
-            let [r, g, b, a] = chroma(value).rgba();
+            let [r, g, b, a] = parseColor(value).rgba();
             let w = Math.max(r, g, b);
 
             this.cool.dmx = Math.round(w * a);
@@ -155,7 +155,7 @@ let pixelControls = {
             return chroma(this.fader, this.fader, this.fader).hex();
         }
         set(value) {
-            let [r, g, b, a] = chroma(value).rgba();
+            let [r, g, b, a] = parseColor(value).rgba();
             let w = Math.max(r, g, b);
 
             this.fader.dmx = Math.round(w * a);

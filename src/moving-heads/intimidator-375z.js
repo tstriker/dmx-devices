@@ -89,7 +89,7 @@ export default ModelFactory({
             rotation: rangeProp({label: "Gobo Rotation"}),
             prism: rangeProp({label: "Prism"}),
             focus: rangeProp({label: "Focus"}),
-            dimmer: rangeProp({label: "Dimmer", activeDefault: 1}),
+            dimmer: rangeProp({label: "Dimmer", activeDefault: 255}),
             shutter: rangeProp({label: "Shutter"}),
             function: rangeProp({label: "Function", ui: false}),
             movement_macros: rangeProp({label: "Movement Macros", ui: false}),

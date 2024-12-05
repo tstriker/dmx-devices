@@ -61,7 +61,7 @@ let configs = [];
         let colorAddress = (idx - 1) * 7;
         config.props = {
             ...config.props,
-            [`dimmer${idx}`]: rangeProp({channel: colorAddress + 1, label: `Dimmer ${idx}`, activeDefault: 1, ui: false}),
+            [`dimmer${idx}`]: rangeProp({channel: colorAddress + 1, label: `Dimmer ${idx}`, activeDefault: 255, ui: false}),
 
             [`strobe${idx}`]: {
                 channel: colorAddress + 2,

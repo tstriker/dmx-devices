@@ -80,7 +80,7 @@ export default ModelFactory({
                         {chVal: 255, val: 1},
                     ],
                 },
-                dimmer: rangeProp({label: "Dimmer", activeDefault: 1}),
+                dimmer: rangeProp({label: "Dimmer", activeDefault: 255}),
             },
             pixels: repeatPixels(4, {
                 id: "light#",

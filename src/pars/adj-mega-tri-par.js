@@ -57,7 +57,7 @@ export default ModelFactory({
                 blue: rangeProp({}),
                 uv: rangeProp({}),
                 strobe: strobe,
-                brightness: rangeProp({label: "Dimmer (always on)", activeDefault: 1, ui: false}),
+                brightness: rangeProp({label: "Dimmer (always on)", activeDefault: 255, ui: false}),
             },
             pixels: [
                 {

@@ -8,7 +8,7 @@ export default ModelFactory({
     config: {
         name: "1ch",
         props: {
-            fader: rangeProp({label: "Fader", activeDefault: 1}),
+            fader: rangeProp({label: "Fader", activeDefault: 255}),
         },
 
         pixels: [

@@ -9,7 +9,7 @@ export default ModelFactory({
         {
             name: "4ch",
             props: {
-                dimmer: rangeProp({activeDefault: 1}),
+                dimmer: rangeProp({activeDefault: 255}),
             },
             pixels: [
                 {

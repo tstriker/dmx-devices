@@ -33,7 +33,7 @@ export default ModelFactory({
                     defaultVal: 127, // point straight up/down  by default to avoid blinding anyone
                 },
 
-                dimmer: rangeProp({label: "Dimmer", activeDefault: 1}),
+                dimmer: rangeProp({label: "Dimmer", activeDefault: 255}),
 
                 wheel: {
                     label: "Color Wheel",

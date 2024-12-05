@@ -11,7 +11,7 @@ export default ModelFactory({
             name: "9ch",
             props: {
                 rotation: rangeProp({label: "Rotation"}),
-                dimmer: rangeProp({activeDefault: 1}),
+                dimmer: rangeProp({activeDefault: 255}),
                 wheel: {
                     label: "Derby Color",
                     modes: [

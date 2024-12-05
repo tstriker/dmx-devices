@@ -9,7 +9,7 @@ export default ModelFactory({
         {
             name: "2ch",
             props: {
-                dimmer: rangeProp({activeDefault: 1}),
+                dimmer: rangeProp({activeDefault: 255}),
                 zoom: rangeProp({}),
             },
 
@@ -33,7 +33,7 @@ export default ModelFactory({
         {
             name: "3ch",
             props: {
-                dimmer: rangeProp({activeDefault: 1}),
+                dimmer: rangeProp({activeDefault: 255}),
                 strobe: {
                     label: "Strobe",
                     stops: [

@@ -93,7 +93,14 @@ export class Prop {
                 dmx = idx;
             }
         }
-        this.dmx = dmx;
+
+        if (dmx >= 0 && dmx <= 255) {
+            this.dmx = dmx;
+        } else {
+            console.error(
+                `Attempting to set ${this.name} prop with val '${val}' that maps to invalid DMX value '${dmx}'`
+            );
+        }
     }
 
     get val() {

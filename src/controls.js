@@ -121,7 +121,7 @@ let pixelControls = {
         defaultVal = "#000";
 
         get() {
-            return chroma(this.dimmer, this.dimmer, this.dimmer).hex();
+            return chroma(this.dimmer.val, this.dimmer.val, this.dimmer.val).hex();
         }
         set(value) {
             let [r, g, b, a] = parseColor(value).rgba();
@@ -135,7 +135,7 @@ let pixelControls = {
         defaultVal = "#000";
 
         get() {
-            return chroma(this.cool, this.cool, this.cool).hex();
+            return chroma(this.cool.val, this.cool.val, this.cool.val).hex();
         }
         set(value) {
             let [r, g, b, a] = parseColor(value).rgba();
@@ -152,7 +152,7 @@ let pixelControls = {
         // same as w-light, except we don't assume it's white
         // single color light; assuming white but that would be gel-dependant
         get() {
-            return chroma(this.fader, this.fader, this.fader).hex();
+            return chroma(this.fader.val, this.fader.val, this.fader.val).hex();
         }
         set(value) {
             let [r, g, b, a] = parseColor(value).rgba();

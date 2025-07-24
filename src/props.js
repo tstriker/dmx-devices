@@ -129,6 +129,7 @@ export function calcModeMap(stops) {
     };
 
     if (
+        stops.length == 0 ||
         (stops.length == 1 && stops[0].range == 255) ||
         (stops.length == 2 && stops[0].chVal == 0 && stops[1].chVal == 255)
     ) {

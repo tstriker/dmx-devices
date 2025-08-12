@@ -5,12 +5,13 @@ let strobe = {
     // even though the tripar is capable of several strobe modes, we default to the standard
     // as anything more sophisticated can be implemented on software side
     label: "Strobe",
-    stops: [
-        {val: 0, chVal: 63},
-        {val: 0.1, chVal: 64},
-        {val: 1, chVal: 95},
+    modes: [
+        {chVal: 32, val: "Don't strobe"},
+        {chVal: 64, val: "Strobe slow-fast", range: 32},
+        {chVal: 128, val: "Pulse strobe", range: 32},
+        {chVal: 192, val: "Random strobe", range: 32},
     ],
-    activeDefault: 0,
+    defaultVal: 32,
 };
 
 let colorControl = {

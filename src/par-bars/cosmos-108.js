@@ -36,15 +36,7 @@ function rgb(...addresses) {
 }
 
 function strobe(channel, label) {
-    return {
-        channel,
-        label: label || "Strobe",
-        stops: [
-            {chVal: 0, val: 0},
-            {chVal: 15, val: 0.1},
-            {chVal: 255, val: 1},
-        ],
-    };
+    return rangeProp({label: "Strobe"});
 }
 
 export default ModelFactory({
@@ -58,7 +50,7 @@ export default ModelFactory({
             props: {
                 mode: rangeProp({channel: 1, label: "Mode", ui: false}),
                 dimmer: rangeProp({channel: 2, label: "Dimmer", activeDefault: 255}),
-                strobe: strobe(3, "Strobe Speed"),
+                strobe: rangeProp({channel: 3, label: "Strobe"}),
                 ...rgb(4, 7, 10, 13).props,
             },
             pixels: [...rgb(4, 7, 10, 13).pixels],

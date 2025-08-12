@@ -34,14 +34,7 @@ export default ModelFactory({
             name: "3ch",
             props: {
                 dimmer: rangeProp({activeDefault: 255}),
-                strobe: {
-                    label: "Strobe",
-                    stops: [
-                        {chVal: 0, val: 0, label: "off"},
-                        {chVal: 10, val: 0.01},
-                        {chVal: 255, val: 1},
-                    ],
-                },
+                strobe: rangeProp({label: "Strobe"}),
                 zoom: rangeProp({label: "Zoom"}),
             },
 

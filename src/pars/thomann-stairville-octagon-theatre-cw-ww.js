@@ -11,14 +11,7 @@ export default ModelFactory({
             props: {
                 cool: rangeProp({label: "Cool White"}),
                 warm: rangeProp({label: "Warm White"}),
-                strobe: {
-                    label: "Strobe",
-                    stops: [
-                        {chVal: 0, val: 0, label: "off"},
-                        {chVal: 16, val: 0.01},
-                        {chVal: 255, val: 1},
-                    ],
-                },
+                strobe: rangeProp({label: "Strobe"}),
                 mode: rangeProp({ui: false}),
                 brightness: rangeProp({label: "Dimmer (always on)", activeDefault: 255, ui: false}),
             },

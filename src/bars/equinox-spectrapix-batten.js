@@ -2,14 +2,7 @@ import {ModelFactory} from "../device.js";
 import {rangeProp, repeatProps, repeatPixels} from "../utils.js";
 
 let dimmer = rangeProp({label: "Dimmer", activeDefault: 255});
-let strobe = {
-    label: "Strobe",
-    stops: [
-        {chVal: 0, val: 0},
-        {chVal: 10, val: 0.1},
-        {chVal: 255, val: 1},
-    ],
-};
+let strobe = rangeProp({label: "Strobe"});
 let red = rangeProp({label: "Red"});
 let green = rangeProp({label: "Green"});
 let blue = rangeProp({label: "Blue"});

@@ -61,14 +61,7 @@ export default ModelFactory({
             name: "8ch",
             props: {
                 dimmer: rangeProp({label: "Dimmer", activeDefault: 255}),
-                strobe: rangeProp({
-                    label: "Strobe",
-                    stops: [
-                        {chVal: 0, val: 0},
-                        {chVal: 10, val: 0.1},
-                        {chVal: 255, val: 1},
-                    ],
-                }),
+                strobe: rangeProp({label: "Strobe"}),
                 red: rangeProp({label: "Red"}),
                 green: rangeProp({label: "Red"}),
                 blue: rangeProp({label: "Red"}),

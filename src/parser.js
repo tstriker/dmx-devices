@@ -55,7 +55,7 @@ export function parseFixtureConfig(config) {
                 delete prop.default_active;
             }
 
-            if (prop.modes) {
+            if ((prop.modes || []).length > 1) {
                 // deal with props that have modes, either as stops or ranges
                 let modes = (prop.modes || []).map((conf, idx) => {
                     let mode = {
@@ -159,6 +159,10 @@ export function parseFixtureConfig(config) {
                 pixels.push({controls});
             }
         }
+        if (!pixels.length) {
+            pixels = [{}];
+        }
+
         pixels.forEach((pixel, idx) => {
             // add the superfluous ID; not sure why we have it tbh
             pixel.id = `light-${idx + 1}`;

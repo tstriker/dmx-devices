@@ -79,6 +79,9 @@ export class Prop {
     }
 
     set val(val) {
+        if (val === null || (typeof val == "number" && Number.isNaN(val))) {
+            val = this.defaultVal;
+        }
         this.interpolated = val;
 
         // try exact match and fall back on search
@@ -97,9 +100,7 @@ export class Prop {
         if (dmx >= 0 && dmx <= 255) {
             this.dmx = dmx;
         } else {
-            console.error(
-                `Attempting to set ${this.name} prop with val '${val}' that maps to invalid DMX value '${dmx}'`
-            );
+            console.error(`Attempting to set ${this.name} prop to '${val}' that maps to invalid DMX value '${dmx}'`);
         }
     }
 

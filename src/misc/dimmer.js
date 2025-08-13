@@ -1,29 +1,13 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "Dimmer",
     widthCm: 20,
     type: "fader",
-    config: {
-        name: "1ch",
-        props: {
-            fader: rangeProp({label: "Fader", activeDefault: 255}),
+    modes: [
+        {
+            name: "1ch",
+            props: ["dimmer"],
         },
-
-        pixels: [
-            {
-                id: `fader`,
-                label: `Fader`,
-                controls: {
-                    color: {
-                        type: "fader",
-                        props: {
-                            fader: "fader",
-                        },
-                    },
-                },
-            },
-        ],
-    },
+    ],
 });

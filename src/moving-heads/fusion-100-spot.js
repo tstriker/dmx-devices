@@ -1,42 +1,25 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "Fusion 100 Spot",
     type: "moving head",
-    config: [
+    modes: [
         {
             name: "8ch",
-            props: {
-                panCoarse: {
+            props: [
+                {
+                    type: "pan_coarse",
                     degrees: 540,
-                    label: "Pan",
-                    stops: [
-                        {chVal: 0, val: 0},
-                        // {chVal: 42, val: 90},
-                        // {chVal: 84, val: 180},
-                        // {chVal: 128, val: 270},
-                        // {chVal: 170, val: 360},
-                        // {chVal: 212, val: 450},
-                        {chVal: 255, val: 540},
-                    ],
                     defaultVal: 127, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
                 },
-
-                tiltCoarse: {
+                {
+                    type: "tilt_coarse",
                     degrees: 180,
-                    label: "Tilt",
-                    stops: [
-                        {chVal: 0, val: 0},
-                        {chVal: 255, val: 180},
-                    ],
                     defaultVal: 127, // point straight up/down  by default to avoid blinding anyone
                 },
-
-                dimmer: rangeProp({label: "Dimmer", activeDefault: 255}),
-
-                wheel: {
-                    label: "Color Wheel",
+                {type: "dimmer", activeDefault: 255},
+                {
+                    type: "wheel",
                     modes: [
                         {chVal: 0, val: "white", color: "#fff"},
                         {chVal: 14, val: "red", color: "#ff0000"},
@@ -50,8 +33,8 @@ export default ModelFactory({
                     defaultVal: "green", // by default sit in the middle for faster spin-to times
                 },
 
-                gobo: {
-                    label: "Gobo",
+                {
+                    type: "gobo",
                     modes: [
                         {chVal: 0, val: "Off"},
                         {chVal: 9, val: "Stars"},
@@ -65,96 +48,31 @@ export default ModelFactory({
                     ],
                 },
 
-                rotation: rangeProp({label: "Gobo Rotation"}),
-                focus: rangeProp({label: "Focus"}),
-                prism: rangeProp({label: "Prism"}),
-            },
-
-            pixels: [
-                {
-                    id: "light",
-                    label: "Light",
-                    controls: {
-                        fader: "dimmer",
-                        gobo: "gobo",
-                        wheel: "wheel",
-                        speed: "speed",
-                        pan: {
-                            type: "degrees",
-                            degrees: 540,
-                            props: {
-                                coarse: "panCoarse",
-                            },
-                        },
-                        tilt: {
-                            type: "degrees",
-                            degrees: 180,
-                            props: {
-                                coarse: "tiltCoarse",
-                            },
-                        },
-                    },
-                },
+                "rotation",
+                "focus",
+                "prism",
             ],
         },
         {
             name: "15ch",
-            props: {
-                panCoarse: {
+            props: [
+                {
+                    type: "pan_coarse",
                     degrees: 540,
-                    label: "Pan",
-                    stops: [
-                        {chVal: 0, val: 0},
-                        // {chVal: 42, val: 90},
-                        // {chVal: 84, val: 180},
-                        // {chVal: 128, val: 270},
-                        // {chVal: 170, val: 360},
-                        // {chVal: 212, val: 450},
-                        {chVal: 255, val: 540},
-                    ],
                     defaultVal: 127, // point straight ahead at 360 degrees to allow 90 degree freedom either direction
                 },
-
-                panFine: {
-                    label: "Pan Fine",
-                    stops: [
-                        {chVal: 0, val: 0},
-                        {chVal: 255, val: 3.6},
-                    ],
-                },
-
-                tiltCoarse: {
+                "pan_fine",
+                {
+                    type: "tilt_coarse",
                     degrees: 180,
-                    label: "Tilt",
-                    stops: [
-                        {chVal: 0, val: 0},
-                        {chVal: 255, val: 180},
-                    ],
                     defaultVal: 127, // point straight up/down  by default to avoid blinding anyone
                 },
-
-                tiltFine: {
-                    label: "Tilt Fine",
-                    stops: [
-                        {chVal: 0, val: 0},
-                        {chVal: 255, val: 1.3},
-                    ],
-                },
-
-                speed: {
-                    label: "Speed",
-                    defaultVal: 0,
-                    stops: [
-                        {chVal: 0, val: 1},
-                        {chVal: 255, val: 0.01},
-                    ],
-                },
-
-                dimmer: rangeProp({label: "Dimmer", activeDefault: 255}),
-                strobe: rangeProp({label: "Strobe", defaultVal: 255}),
-
-                wheel: {
-                    label: "Color Wheel",
+                "tilt_fine",
+                "speed",
+                {type: "dimmer", activeDefault: 255},
+                {type: "strobe", defaultVal: 255},
+                {
+                    type: "wheel",
                     modes: [
                         {chVal: 0, val: "white", color: "#fff"},
                         {chVal: 14, val: "red", color: "#ff0000"},
@@ -168,8 +86,8 @@ export default ModelFactory({
                     defaultVal: 68, // middle of the color wheel
                 },
 
-                gobo: {
-                    label: "Gobo",
+                {
+                    type: "gobo",
                     modes: [
                         {chVal: 0, val: "Off"},
                         {chVal: 16, val: "Fog"},
@@ -180,47 +98,15 @@ export default ModelFactory({
                         {chVal: 96, val: "Aliens"},
                         {chVal: 112, val: "Focus Ring"},
                         {chVal: 128, val: "Gobos C-Clockwise"},
-
-                        {chVal: 190, val: "Gobos C-Clockwise"},
-                        {chVal: 194, val: "Gobos C-Clockwise"},
+                        {chVal: 190, val: "Gobos C-Clockwise 2"},
+                        {chVal: 194, val: "Gobos C-Clockwise 3"},
                     ],
                 },
-
-                rotation: rangeProp({label: "Rotation"}),
-                focus: rangeProp({label: "Focus"}),
-                prism: rangeProp({label: "Prism"}),
-
-                led_macro: rangeProp({label: "LED macro", ui: false}),
-                tilt_macro: rangeProp({label: "Tilt macro", ui: false}),
-            },
-
-            pixels: [
-                {
-                    id: "light",
-                    label: "Light",
-                    controls: {
-                        fader: "dimmer",
-                        gobo: "gobo",
-                        wheel: "wheel",
-                        strobe: "strobe",
-                        pan: {
-                            type: "degrees",
-                            degrees: 540,
-                            props: {
-                                coarse: "panCoarse",
-                                fine: "panFine",
-                            },
-                        },
-                        tilt: {
-                            type: "degrees",
-                            degrees: 180,
-                            props: {
-                                coarse: "tiltCoarse",
-                                fine: "tiltFine",
-                            },
-                        },
-                    },
-                },
+                "rotation",
+                "focus",
+                "prism",
+                {type: "custom", label: "led_macro", ui: false},
+                {type: "custom", label: "tilt_macro", ui: false},
             ],
         },
     ],

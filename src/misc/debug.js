@@ -1,31 +1,17 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-function channels(i) {
-    let channelProps = {};
-    for (let channel = 1; channel <= i; channel++) {
-        channelProps[`ch${channel < 10 ? "0" + channel : channel}`] = rangeProp({
-            label: channel < 10 ? `0${channel}` : channel,
-        });
-    }
-    return {
-        props: channelProps,
-        pixels: [{id: "dummy"}], // needs a dummy pixel to attach to, or otherwise the code doesn't recognise it
-    };
-}
-
-export default ModelFactory({
+export default parseFixtureConfig({
     company: "RGB Monster",
     model: "Debug Device",
     type: "debug",
-    config: [
-        {name: "1ch", ...channels(1)},
-        {name: "2ch", ...channels(2)},
-        {name: "4ch", ...channels(4)},
-        {name: "8ch", ...channels(8)},
-        {name: "16ch", ...channels(16)},
-        {name: "32ch", ...channels(32)},
-        {name: "64ch", ...channels(64)},
-        {name: "256ch", ...channels(256)},
+    modes: [
+        {name: "1ch", props: [{type: "custom", label: "intensity", repeats: 1, every: 1}]},
+        {name: "2ch", props: [{type: "custom", label: "intensity", repeats: 2, every: 1}]},
+        {name: "4ch", props: [{type: "custom", label: "intensity", repeats: 4, every: 1}]},
+        {name: "8ch", props: [{type: "custom", label: "intensity", repeats: 8, every: 1}]},
+        {name: "16ch", props: [{type: "custom", label: "intensity", repeats: 16, every: 1}]},
+        {name: "32ch", props: [{type: "custom", label: "intensity", repeats: 32, every: 1}]},
+        {name: "64ch", props: [{type: "custom", label: "intensity", repeats: 64, every: 1}]},
+        {name: "256ch", props: [{type: "custom", label: "intensity", repeats: 256, every: 1}]},
     ],
 });

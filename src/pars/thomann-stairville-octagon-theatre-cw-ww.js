@@ -1,36 +1,18 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "Thomann Stairville Octagon Theatre CW WW",
     widthCm: 20,
     type: "rgb-light",
-    config: [
+    modes: [
         {
             name: "5ch",
-            props: {
-                cool: rangeProp({label: "Cool White"}),
-                warm: rangeProp({label: "Warm White"}),
-                strobe: rangeProp({label: "Strobe"}),
-                mode: rangeProp({ui: false}),
-                brightness: rangeProp({label: "Dimmer (always on)", activeDefault: 255, ui: false}),
-            },
-
-            pixels: [
-                {
-                    id: `light`,
-                    label: `Light`,
-                    controls: {
-                        color: {
-                            type: "cool-warm-light",
-                            props: {
-                                cool: "cool",
-                                warm: "warm",
-                            },
-                        },
-                        strobe: "strobe",
-                    },
-                },
+            props: [
+                {type: "custom", label: "cool"},
+                {type: "custom", label: "warm"},
+                "strobe",
+                {type: "custom", label: "mode", ui: false},
+                {type: "dimmer", activeDefault: 255, ui: false},
             ],
         },
     ],

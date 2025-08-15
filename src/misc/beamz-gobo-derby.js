@@ -1,18 +1,18 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "Beamz Gobo Derby",
     widthCm: 20,
     type: "rgbw-light",
 
-    config: [
+    modes: [
         {
             name: "9ch",
-            props: {
-                rotation: rangeProp({label: "Rotation"}),
-                dimmer: rangeProp({activeDefault: 255}),
-                wheel: {
+            props: [
+                "rotation",
+                {type: "dimmer", activeDefault: 255},
+                {
+                    type: "wheel",
                     label: "Derby Color",
                     modes: [
                         {chVal: 0, val: "off", color: "#fff"},
@@ -38,19 +38,11 @@ export default ModelFactory({
                     defaultVal: 80,
                 },
 
-                strobe: rangeProp({}),
-                uv1: rangeProp({label: "UV 1"}),
-                uv2: rangeProp({label: "UV 2"}),
-
-                autoSound: rangeProp({ui: false}),
-                autoSoundUV: rangeProp({ui: false}),
-            },
-            pixels: [
-                {
-                    id: "light",
-                    label: "Light",
-                    controls: {},
-                },
+                "strobe",
+                {type: "custom", label: "UV 1"},
+                {type: "custom", label: "UV 2"},
+                {type: "custom", label: "autoSound", ui: false},
+                {type: "custom", label: "autoSoundUV", ui: false},
             ],
         },
     ],

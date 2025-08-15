@@ -1,98 +1,32 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "Beamz BT270",
     widthCm: 20,
     type: "rgb-light",
 
-    config: [
+    modes: [
         {
             name: "3ch",
-            props: {
-                red: rangeProp({}),
-                green: rangeProp({}),
-                blue: rangeProp({}),
-            },
-            pixels: [
-                {
-                    id: "light",
-                    label: "Light",
-                    controls: {
-                        color: {
-                            name: "light",
-                            type: "rgb-light",
-                            label: "Light",
-                            props: {
-                                red: "red",
-                                green: "green",
-                                blue: "blue",
-                            },
-                        },
-                    },
-                },
-            ],
+            props: ["red", "green", "blue"],
         },
-
         {
             name: "4ch",
-            props: {
-                red: rangeProp({}),
-                green: rangeProp({}),
-                blue: rangeProp({}),
-                white: rangeProp({}),
-            },
-            pixels: [
-                {
-                    id: "light",
-                    label: "Light",
-                    controls: {
-                        color: {
-                            name: "light",
-                            type: "rgbw-light",
-                            label: "Light",
-                            props: {
-                                red: "red",
-                                green: "green",
-                                blue: "blue",
-                                white: "white",
-                            },
-                        },
-                    },
-                },
-            ],
+
+            props: ["red", "green", "blue", "white"],
         },
 
         {
             name: "8ch",
-            props: {
-                brightness: rangeProp({label: "Dimmer (always on)", activeDefault: 255, ui: false}),
-                strobe: rangeProp({}),
-                red: rangeProp({}),
-                green: rangeProp({}),
-                blue: rangeProp({}),
-                white: rangeProp({}),
-                staticColor: rangeProp({ui: false}),
-                colorMacro: rangeProp({ui: false}),
-            },
-            pixels: [
-                {
-                    id: "light",
-                    label: "Light",
-                    controls: {
-                        color: {
-                            name: "light",
-                            type: "rgbw-light",
-                            label: "Light",
-                            props: {
-                                red: "red",
-                                green: "green",
-                                blue: "blue",
-                                white: "white",
-                            },
-                        },
-                    },
-                },
+            props: [
+                {type: "dimmer", activeDefault: 255, ui: false},
+                "strobe",
+                "red",
+                "green",
+                "blue",
+                "white",
+                {type: "custom", label: "static color", ui: false},
+                {type: "custom", label: "color macro", ui: false},
             ],
         },
     ],

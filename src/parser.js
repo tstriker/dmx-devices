@@ -1,6 +1,4 @@
 import {ModelFactory} from "./device.js";
-import {rangeProp} from "./utils.js";
-import {calcModeMap} from "./props.js";
 
 export function parseFixtureConfig(config) {
     // takes json-friendly config and renders a device factory, with inferred pixels and all
@@ -16,34 +14,67 @@ export function parseFixtureConfig(config) {
         // clone so we don't end up in weird echoes
         let props = JSON.parse(JSON.stringify(mode.props));
 
-        // make sure each prop is present
-        let totalChannels = Math.max(mode.channels, props.length);
-        for (let channel = 0; channel < totalChannels; channel++) {
-            props[channel] = props[channel] || {type: null, label: ""};
-        }
+        // props was an packed array, but now i'm packing it more tightly and allowing
+        // not to have nulls
+        let channelMappings = {};
+        let countsByProp = {};
 
-        // repeat the repeated props and for each repeated mark the number of repetition
-        props.forEach((prop, idx) => {
-            if (prop.repeats > 1) {
-                for (let i = 0; i < prop.repeats; i++) {
-                    let repeatIdx = idx + i * prop.every;
+        let firstAvailable = 0;
+        props.forEach(prop => {
+            if (!prop) {
+                // the old nulls that we don't need anymore
+                return;
+            }
 
-                    props[repeatIdx] = {
-                        ...prop,
-                        repetition: i + 1,
-                    };
-                    delete props[repeatIdx].repeats;
-                    delete props[repeatIdx].every;
+            prop = typeof prop == "string" ? {type: prop} : prop;
+
+            let propType = prop.type == "custom" ? prop.label || "custom" : prop.type;
+
+            channelMappings[firstAvailable] = prop;
+            countsByProp[propType] = (countsByProp[propType] || 0) + 1;
+
+            if (countsByProp[propType] > 1) {
+                prop.repetition = countsByProp[propType];
+            }
+
+            if (prop?.repeats > 1) {
+                prop.group = countsByProp[propType] - 1;
+
+                for (let i = 1; i < prop.repeats; i++) {
+                    let repeatIdx = firstAvailable + i * prop.every;
+
+                    let repeatedProp = {...prop, repetition: i + 1};
+                    delete repeatedProp.repeats;
+                    delete repeatedProp.every;
+                    channelMappings[repeatIdx] = repeatedProp;
+                }
+            }
+
+            // don't try to be overly smart about determining first available
+            // instead just sniff it out
+            for (let channel = 0; channel < 512; channel++) {
+                if (!channelMappings[channel]) {
+                    firstAvailable = channel;
+                    break;
                 }
             }
         });
-        // console.log("repeated props", props);
+
+        props = [];
+        for (let channel = 0; channel < firstAvailable; channel++) {
+            props.push(channelMappings[channel]);
+        }
 
         // turn props from a list of prop types into a dict with unique labels
         let propsCounter = {};
         let propsDict = {};
 
         props.forEach(prop => {
+            if (typeof prop == "string") {
+                // simplified prop types
+                prop = {type: prop};
+            }
+
             delete prop.val; // just in case value has wondered in somehow; XXX - delete it upstream instead
 
             if (prop.default_value != undefined) {
@@ -92,7 +123,6 @@ export function parseFixtureConfig(config) {
             }
 
             propsCounter[propName] = (propsCounter[propName] || 0) + 1;
-            prop.occurence = propsCounter[propName];
 
             if (propsCounter[propName] > 1 || prop.repetition) {
                 propName = `${propName}${propsCounter[propName]}`;
@@ -105,8 +135,12 @@ export function parseFixtureConfig(config) {
         let maxRepetitions = Math.max(...Object.values(propsCounter));
 
         let pixels = [];
-        for (let group = 0; group <= maxRepetitions; group++) {
-            let numbered = propName => (group == 0 ? propName : `${propName}${group}`);
+
+        // we identify pixels by their repetition number, e.g. if we have 3 red props,
+        // or 3 tilt props, that means we have three pixels. we then parse these into controls
+        // that we know, e.g. pixel1.color = {red1,green1, blue1}
+        for (let pixelIdx = 0; pixelIdx <= maxRepetitions; pixelIdx++) {
+            let numbered = propName => (pixelIdx == 0 ? propName : `${propName}${pixelIdx}`);
             let numberedProp = propName => propsDict[numbered(propName)];
             let exists = propName => numberedProp(propName) !== undefined;
             let ifExists = propName => (exists(propName) ? numbered(propName) : null);
@@ -142,7 +176,11 @@ export function parseFixtureConfig(config) {
                 }
             });
 
+            let group = null;
+
             if (exists("red")) {
+                group = numberedProp("red").group || 0;
+
                 if (exists("white")) {
                     controls.color = {type: "rgbw-light", props: ["red", "green", "blue", "white"]};
                 } else {
@@ -153,10 +191,23 @@ export function parseFixtureConfig(config) {
                 controls.color.props = Object.fromEntries(
                     controls.color.props.map(propName => [propName, numbered(propName)])
                 );
+            } else if (exists("dimmer")) {
+                group = numberedProp("dimmer").group || 0;
+                controls.color = {type: "w-light", props: ["dimmer"]};
+
+                // convert the prop list into {red: red1, green: green1,...}
+                controls.color.props = Object.fromEntries(
+                    controls.color.props.map(propName => [propName, numbered(propName)])
+                );
             }
 
-            if (Object.keys(controls).length) {
-                pixels.push({controls});
+            let pixel = {controls};
+            if (group != null) {
+                pixel.group = group;
+            }
+
+            if (Object.keys(pixel.controls).length) {
+                pixels.push(pixel);
             }
         }
         if (!pixels.length) {

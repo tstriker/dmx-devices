@@ -26,15 +26,13 @@ export {default as Gear4MusicGalaxy1938} from "./bars/gear4music-galaxy1938.js";
 export {default as EventPixbar12x3} from "./bars/event-pixbar-12x3.js";
 export {default as EuroliteLEDBar2RGBA25210} from "./bars/eurolite-led-bar-2-rgba-252-10.js";
 export {default as ShowtecSunstrip} from "./bars/showtec-sunstrip.js";
+export {default as EquinoxSpectrapixBatten} from "./bars/equinox-spectrapix-batten.js";
 
 export {default as BeamzMHL75} from "./moving-heads/beamz-mhl75.js";
 export {default as Fusion100Spot} from "./moving-heads/fusion-100-spot.js";
 export {default as Intimidator375z} from "./moving-heads/intimidator-375z.js";
 
 export {default as Cosmo108} from "./par-bars/cosmos-108.js";
-
-export {default as EuroliteSD201} from "./bubbles/eurolite-sd-201.js";
-export {default as F1600ProFaze} from "./haze/f1600-pro-faze.js";
 
 export {default as BeamzGoboDerby} from "./misc/beamz-gobo-derby.js";
 export {default as Dimmer} from "./misc/dimmer.js";

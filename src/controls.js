@@ -77,7 +77,7 @@ export class Pixel {
         });
 
         this.channels = [...usedChannels];
-        this.features = ["color", "red", "dimmer", "strobe", "white", "amber", "uv", "pan", "tilt"].filter(
+        this.features = ["color", "red", "white", "dimmer", "strobe", "white", "amber", "uv", "pan", "tilt"].filter(
             feature => feature in this
         );
     }
@@ -121,44 +121,13 @@ let pixelControls = {
         defaultVal = "#000";
 
         get() {
-            return chroma(this.dimmer.val, this.dimmer.val, this.dimmer.val).hex();
+            return chroma(this.white.val, this.white.val, this.white.val).hex();
         }
         set(value) {
             let [r, g, b, a] = parseColor(value).rgba();
             let w = Math.max(r, g, b);
 
-            this.dimmer.dmx = Math.round(w * a);
-        }
-    },
-
-    "cool-warm-light": class extends Control {
-        defaultVal = "#000";
-
-        get() {
-            return chroma(this.cool.val, this.cool.val, this.cool.val).hex();
-        }
-        set(value) {
-            let [r, g, b, a] = parseColor(value).rgba();
-            let w = Math.max(r, g, b);
-
-            this.cool.dmx = Math.round(w * a);
-            this.warm.dmx = Math.round(w * a);
-        }
-    },
-
-    fader: class extends Control {
-        defaultVal = "#000";
-
-        // same as w-light, except we don't assume it's white
-        // single color light; assuming white but that would be gel-dependant
-        get() {
-            return chroma(this.fader.val, this.fader.val, this.fader.val).hex();
-        }
-        set(value) {
-            let [r, g, b, a] = parseColor(value).rgba();
-            let w = Math.max(r, g, b);
-
-            this.fader.dmx = Math.round(w * a);
+            this.white.dmx = Math.round(w * a);
         }
     },
 

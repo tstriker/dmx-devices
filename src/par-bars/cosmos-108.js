@@ -13,7 +13,7 @@ export default parseFixtureConfig({
                 "strobe",
                 {type: "red", repeats: 4, every: 3},
                 {type: "green", repeats: 4, every: 3},
-                {type: "bluu", repeats: 4, every: 3},
+                {type: "blue", repeats: 4, every: 3},
             ],
         },
     ],

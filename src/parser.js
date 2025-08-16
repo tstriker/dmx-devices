@@ -192,8 +192,8 @@ export function parseFixtureConfig(config) {
                     controls.color.props.map(propName => [propName, numbered(propName)])
                 );
             } else if (exists("white")) {
-                group = numberedProp("dimmer").group || 0;
-                controls.color = {type: "w-light", props: ["dimmer"]};
+                group = numberedProp("white").group || 0;
+                controls.color = {type: "w-light", props: ["white"]};
 
                 // convert the prop list into {red: red1, green: green1,...}
                 controls.color.props = Object.fromEntries(

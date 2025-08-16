@@ -12,7 +12,7 @@ export default parseFixtureConfig({
                 {type: "custom", label: "warm"},
                 "strobe",
                 {type: "custom", label: "mode", ui: false},
-                {type: "dimmer", activeDefault: 255, ui: false},
+                {type: "white", activeDefault: 255, ui: false},
             ],
         },
     ],

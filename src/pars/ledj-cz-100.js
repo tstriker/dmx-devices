@@ -7,7 +7,7 @@ export default parseFixtureConfig({
     modes: [
         {
             name: "3ch",
-            props: ["dimmer", {type: "custom", label: "dimmer fine"}, "strobe"],
+            props: ["white", {type: "custom", label: "dimmer fine"}, "strobe"],
         },
     ],
 });

@@ -7,11 +7,11 @@ export default parseFixtureConfig({
     modes: [
         {
             name: "1ch",
-            props: ["dimmer"],
+            props: ["white"],
         },
         {
             name: "4ch",
-            props: [{type: "dimmer", repeats: 4, every: 1}],
+            props: [{type: "white", repeats: 4, every: 1}],
         },
     ],
 });

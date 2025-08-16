@@ -7,12 +7,12 @@ export default parseFixtureConfig({
     modes: [
         {
             name: "2ch",
-            props: [{type: "dimmer", activeDefault: 255}, "zoom"],
+            props: [{type: "white", activeDefault: 255}, "zoom"],
         },
 
         {
             name: "3ch",
-            props: [{type: "dimmer", activeDefault: 255}, "strobe", "zoom"],
+            props: [{type: "white", activeDefault: 255}, "strobe", "zoom"],
         },
     ],
 });

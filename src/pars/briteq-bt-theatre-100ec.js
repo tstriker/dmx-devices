@@ -7,7 +7,7 @@ export default parseFixtureConfig({
     modes: [
         {
             name: "2ch",
-            props: [{type: "dimmer", activeDefault: 255}, "strobe"],
+            props: [{type: "white", activeDefault: 255}, "strobe"],
         },
     ],
 });

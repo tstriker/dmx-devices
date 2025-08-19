@@ -11,15 +11,15 @@ export default parseFixtureConfig({
                 {
                     type: "wheel",
                     modes: [
-                        {chVal: 0, val: "coolWhite", label: "cool white", color: "#fff"},
-                        {chVal: 32, val: "warmWhite", label: "warm white", color: "#fff"},
+                        {ch_val: 0, val: "coolWhite", label: "cool white", color: "#fff"},
+                        {ch_val: 32, val: "warmWhite", label: "warm white", color: "#fff"},
 
-                        {chVal: 64, val: "yellow", color: "#f5ef27"},
-                        {chVal: 96, val: "purple", color: "#ad2eed"},
-                        {chVal: 128, val: "green", color: "#00ff00"},
-                        {chVal: 160, val: "red", color: "#ff0000"},
-                        {chVal: 192, val: "blue", color: "#4f9ae5"},
-                        {chVal: 224, val: "orange", color: "#ed982e"},
+                        {ch_val: 64, val: "yellow", color: "#f5ef27"},
+                        {ch_val: 96, val: "purple", color: "#ad2eed"},
+                        {ch_val: 128, val: "green", color: "#00ff00"},
+                        {ch_val: 160, val: "red", color: "#ff0000"},
+                        {ch_val: 192, val: "blue", color: "#4f9ae5"},
+                        {ch_val: 224, val: "orange", color: "#ed982e"},
                     ],
                     defaultVal: 32, // yellow sits in the middle of color wheel, so a good place to return to
                 },

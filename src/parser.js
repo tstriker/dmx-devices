@@ -89,14 +89,19 @@ export function parseFixtureConfig(config) {
             if ((prop.modes || []).length > 1) {
                 // deal with props that have modes, either as stops or ranges
                 let modes = (prop.modes || []).map((conf, idx) => {
-                    let mode = {
-                        chVal: conf.ch_val,
+                    let val = conf.val;
+                    if (prop.type == "wheel" && config.source == "editor") {
                         // the editor was stuffing val with #fff for quite some time and we want to ignore that
                         // but we also want to maintain backwards compat with our hardcoded fixtures that
                         // actually did use val to stuff in human readable color values like "red" and "fuchsia"
                         // and any saved presets would point to that, because i'm crazy and didn't think that it would
                         // be smarter to save the channel value rather than the extrapolated value
-                        val: config.source == "editor" ? conf.color : conf.val || conf.color,
+                        val = conf.color;
+                    }
+
+                    let mode = {
+                        chVal: conf.ch_val,
+                        val,
                     };
                     if (conf.color) {
                         mode.color = conf.color;

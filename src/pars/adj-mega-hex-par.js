@@ -26,9 +26,9 @@ export default parseFixtureConfig({
                     type: "strobe",
                     modes: [
                         {ch_val: 32, val: "Don't strobe"},
-                        {ch_val: 64, val: "Strobe slow-fast", range: 32},
-                        {ch_val: 128, val: "Pulse strobe", range: 32},
-                        {ch_val: 192, val: "Random strobe", range: 32},
+                        {ch_val: 64, val: "Strobe slow-fast", custom: "range"},
+                        {ch_val: 128, val: "Pulse strobe", custom: "range"},
+                        {ch_val: 192, val: "Random strobe", custom: "range"},
                     ],
                     defaultVal: 32,
                 },

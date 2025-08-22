@@ -2,16 +2,15 @@ import {Prop} from "./props.js";
 import {Pixel} from "./controls.js";
 
 export class Device {
-    constructor({address, label, props, pixels, render, onChange, options, resetDMX = true, ...other}) {
+    constructor({address, label, props, pixels, render, options, resetDMX = true, ...other}) {
         this.address = address;
         this.label = label;
         this.deviceOptions = {};
         this.dmx = {};
-        this.onChange = onChange;
         this.render = render;
 
+        this._pendingChanges = {};
         this._externalUpdate = false;
-        this._notifyTimeout = null;
 
         this.props = [];
 
@@ -94,14 +93,16 @@ export class Device {
     }
 
     onPropChange(ch, val) {
-        this.dmx[ch] = val;
+        if (this._externalUpdate) return;
 
-        if (!this._notifyTimeout && !this._externalUpdate) {
-            this._notifyTimeout = setTimeout(() => {
-                this._notifyTimeout = null;
-                this.onChange(this.dmx);
-            });
-        }
+        this.dmx[ch] = val;
+        this._pendingChanges[ch] = val;
+    }
+
+    flush() {
+        const changes = this._pendingChanges;
+        this._pendingChanges = {};
+        return changes;
     }
 
     updateProps(dmx) {

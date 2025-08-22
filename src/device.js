@@ -93,7 +93,9 @@ export class Device {
     }
 
     onPropChange(ch, val) {
-        if (this._externalUpdate) return;
+        if (this._externalUpdate) {
+            return;
+        }
 
         this.dmx[ch] = val;
         this._pendingChanges[ch] = val;

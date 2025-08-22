@@ -42,7 +42,7 @@ export class Prop {
 
         this.modeMap = calcModeMap(stops || modes);
         this.modeByVal = Object.fromEntries(
-            Object.entries(this.modeMap).map(([chVal, rec]) => [rec.label, {...rec, chVal}])
+            Object.entries(this.modeMap).map(([chVal, rec]) => [rec.label, {...rec, chVal: parseInt(chVal)}])
         );
 
         this.modeMapEntries = Object.values(this.modeMap);

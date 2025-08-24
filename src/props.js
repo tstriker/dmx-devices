@@ -118,46 +118,45 @@ export function calcModeMap(stops) {
     // this way we can cheaply map from channel to specific state and don't have to calc it on the fly
     let modeMap = {};
 
-    let closest = channel => {
-        let modeStop = stops[0];
-        for (let i = 0; i < stops.length; i++) {
-            if (stops[i].chVal > channel) {
-                break;
-            }
-            modeStop = stops[i];
-        }
-        return modeStop;
-    };
+    stops = stops || [];
 
+    // handles all cases that should be treated as a simple 0-255 linear ramp.
     if (
-        stops.length == 0 ||
-        (stops.length == 1 && stops[0].range == 255) ||
-        (stops.length == 2 && stops[0].chVal == 0 && stops[1].chVal == 255)
+        stops.length === 0 ||
+        (stops.length === 1 && stops[0].range === 255) ||
+        (stops.length === 2 && stops[0].chVal === 0 && stops[1].chVal === 255)
     ) {
-        // if we have a linear range that goes from one end to the other, the value label will be 0..1
+        const startStop = stops[0];
+        const endStop = stops.length > 0 ? stops[stops.length - 1] : undefined;
+
         for (let channel = 0; channel <= 255; channel++) {
-            let cur = channel == 255 ? stops[stops.length - 1] : stops[0];
-            let progressVal = round(channel / 255, 4);
+            const progressVal = round(channel / 255, 4);
+            // The logic inside the loop is now simpler.
+            const cur = channel === 255 ? endStop : startStop;
             modeMap[channel] = {cur, val: progressVal, progress: channel, label: progressVal};
         }
         return modeMap;
     }
 
-    stops = [...stops];
-    if (stops[0].chVal != 0) {
-        stops.splice(0, 0, {chVal: 0, val: null});
+    // Use a single-pass algorithm to determine all the stops
+    const sortedStops = [...stops].sort((a, b) => a.chVal - b.chVal);
+    if (sortedStops[0].chVal !== 0) {
+        sortedStops.unshift({chVal: 0, val: null});
     }
 
+    let stopIndex = 0;
     for (let channel = 0; channel <= 255; channel++) {
-        // find the stop closest to the current channel value
-        let cur = closest(channel);
-        let progress = channel - cur.chVal;
+        // Advance to the next stop if the current channel value has passed the start of the next stop.
+        if (stopIndex + 1 < sortedStops.length && channel >= sortedStops[stopIndex + 1].chVal) {
+            stopIndex++;
+        }
 
-        // progressVal allows us to set value programmatically when we are tweening between different
-        // non-interpolatable states
-        let curVal = cur.val || "null";
-        let progressVal = progress == 0 ? curVal : `${curVal}:${progress}`;
-        modeMap[channel] = {cur: cur, progress, label: progressVal};
+        const cur = sortedStops[stopIndex];
+        const progress = channel - cur.chVal;
+        const curVal = cur.val || "null";
+        const progressVal = progress === 0 ? curVal : `${curVal}:${progress}`;
+
+        modeMap[channel] = {cur, progress, label: progressVal};
     }
 
     return modeMap;

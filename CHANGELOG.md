@@ -1,3 +1,13 @@
+# 0.6.0
+
+Smorgasbord of changes. Most importantly w-light control is now determined by
+presence of "white". This allows to explicitly create white light control or
+choose to use a dimmer prop and forego the control. Still very much WIP
+* also switched all current config to use the parser
+
+
+
+
 # 0.4.0
 
 All in all cleaner and simpler way to add new devices. Still massively WIP

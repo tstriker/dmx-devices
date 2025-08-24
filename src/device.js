@@ -56,6 +56,7 @@ export class Device {
         let deviceFeatures = [
             "color",
             "red", // this is to tell apart RGB from pseudo colors
+            "white", // this is for single-color cobs
             "dimmer",
             "strobe",
             "white",

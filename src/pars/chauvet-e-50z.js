@@ -1,44 +1,28 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "Chauvet EVE E-50Z",
     widthCm: 20,
     type: "w-light",
-    config: {
-        name: "3ch",
-        props: {
-            dimmer: rangeProp({label: "Dimmer", activeDefault: 255}),
-            strobe: rangeProp({label: "Strobe"}),
-            dimmerMode: {
-                label: "Dimmer Mode",
-                ui: false,
-                modes: [
-                    {chVal: 0, val: "display", label: "From Display"},
-                    {chVal: 52, val: "off", label: "Mode Off"},
+    modes: [
+        {
+            name: "3ch",
+            props: [
+                {type: "white", activeDefault: 255},
+                "strobe",
+                {
+                    type: "custom",
+                    label: "Dimmer Mode",
+                    modes: [
+                        {ch_val: 0, val: "display", label: "From Display"},
+                        {ch_val: 52, val: "off", label: "Mode Off"},
 
-                    {chVal: 102, val: "fast", label: "Fast"},
-                    {chVal: 153, val: "medium", label: "Medium"},
-                    {chVal: 204, val: "slot", label: "Slow"},
-                ],
-                default: "display",
-            },
-        },
-
-        pixels: [
-            {
-                id: "light",
-                label: "Light",
-                controls: {
-                    color: {
-                        type: "w-light",
-                        props: {
-                            dimmer: "dimmer",
-                        },
-                    },
-                    strobe: "strobe",
+                        {ch_val: 102, val: "fast", label: "Fast"},
+                        {ch_val: 153, val: "medium", label: "Medium"},
+                        {ch_val: 204, val: "slot", label: "Slow"},
+                    ],
                 },
-            },
-        ],
-    },
+            ],
+        },
+    ],
 });

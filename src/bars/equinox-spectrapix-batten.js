@@ -1,135 +1,154 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp, repeatProps, repeatPixels} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-let dimmer = rangeProp({label: "Dimmer", activeDefault: 255});
-let strobe = rangeProp({label: "Strobe"});
-let red = rangeProp({label: "Red"});
-let green = rangeProp({label: "Green"});
-let blue = rangeProp({label: "Blue"});
-
-// the spectrapix batten is exactly same as the beamz 224, except they put the strobe in 53 channel mode at the start
-// not in the end (makes way more sense)
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "Equinox SpectraPix Batten",
     widthCm: 110,
     type: "two-row-bar",
-    config: [
+    modes: [
         {
             name: "3ch 2",
-            lights: 1,
-            props: {red, green, blue},
-            pixels: [
-                {
-                    id: "light",
-                    label: "Light",
-                    controls: {
-                        color: {
-                            type: "rgb-light",
-                            props: {
-                                red: "red",
-                                green: "green",
-                                blue: "blue",
-                            },
-                        },
-                    },
-                },
-            ],
+            props: ["red", "green", "blue"],
         },
         {
             name: "5ch",
-            lights: 1,
-            props: {dimmer, strobe, red, green, blue},
-            pixels: [
-                {
-                    id: "light",
-                    label: "Light",
-                    controls: {
-                        dimmer: "dimmer",
-                        strobe: "strobe",
-                        color: {
-                            type: "rgb-light",
-                            props: {
-                                red: "red",
-                                green: "green",
-                                blue: "blue",
-                            },
-                        },
-                    },
-                },
-            ],
+            props: [{type: "dimmer", activeDefault: 255}, "strobe", "red", "green", "blue"],
         },
 
         {
             name: "24ch",
-            lights: 8,
-            props: repeatProps(8, {"red#": red, "green#": green, "blue#": blue}),
-            pixels: repeatPixels(8, {
-                id: "light#",
-                label: "Light #",
-                controls: {
-                    dimmer: "dimmer#",
-                    strobe: "strobe#",
-                    color: {
-                        type: "rgb-light",
-                        props: {
-                            red: "red#",
-                            green: "green#",
-                            blue: "blue#",
-                        },
-                    },
-                },
-            }),
+            props: [
+                {type: "red", repeats: 8, every: 3},
+                {type: "green", repeats: 8, every: 3},
+                {type: "blue", repeats: 8, every: 3},
+            ],
         },
 
         {
             name: "48ch",
-            lights: 16,
-
-            props: repeatProps(16, {"red#": red, "green#": green, "blue#": blue}),
-            pixels: repeatPixels(16, {
-                id: "light#",
-                label: "Light #",
-                group: idx => (idx <= 8 ? 0 : 1),
-                controls: {
-                    dimmer: "dimmer#",
-                    strobe: "strobe#",
-                    color: {
-                        type: "rgb-light",
-                        props: {
-                            red: "red#",
-                            green: "green#",
-                            blue: "blue#",
-                        },
-                    },
-                },
-            }),
+            props: [
+                {type: "red", repeats: 8, every: 3},
+                {type: "green", repeats: 8, every: 3},
+                {type: "blue", repeats: 8, every: 3},
+                {type: "red", repeats: 8, every: 3},
+                {type: "green", repeats: 8, every: 3},
+                {type: "blue", repeats: 8, every: 3},
+            ],
         },
 
         {
             name: "53ch",
-            lights: 16,
-            props: {
-                dimmer,
-                strobe,
-                ...repeatProps(16, {"red#": red, "green#": green, "blue#": blue}),
-            },
-            pixels: repeatPixels(16, {
-                id: "light#",
-                label: "Light #",
-                group: idx => (idx <= 8 ? 0 : 1),
-                controls: {
-                    dimmer: "dimmer#",
-                    strobe: "strobe#",
-                    color: {
-                        type: "rgb-light",
-                        props: {
-                            red: "red#",
-                            green: "green#",
-                            blue: "blue#",
-                        },
-                    },
+            props: [
+                {type: "dimmer", activeDefault: 255},
+                "strobe",
+                {type: "red", repeats: 8, every: 3},
+                {type: "green", repeats: 8, every: 3},
+                {type: "blue", repeats: 8, every: 3},
+                {type: "red", repeats: 8, every: 3},
+                {type: "green", repeats: 8, every: 3},
+                {type: "blue", repeats: 8, every: 3},
+                {
+                    type: "custom",
+                    label: "Mode",
+                    modes: [
+                        {ch_val: 0, val: "Off", custom: "stop"},
+                        {ch_val: 10, val: "Static Colour", custom: "stop"},
+                        {ch_val: 14, val: "Show 1", custom: "stop"},
+                        {ch_val: 18, val: "Show 2", custom: "stop"},
+                        {ch_val: 22, val: "Show 3", custom: "stop"},
+                        {ch_val: 26, val: "Show 4", custom: "stop"},
+                        {ch_val: 30, val: "Show 5", custom: "stop"},
+                        {ch_val: 34, val: "Show 6", custom: "stop"},
+                        {ch_val: 38, val: "Show 7", custom: "stop"},
+                        {ch_val: 42, val: "Show 8", custom: "stop"},
+                        {ch_val: 46, val: "Show 9", custom: "stop"},
+                        {ch_val: 50, val: "Show 10", custom: "stop"},
+                        {ch_val: 54, val: "Show 11", custom: "stop"},
+                        {ch_val: 58, val: "Show 12", custom: "stop"},
+                        {ch_val: 62, val: "Show 13", custom: "stop"},
+                        {ch_val: 66, val: "Show 14", custom: "stop"},
+                        {ch_val: 70, val: "Show 15", custom: "stop"},
+                        {ch_val: 74, val: "Show 16", custom: "stop"},
+                        {ch_val: 78, val: "Show 17", custom: "stop"},
+                        {ch_val: 82, val: "Show 18", custom: "stop"},
+                        {ch_val: 86, val: "Show 19", custom: "stop"},
+                        {ch_val: 90, val: "Show 20", custom: "stop"},
+                        {ch_val: 94, val: "Show 21", custom: "stop"},
+                        {ch_val: 98, val: "Show 22", custom: "stop"},
+                        {ch_val: 102, val: "Show 23", custom: "stop"},
+                        {ch_val: 106, val: "Show 24", custom: "stop"},
+                        {ch_val: 110, val: "Show 25", custom: "stop"},
+                        {ch_val: 114, val: "Show 26", custom: "stop"},
+                        {ch_val: 118, val: "Show 27", custom: "stop"},
+                        {ch_val: 122, val: "Show 28", custom: "stop"},
+                        {ch_val: 126, val: "Show 29", custom: "stop"},
+                        {ch_val: 130, val: "Show 30", custom: "stop"},
+                        {ch_val: 134, val: "Show 31", custom: "stop"},
+                        {ch_val: 138, val: "Show 32", custom: "stop"},
+                        {ch_val: 142, val: "Show 33", custom: "stop"},
+                        {ch_val: 146, val: "Show 34", custom: "stop"},
+                        {ch_val: 150, val: "Show 35", custom: "stop"},
+                        {ch_val: 154, val: "Show 36", custom: "stop"},
+                        {ch_val: 158, val: "Show 37", custom: "stop"},
+                        {ch_val: 162, val: "Show 38", custom: "stop"},
+                        {ch_val: 166, val: "Show 39", custom: "stop"},
+                        {ch_val: 170, val: "Show 40", custom: "stop"},
+                        {ch_val: 174, val: "Show 41", custom: "stop"},
+                        {ch_val: 178, val: "Show 42", custom: "stop"},
+                        {ch_val: 182, val: "Show 43", custom: "stop"},
+                        {ch_val: 186, val: "Show 44", custom: "stop"},
+                        {ch_val: 190, val: "Show 45", custom: "stop"},
+                        {ch_val: 194, val: "Show 46", custom: "stop"},
+                        {ch_val: 198, val: "Show 47", custom: "stop"},
+                        {ch_val: 202, val: "Show 48", custom: "stop"},
+                        {ch_val: 206, val: "Show 49", custom: "stop"},
+                        {ch_val: 210, val: "Show 50", custom: "stop"},
+                        {ch_val: 214, val: "Show 51", custom: "stop"},
+                        {ch_val: 218, val: "Show 52", custom: "stop"},
+                        {ch_val: 222, val: "Show 53", custom: "stop"},
+                        {ch_val: 226, val: "Show 54", custom: "stop"},
+                        {ch_val: 230, val: "Auto Mode", custom: "stop"},
+                        {ch_val: 234, val: "DMX Sound mode 1", custom: "stop"},
+                        {ch_val: 238, val: "DMX Sound mode 2", custom: "stop"},
+                        {ch_val: 242, val: "DMX Sound mode 3", custom: "stop"},
+                    ],
                 },
-            }),
+                {
+                    type: "custom",
+                    label: "Color Preset",
+                    modes: [
+                        {ch_val: 0, val: "Off", custom: "stop"},
+                        {ch_val: 10, val: "Red", custom: "stop"},
+                        {ch_val: 20, val: "Dark Orange", custom: "stop"},
+                        {ch_val: 30, val: "Orange", custom: "stop"},
+                        {ch_val: 40, val: "Amber", custom: "stop"},
+                        {ch_val: 50, val: "Yellow", custom: "stop"},
+                        {ch_val: 60, val: "Yellow Green", custom: "stop"},
+                        {ch_val: 70, val: "Lime Green", custom: "stop"},
+                        {ch_val: 80, val: "Medium Green", custom: "stop"},
+                        {ch_val: 90, val: "Green", custom: "stop"},
+                        {ch_val: 100, val: "Vibrant Green", custom: "stop"},
+                        {ch_val: 110, val: "Mint Green", custom: "stop"},
+                        {ch_val: 120, val: "Turquoise", custom: "stop"},
+                        {ch_val: 130, val: "Cyan", custom: "stop"},
+                        {ch_val: 140, val: "Light Blue", custom: "stop"},
+                        {ch_val: 150, val: "Medium Blue", custom: "stop"},
+                        {ch_val: 160, val: "Congo Blue", custom: "stop"},
+                        {ch_val: 170, val: "Blue", custom: "stop"},
+                        {ch_val: 180, val: "Purple Blue", custom: "stop"},
+                        {ch_val: 190, val: "Purple", custom: "stop"},
+                        {ch_val: 200, val: "Violet", custom: "stop"},
+                        {ch_val: 210, val: "Pink", custom: "stop"},
+                        {ch_val: 220, val: "Magenta", custom: "stop"},
+                        {ch_val: 230, val: "Hot Pink", custom: "stop"},
+                        {ch_val: 240, val: "Fuchsia", custom: "stop"},
+                        {ch_val: 250, val: "White", custom: "stop"},
+                    ],
+                },
+                {
+                    type: "custom",
+                    label: "Program Speed",
+                },
+            ],
         },
     ],
 });

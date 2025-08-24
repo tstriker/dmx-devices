@@ -1,58 +1,18 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "CentoLight Plot 200FZ",
     widthCm: 20,
     type: "w-light",
-    config: [
+    modes: [
         {
             name: "2ch",
-            props: {
-                dimmer: rangeProp({activeDefault: 255}),
-                zoom: rangeProp({}),
-            },
-
-            pixels: [
-                {
-                    id: `light`,
-                    label: `Light`,
-                    controls: {
-                        color: {
-                            type: "w-light",
-                            props: {
-                                dimmer: "dimmer",
-                            },
-                        },
-                        zoom: "zoom",
-                    },
-                },
-            ],
+            props: [{type: "white", activeDefault: 255}, "zoom"],
         },
 
         {
             name: "3ch",
-            props: {
-                dimmer: rangeProp({activeDefault: 255}),
-                strobe: rangeProp({label: "Strobe"}),
-                zoom: rangeProp({label: "Zoom"}),
-            },
-
-            pixels: [
-                {
-                    id: `light`,
-                    label: `Light`,
-                    controls: {
-                        color: {
-                            type: "w-light",
-                            props: {
-                                dimmer: "dimmer",
-                            },
-                        },
-                        strobe: "strobe",
-                    },
-                },
-            ],
+            props: [{type: "white", activeDefault: 255}, "strobe", "zoom"],
         },
     ],
 });

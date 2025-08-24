@@ -1,30 +1,13 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "LeDJ Stage Par CZ 100",
     widthCm: 20,
     type: "w-light",
-    config: [
+    modes: [
         {
-            name: "4ch",
-            props: {
-                dimmer: rangeProp({activeDefault: 255}),
-            },
-            pixels: [
-                {
-                    id: `light`,
-                    label: `Light`,
-                    controls: {
-                        color: {
-                            type: "w-light",
-                            props: {
-                                dimmer: "dimmer",
-                            },
-                        },
-                    },
-                },
-            ],
+            name: "3ch",
+            props: ["white", {type: "custom", label: "dimmer fine"}, "strobe"],
         },
     ],
 });

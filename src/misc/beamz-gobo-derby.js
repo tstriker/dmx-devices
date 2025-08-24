@@ -1,56 +1,48 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "Beamz Gobo Derby",
     widthCm: 20,
     type: "rgbw-light",
 
-    config: [
+    modes: [
         {
             name: "9ch",
-            props: {
-                rotation: rangeProp({label: "Rotation"}),
-                dimmer: rangeProp({activeDefault: 255}),
-                wheel: {
+            props: [
+                "rotation",
+                {type: "dimmer", activeDefault: 255},
+                {
+                    type: "wheel",
                     label: "Derby Color",
                     modes: [
-                        {chVal: 0, val: "off", color: "#fff"},
-                        {chVal: 10, val: "red", color: "#ff0000"},
-                        {chVal: 20, val: "green", color: "#00ff00"},
-                        {chVal: 30, val: "blue", color: "#4f9ae5"},
-                        {chVal: 40, val: "amber", color: "#feb204"},
+                        {ch_val: 0, val: "off", color: "#fff"},
+                        {ch_val: 10, val: "red", color: "#ff0000"},
+                        {ch_val: 20, val: "green", color: "#00ff00"},
+                        {ch_val: 30, val: "blue", color: "#4f9ae5"},
+                        {ch_val: 40, val: "amber", color: "#feb204"},
 
-                        {chVal: 50, val: "red + green", color: "#ffff00"},
-                        {chVal: 60, val: "green + blue"},
-                        {chVal: 70, val: "blue + amber"},
-                        {chVal: 80, val: "red + amber"},
-                        {chVal: 90, val: "red + blue"},
-                        {chVal: 100, val: "green + amber"},
+                        {ch_val: 50, val: "red + green", color: "#ffff00"},
+                        {ch_val: 60, val: "green + blue"},
+                        {ch_val: 70, val: "blue + amber"},
+                        {ch_val: 80, val: "red + amber"},
+                        {ch_val: 90, val: "red + blue"},
+                        {ch_val: 100, val: "green + amber"},
 
-                        {chVal: 110, val: "blue + green + amber"},
-                        {chVal: 120, val: "red + blue + amber"},
-                        {chVal: 130, val: "red + green + amber"},
-                        {chVal: 140, val: "red + green + blue"},
-                        {chVal: 150, val: "All On"},
-                        {chVal: 160, val: "LED Automatic"},
+                        {ch_val: 110, val: "blue + green + amber"},
+                        {ch_val: 120, val: "red + blue + amber"},
+                        {ch_val: 130, val: "red + green + amber"},
+                        {ch_val: 140, val: "red + green + blue"},
+                        {ch_val: 150, val: "All On"},
+                        {ch_val: 160, val: "LED Automatic"},
                     ],
                     defaultVal: 80,
                 },
 
-                strobe: rangeProp({}),
-                uv1: rangeProp({label: "UV 1"}),
-                uv2: rangeProp({label: "UV 2"}),
-
-                autoSound: rangeProp({ui: false}),
-                autoSoundUV: rangeProp({ui: false}),
-            },
-            pixels: [
-                {
-                    id: "light",
-                    label: "Light",
-                    controls: {},
-                },
+                "strobe",
+                {type: "custom", label: "UV 1"},
+                {type: "custom", label: "UV 2"},
+                {type: "custom", label: "autoSound", ui: false},
+                {type: "custom", label: "autoSoundUV", ui: false},
             ],
         },
     ],

@@ -1,36 +1,17 @@
-import {ModelFactory} from "../device.js";
-import {rangeProp} from "../utils.js";
+import {parseFixtureConfig} from "../parser.js";
 
-export default ModelFactory({
+export default parseFixtureConfig({
     model: "Eurolite LED Bar 2 RGBA 252/10",
     widthCm: 20,
-    type: "rgb-light",
-    config: [
+    type: "bar",
+    modes: [
         {
             name: "4ch",
-            props: {
-                red: rangeProp({label: "Red"}),
-                green: rangeProp({label: "Green"}),
-                blue: rangeProp({label: "Blue"}),
-                blue: rangeProp({label: "Amber"}),
-            },
-            pixels: [
-                {
-                    id: "light",
-                    label: "Light",
-                    controls: {
-                        color: {
-                            type: "rgb-light",
-                            props: {
-                                red: "red",
-                                green: "green",
-                                blue: "blue",
-                            },
-                        },
-                        amber: "amber",
-                    },
-                },
-            ],
+            props: ["red", "green", "blue", "amber"],
+        },
+        {
+            name: "6ch",
+            props: ["red", "green", "blue", "amber", {type: "dimmer", activeDefault: 255}, "strobe"],
         },
     ],
 });

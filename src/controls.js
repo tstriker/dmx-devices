@@ -77,9 +77,9 @@ export class Pixel {
         });
 
         this.channels = [...usedChannels];
-        this.features = ["color", "red", "white", "dimmer", "strobe", "white", "amber", "uv", "pan", "tilt"].filter(
-            feature => feature in this
-        );
+
+        let features = ["color", "red", "white", "dimmer", "strobe", "white", "amber", "uv", "pan", "tilt", "warmth"];
+        this.features = features.filter(feature => feature in this);
     }
 }
 
@@ -114,6 +114,45 @@ let pixelControls = {
                 Math.round(b * a),
                 Math.round(w * a),
             ];
+        }
+    },
+
+    "cww-light": class extends Control {
+        defaultVal = "#000";
+
+        get() {
+            // convert warm white, cool white and dimmer into a hex color.
+            // we construct HSL, where L=dimmer, H=red (0-180)/blue(180-360), S=how far out of balance we are
+            let warmWhite = this.warm_white.val;
+            let coolWhite = this.cool_white.val;
+            let maxIntensity = Math.max(warmWhite, coolWhite);
+
+            let [h, s, l] = [25, 0, this.dimmer.val];
+            if (maxIntensity) {
+                if (warmWhite >= coolWhite) {
+                    h = 25; // yellowish
+                    s = coolWhite / maxIntensity;
+                } else {
+                    h = 217; // blueish
+                    s = warmWhite / maxIntensity;
+                }
+            }
+            return chroma.hsl(h, s, l).hex();
+        }
+        set(value) {
+            let [h, s, l] = parseColor(value).hsl();
+
+            // we are dimming the opposite light (when going towards cool, we dim warm), so here we are inverting
+            let dmxVal = Math.round((1 - s) * 255);
+
+            if (h > 180) {
+                this.cool_white.dmx = 255;
+                this.warm_white.dmx = dmxVal;
+            } else {
+                this.cool_white.dmx = dmxVal;
+                this.warm_white.dmx = 255;
+            }
+            this.dimmer.dmx = Math.round(l * 255);
         }
     },
 

@@ -9,7 +9,7 @@ export function parseFixtureConfig(config) {
     res.config = [];
 
     deviceModes.forEach(mode => {
-        // console.log("raw mode", mode);
+        // console.log("raw mode", config.model, mode.channels, mode);
 
         // clone so we don't end up in weird echoes
         let props = JSON.parse(JSON.stringify(mode.props));
@@ -23,6 +23,9 @@ export function parseFixtureConfig(config) {
         props.forEach(prop => {
             if (!prop) {
                 // the old nulls that we don't need anymore
+                return;
+            } else if (mode.channels && firstAvailable >= mode.channels) {
+                // bail out if firstAvailable is beyond the number of channels we've been told we have
                 return;
             }
 
@@ -201,14 +204,22 @@ export function parseFixtureConfig(config) {
                 controls.color.props = Object.fromEntries(
                     controls.color.props.map(propName => [propName, numbered(propName)])
                 );
+            } else if (exists("warm_white") && exists("cool_white")) {
+                group = numberedProp("warm_white").group || 0;
+                let controlProps = ["warm_white", "cool_white", "dimmer"];
+                controls.color = {
+                    type: "cww-light",
+                    props: Object.fromEntries(controlProps.map(propName => [propName, numbered(propName)])),
+                };
+                controls.warmth = controls.color;
             } else if (exists("white")) {
                 group = numberedProp("white").group || 0;
-                controls.color = {type: "w-light", props: ["white"]};
 
-                // convert the prop list into {red: red1, green: green1,...}
-                controls.color.props = Object.fromEntries(
-                    controls.color.props.map(propName => [propName, numbered(propName)])
-                );
+                let controlProps = ["white"];
+                controls.color = {
+                    type: "w-light",
+                    props: Object.fromEntries(controlProps.map(propName => [propName, numbered(propName)])),
+                };
             }
 
             let pixel = {controls};

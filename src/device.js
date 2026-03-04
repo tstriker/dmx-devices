@@ -68,6 +68,7 @@ export class Device {
             "spot",
             "gobo",
             "speed",
+            "warmth",
         ];
         deviceFeatures = deviceFeatures.filter(
             feature => feature in this || (pixels.length && pixels.some(pixel => feature in pixel))

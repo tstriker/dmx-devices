@@ -88,7 +88,7 @@ let pixelControls = {
         defaultVal = "#000";
 
         get() {
-            chroma(this.red.val, this.green.val, this.blue.val).hex();
+            return chroma(this.red.val, this.green.val, this.blue.val).hex();
         }
 
         set(value) {
@@ -105,8 +105,9 @@ let pixelControls = {
             return color.hex();
         }
         set(value) {
-            let [r, g, b, a] = parseColor(value).rgba();
-            let w = colorToRGBW(value)[3];
+            let color = parseColor(value);
+            let [r, g, b, a] = color.rgba();
+            let w = colorToRGBW(color)[3];
 
             [this.red.dmx, this.green.dmx, this.blue.dmx, this.white.dmx] = [
                 Math.round(r * a),

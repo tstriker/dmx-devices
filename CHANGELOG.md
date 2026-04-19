@@ -1,3 +1,7 @@
+# 0.6.2
+
+* Minor perf tweaks
+
 # 0.6.1
 
 * Add suport for warm/cool white par cans that we map to the color property

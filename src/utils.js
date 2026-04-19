@@ -29,6 +29,10 @@ export function between(val, bounds) {
 }
 
 export function parseColor(color) {
+    if (color && typeof color === "object" && color._rgb) {
+        return color;
+    }
+
     let parsed = color.hex ? color.hex() : color;
     return chroma(parsed);
 }
@@ -91,10 +95,10 @@ export function repeatProps(repetitions, props, fromChannel) {
     let channel = fromChannel;
     for (let i = 1; i <= repetitions; i += 1) {
         Object.entries(props).forEach(([propName, config]) => {
-            propName = propName.replace("#", i);
-            res[propName] = {...config};
+            let name = propName.replace("#", i);
+            res[name] = {...config};
             if (channel) {
-                res.channel = channel;
+                res[name].channel = channel;
                 channel += 1;
             }
         });

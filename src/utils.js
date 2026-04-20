@@ -28,13 +28,32 @@ export function between(val, bounds) {
     return bounds.some(([lower, upper]) => val >= lower && val <= upper);
 }
 
+let colorCache = new Map();
+let maxCacheSize = 20000;
 export function parseColor(color) {
     if (color && typeof color === "object" && color._rgb) {
         return color;
     }
 
-    let parsed = color.hex ? color.hex() : color;
-    return chroma(parsed);
+    let parsed = typeof color === "string" ? color : color.hex ? color.hex() : color;
+    let result = colorCache.get(parsed);
+    if (result !== undefined) {
+        // move to the end to mark as most recently used
+        colorCache.delete(parsed);
+        colorCache.set(parsed, result);
+        return result;
+    }
+
+    result = chroma(parsed);
+    if (colorCache.size >= maxCacheSize) {
+        let iter = colorCache.keys();
+        for (let i = 0; i < 100; i += 1) {
+            colorCache.delete(iter.next().value);
+        }
+    }
+
+    colorCache.set(parsed, result);
+    return result;
 }
 
 export function colorToRGBW(color) {

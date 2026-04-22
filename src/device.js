@@ -6,15 +6,24 @@ export class Device {
         this.address = address;
         this.label = label;
         this.deviceOptions = {};
-        this.dmx = {};
         this.render = render;
-
-        this._pendingChanges = {};
+        this._pendingChanges = null;
         this._externalUpdate = false;
 
         this.props = [];
 
         this.options = options || {}; // custom options for props/controls/etc. for now it's just flip for heads
+
+        // determine max channel first so we can init dmx buffer
+        let maxChannel = 0;
+        Object.entries(props).forEach(([key, config], idx) => {
+            let propChannel = config.channel || idx + 1;
+            propChannel = address + propChannel - 1;
+            if (propChannel > maxChannel) {
+                maxChannel = propChannel;
+            }
+        });
+        this.dmx = new Uint8Array(maxChannel + 1);
 
         // populate props
         Object.entries(props).forEach(([key, config], idx) => {
@@ -31,6 +40,7 @@ export class Device {
             this[key] = prop;
             this.props.push(prop);
         });
+
         this.reset();
 
         this.pixels = [];
@@ -100,20 +110,25 @@ export class Device {
         }
 
         this.dmx[ch] = val;
+        this._pendingChanges = this._pendingChanges || Object.create(null);
         this._pendingChanges[ch] = val;
     }
 
     flush() {
         const changes = this._pendingChanges;
-        this._pendingChanges = {};
+        this._pendingChanges = null;
         return changes;
     }
 
     updateProps(dmx) {
+        if (!dmx) {
+            return;
+        }
         this._externalUpdate = true;
+        const isTypedArray = dmx instanceof Uint8Array;
         this.props.forEach(prop => {
-            if (dmx[prop.channel] != null) {
-                let val = dmx[prop.channel];
+            const val = dmx[prop.channel];
+            if (isTypedArray || val != null) {
                 prop.dmx = val;
             }
         });

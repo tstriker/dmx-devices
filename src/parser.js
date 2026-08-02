@@ -194,16 +194,27 @@ export function parseFixtureConfig(config) {
             if (exists("red")) {
                 group = numberedProp("red").group || 0;
 
+                // white joins the colour mix whenever the fixture has one
+                let controlProps = ["red", "green", "blue"];
                 if (exists("white")) {
-                    controls.color = {type: "rgbw-light", props: ["red", "green", "blue", "white"]};
-                } else {
-                    controls.color = {type: "rgb-light", props: ["red", "green", "blue"]};
+                    controlProps.push("white");
                 }
 
-                // convert the prop list into {red: red1, green: green1,...}
-                controls.color.props = Object.fromEntries(
-                    controls.color.props.map(propName => [propName, numbered(propName)])
-                );
+                let type = exists("white") ? (exists("amber") ? "rgbwa-light" : "rgbw-light") : "rgb-light";
+
+                controls.color = {
+                    type,
+                    // convert the prop list into {red: red1, green: green1,...}
+                    props: Object.fromEntries(controlProps.map(propName => [propName, numbered(propName)])),
+
+                    // amber and the dimmer sit outside props on purpose. the mix drives both, but the
+                    // channels stay unmanaged so they keep their own slider in the fixture's controls -
+                    // amber is a colour you reach for by name, not only a by-product of the mix
+                    amber: ifExists("amber"),
+
+                    // the dimmer is subject to the check below that no other pixel wants the same one
+                    dimmer: ifExists("dimmer"),
+                };
             } else if (exists("warm_white") && exists("cool_white")) {
                 group = numberedProp("warm_white").group || 0;
                 let controlProps = ["warm_white", "cool_white", "dimmer"];
@@ -233,6 +244,20 @@ export function parseFixtureConfig(config) {
         }
         if (!pixels.length) {
             pixels = [{}];
+        }
+
+        let colorPixels = pixels.filter(pixel => pixel.controls?.color);
+        if (colorPixels.length > 1) {
+            // a pixel only gets to carry its level on a dimmer that answers to it alone. on a bar with a
+            // row of colour cells and one master dimmer, the unnumbered lookup lands on the first cell
+            // and it would drag the whole bar to its own level, so unless every cell has a dimmer of its
+            // own they all go back to carrying brightness in their colour
+            let dimmers = new Set(colorPixels.map(pixel => pixel.controls.color.dimmer));
+            if (dimmers.size < colorPixels.length || dimmers.has(null)) {
+                colorPixels.forEach(pixel => {
+                    delete pixel.controls.color.dimmer;
+                });
+            }
         }
 
         pixels.forEach((pixel, idx) => {

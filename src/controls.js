@@ -1,6 +1,4 @@
-import chroma from "chroma-js";
-
-import {parseColor, colorToRGBW} from "./utils.js";
+import {ColorMixer, parseColor} from "./color.js";
 
 export class Control {
     constructor(config, props) {
@@ -49,10 +47,14 @@ export class Pixel {
                         ? new pixelControls[config.type](config, this._allProps)
                         : new config.type(config, this._allProps);
 
-                Object.defineProperty(this, controlName, {
-                    get: () => control.get(),
-                    set: val => control.set(val),
-                });
+                // colour controls are write-only - there is no honest way to reconstruct a hex from
+                // channel values once white and amber are in the mix, so they just don't define a getter
+                let descriptor = {set: val => control.set(val)};
+                if (control.get) {
+                    descriptor.get = () => control.get();
+                }
+
+                Object.defineProperty(this, controlName, descriptor);
                 this.controls[controlName] = control;
 
                 // the goal is to set each of the controls to be a setter/getter
@@ -68,7 +70,7 @@ export class Pixel {
                     if (!Object.hasOwn(this, propName)) {
                         Object.defineProperty(this, propName, {
                             get: () => prop.val,
-                            set: val => (prop = val),
+                            set: val => (prop.val = val),
                         });
                     }
                     usedChannels.add(prop.channel);
@@ -78,68 +80,83 @@ export class Pixel {
 
         this.channels = [...usedChannels];
 
-        let features = ["color", "red", "white", "dimmer", "strobe", "white", "amber", "uv", "pan", "tilt", "warmth"];
+        let features = ["color", "red", "white", "dimmer", "strobe", "amber", "uv", "pan", "tilt", "warmth"];
         this.features = features.filter(feature => feature in this);
     }
 }
 
+// a fixture's colour is whatever its emitters can be talked into producing together. red/green/blue are
+// always there; white and amber join in when the fixture has them, and get substituted into the mix
+// rather than piled on top of a full RGB triplet.
+//
+// uv deliberately stays out of it - it sits outside the visible gamut, so folding it in would muddy
+// every colour without buying any accuracy. it stays an independent channel.
+class LEDLight extends Control {
+    defaultVal = "#000";
+
+    constructor(config, props) {
+        super(config, props);
+
+        // amber and the dimmer are ours to work out but not ours to own. both keep their own slider on
+        // the fixture, so we write what the mix asks for and leave whoever is driving the frame free to
+        // put something else there - the amber a colour earns is a starting point, not a verdict
+        this.amberProp = config.amber ? props[config.amber] : null;
+
+        // a dimmer of this pixel's own lets us mix the colour at full and send the level down the
+        // dimmer channel instead. we only take one on if it's a plain 0-255 ramp - anything with stops
+        // or ranges means the channel does more than dim, and writing a level to it would misfire
+        let dimmer = config.dimmer ? props[config.dimmer] : null;
+        let plainRamp = dimmer?.stops?.length == 2 && dimmer.stops[0].chVal === 0 && dimmer.stops[1].chVal === 255;
+        this.dimmerProp = plainRamp ? dimmer : null;
+
+        this.mixer = new ColorMixer({
+            white: Boolean(this.white),
+            amber: Boolean(this.amberProp),
+            substitute: config.substitute !== false,
+            linear: Boolean(config.linear),
+            emitters: config.emitters || {},
+            flux: config.flux || {},
+            strength: config.strength || {},
+        });
+        this.mixer.usesDimmer = Boolean(this.dimmerProp);
+
+        // what the colour worked out for the channels we don't own: the brightness waiting on the
+        // dimmer, and the amber the colour earned before anyone asks for more
+        this.level = 0;
+        this.amberMix = 0;
+
+        // reused so that setting a colour every frame doesn't allocate
+        this._mix = {red: 0, green: 0, blue: 0, white: 0, amber: 0, level: 0};
+    }
+
+    set(value) {
+        let mix = this.mixer.split(value, this._mix);
+        this.level = mix.level;
+        this.amberMix = mix.amber;
+
+        this.red.dmx = Math.round(mix.red * 255);
+        this.green.dmx = Math.round(mix.green * 255);
+        this.blue.dmx = Math.round(mix.blue * 255);
+
+        if (this.white) {
+            this.white.dmx = Math.round(mix.white * 255);
+        }
+        if (this.amberProp) {
+            this.amberProp.dmx = Math.round(mix.amber * 255);
+        }
+    }
+}
+
 let pixelControls = {
-    "rgb-light": class extends Control {
-        defaultVal = "#000";
-
-        get() {
-            return chroma(this.red.val, this.green.val, this.blue.val).hex();
-        }
-
-        set(value) {
-            let [r, g, b, a] = parseColor(value).rgba();
-            [this.red.dmx, this.green.dmx, this.blue.dmx] = [Math.round(r * a), Math.round(g * a), Math.round(b * a)];
-        }
-    },
-
-    "rgbw-light": class extends Control {
-        defaultVal = "#000";
-
-        get() {
-            let color = chroma(this.red.val, this.green.val, this.blue.val);
-            return color.hex();
-        }
-        set(value) {
-            let color = parseColor(value);
-            let [r, g, b, a] = color.rgba();
-            let w = colorToRGBW(color)[3];
-
-            [this.red.dmx, this.green.dmx, this.blue.dmx, this.white.dmx] = [
-                Math.round(r * a),
-                Math.round(g * a),
-                Math.round(b * a),
-                Math.round(w * a),
-            ];
-        }
-    },
+    // all three names land on the same class - which emitters actually get driven is decided by
+    // the props the fixture hands over, not by the type string
+    "rgb-light": LEDLight,
+    "rgbw-light": LEDLight,
+    "rgbwa-light": LEDLight,
 
     "cww-light": class extends Control {
         defaultVal = "#000";
 
-        get() {
-            // convert warm white, cool white and dimmer into a hex color.
-            // we construct HSL, where L=dimmer, H=red (0-180)/blue(180-360), S=how far out of balance we are
-            let warmWhite = this.warm_white.val;
-            let coolWhite = this.cool_white.val;
-            let maxIntensity = Math.max(warmWhite, coolWhite);
-
-            let [h, s, l] = [25, 0, this.dimmer.val];
-            if (maxIntensity) {
-                if (warmWhite >= coolWhite) {
-                    h = 25; // yellowish
-                    s = coolWhite / maxIntensity;
-                } else {
-                    h = 217; // blueish
-                    s = warmWhite / maxIntensity;
-                }
-            }
-            return chroma.hsl(h, s, l).hex();
-        }
         set(value) {
             let [h, s, l] = parseColor(value).hsl();
 
@@ -160,9 +177,6 @@ let pixelControls = {
     "w-light": class extends Control {
         defaultVal = "#000";
 
-        get() {
-            return chroma(this.white.val, this.white.val, this.white.val).hex();
-        }
         set(value) {
             let [r, g, b, a] = parseColor(value).rgba();
             let w = Math.max(r, g, b);

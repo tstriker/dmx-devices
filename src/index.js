@@ -1,4 +1,5 @@
 export {parseFixtureConfig} from "./parser.js";
+export {emitterColors, emitterFlux, emitterStrength, mixing} from "./color.js";
 
 export {default as LEDPar} from "./pars/par.js";
 

@@ -69,7 +69,6 @@ export class Device {
             "white", // this is for single-color cobs
             "dimmer",
             "strobe",
-            "white",
             "amber",
             "uv",
             "pan",

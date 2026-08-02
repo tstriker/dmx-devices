@@ -3,7 +3,7 @@ import {parseFixtureConfig} from "../parser.js";
 export default parseFixtureConfig({
     model: "ADJ Mega HEX Par",
     widthCm: 20,
-    type: "rgbw-light",
+    type: "rgbwa-light",
 
     modes: [
         {

@@ -3,7 +3,7 @@ import {parseFixtureConfig} from "../parser.js";
 export default parseFixtureConfig({
     model: "LeDJ Stage Par CZ 120",
     widthCm: 20,
-    type: "rgba-light",
+    type: "rgbwa-light",
     modes: [
         {
             name: "4ch",

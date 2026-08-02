@@ -3,7 +3,7 @@ import {parseFixtureConfig} from "../parser.js";
 export default parseFixtureConfig({
     model: "Centolight Plot FZ6200",
     widthCm: 20,
-    type: "rgb-light",
+    type: "rgbwa-light",
 
     modes: [
         {

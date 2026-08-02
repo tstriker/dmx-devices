@@ -9,7 +9,7 @@ export default parseFixtureConfig({
             name: "15ch",
             props: [
                 {type: "custom", label: "mode", ui: false},
-                {type: "dimmer", activeDefault: 255},
+                {type: "dimmer", activeDefault: 255, ui: false},
                 "strobe",
                 {type: "red", repeats: 4, every: 3},
                 {type: "green", repeats: 4, every: 3},

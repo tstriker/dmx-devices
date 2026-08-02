@@ -102,7 +102,9 @@ export class Prop {
         if (dmx >= 0 && dmx <= 255) {
             this.dmx = dmx;
         } else {
-            console.error(`Attempting to set ${this.name} prop to '${val}' that maps to invalid DMX value '${dmx}'`);
+            console.error(
+                `Channel: ${this.channel}: Attempting to set ${this.name} prop to '${val}' that maps to invalid DMX value '${dmx}'`
+            );
         }
     }
 

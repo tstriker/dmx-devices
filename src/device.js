@@ -37,7 +37,7 @@ export class Device {
                 channel: propChannel,
                 onPropChange: this.onPropChange.bind(this),
             });
-            this[key] = prop;
+            this.shortcut(key, prop);
             this.props.push(prop);
         });
 
@@ -48,7 +48,7 @@ export class Device {
         pixels = (pixels || []).map((pixel, idx) => new Pixel(pixel, idx + 1, this.props, this.options));
         pixels.forEach(pixel => {
             // math the specific pixel so we can go straight to this.light8 and so on
-            this[pixel.id] = pixel;
+            this.shortcut(pixel.id, pixel);
 
             // establish the nested groups in pixels, so that we can support two-row lights and so on
             let group = pixel.group;
@@ -103,6 +103,16 @@ export class Device {
         });
     }
 
+    shortcut(name, value) {
+        // props and pixels get a direct handle on the device (device.dimmer, device.light3), but a custom channel's
+        // name comes from whatever label the fixture author typed, so it can land on the device's own API
+        if (reservedNames.has(name)) {
+            console.warn(`Device '${this.label}': '${name}' is a reserved name, reach it through .props instead`);
+            return;
+        }
+        this[name] = value;
+    }
+
     onPropChange(ch, val) {
         if (this._externalUpdate) {
             return;
@@ -142,6 +152,22 @@ export class Device {
         }
     }
 }
+
+const reservedNames = new Set([
+    ...Object.getOwnPropertyNames(Device.prototype),
+    "address",
+    "label",
+    "deviceOptions",
+    "render",
+    "props",
+    "options",
+    "dmx",
+    "pixels",
+    "unmanagedProps",
+    "features",
+    "_pendingChanges",
+    "_externalUpdate",
+]);
 
 export function ModelFactory({config, ...modelInfo}) {
     // ended up using a func instead of subclassing, as the constructor gets fired too early for JS classes:

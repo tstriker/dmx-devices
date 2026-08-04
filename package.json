@@ -20,5 +20,8 @@
     "homepage": "https://github.com/tstriker/dmx-devices#readme",
     "dependencies": {
         "chroma-js": "*"
+    },
+    "devDependencies": {
+        "linkedom": "^0.18.13"
     }
 }

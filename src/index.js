@@ -1,4 +1,6 @@
 export {parseFixtureConfig} from "./parser.js";
+export {parseGDTF} from "./gdtf.js";
+export {mergeCatalogues, searchFixtures, fixtureModes} from "./catalogue.js";
 export {emitterColors, emitterFlux, emitterStrength, mixing} from "./color.js";
 
 export {default as LEDPar} from "./pars/par.js";
